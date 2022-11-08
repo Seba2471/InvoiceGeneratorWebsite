@@ -1,0 +1,9 @@
+.main {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin-bottom: -2px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
