@@ -1,6 +1,14 @@
 import React from 'react';
 
-function TextArea(props) {
+type PropsTypes = {
+  label: string;
+  value: string;
+  className: string;
+  error: string;
+  onChange: Function;
+};
+
+function TextArea(props: PropsTypes) {
   const className = props.className;
 
   return (
@@ -8,11 +16,10 @@ function TextArea(props) {
       <label> {props.label}</label>
       <textarea
         value={props.value}
-        onChange={(e) => props.onChange(e.target.value)}
-        type="text"
+        onChange={(e: any) => props.onChange(e.target.value)}
         className={`form-control ${props.error ? 'is-invalid' : ''}`}
       />
-      <div className="invalid-feedback">{props.error}</div>
+      <div className='invalid-feedback'>{props.error}</div>
     </div>
   );
 }

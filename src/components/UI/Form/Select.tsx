@@ -10,7 +10,7 @@ type PropsTypes = {
 };
 
 type OptionType = {
-  value: string;
+  value: string | number;
   label: string;
 };
 

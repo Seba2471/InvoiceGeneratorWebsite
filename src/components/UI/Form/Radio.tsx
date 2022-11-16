@@ -1,12 +1,27 @@
 import React from 'react';
 
-function Radio(props) {
+type PropsTypes = {
+  options: Array<Option>;
+  value: string | number;
+  error: string;
+  showError: boolean;
+  name: string;
+  onChange: Function;
+};
+
+type Option = {
+  value: string | number;
+  name: string;
+  label: string;
+};
+
+function Radio(props: PropsTypes) {
   return (
-    <div className="form-group">
+    <div className='form-group'>
       {props.options.map((option) => (
-        <div className="custom-control custom-radio" key={option.value}>
+        <div className='custom-control custom-radio' key={option.value}>
           <input
-            type="radio"
+            type='radio'
             name={option.name}
             value={option.value}
             id={`radio-${option.value}-${props.name}`}
@@ -16,10 +31,10 @@ function Radio(props) {
               props.error && props.showError ? 'is-invalid' : ''
             }`}
           />
-          <label className="custom-control-label" htmlFor="status-active">
+          <label className='custom-control-label' htmlFor='status-active'>
             {option.label}
           </label>
-          <div className="invalid-feedback">{props.error}</div>
+          <div className='invalid-feedback'>{props.error}</div>
         </div>
       ))}
     </div>
