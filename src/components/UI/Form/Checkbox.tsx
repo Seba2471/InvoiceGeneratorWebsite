@@ -1,7 +1,19 @@
 import React from 'react';
 
-function Checkbox(props) {
-  const chanageFeatureHandler = (e) => {
+type PropsTypes = {
+  value: Array<Option>;
+  options: Array<Option>;
+  onChange: Function;
+};
+
+type Option = {
+  value: string;
+  id: number;
+  label: string;
+};
+
+function Checkbox(props: PropsTypes) {
+  const chanageFeatureHandler = (e: any) => {
     const value = e.target.value;
     const isChecked = e.target.checked;
     if (isChecked) {
@@ -14,21 +26,23 @@ function Checkbox(props) {
   };
 
   return (
-    <div className="form-group">
+    <div className='form-group'>
       {props.options.map((option) => (
         <div
-          className="custom-control custom-checkbox in-valid"
+          className='custom-control custom-checkbox in-valid'
           key={option.value}
         >
           <input
-            type="checkbox"
-            className="custom-control-checkbox"
+            type='checkbox'
+            className='custom-control-checkbox'
             value={option.value}
-            checked={props.value.find((x) => x === option.value) || false}
+            checked={
+              props.value.find((x) => x.value === option.value) ? true : false
+            }
             onChange={chanageFeatureHandler}
-            id={option.id}
+            id={option.id.toString()}
           />
-          <label className="custom-control-label" htmlFor={option.value}>
+          <label className='custom-control-label' htmlFor={option.value}>
             {option.label}
           </label>
         </div>
