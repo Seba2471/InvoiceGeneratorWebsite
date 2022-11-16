@@ -21,3 +21,7 @@ export const logout = (): {
 });
 
 export type Action = ReturnType<typeof login> | ReturnType<typeof logout>;
+
+const actions = { login, logout };
+
+export default actions;

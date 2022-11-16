@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import AuthContext from '../../contexts/authContext';
 import styles from './Layout.module.css';
 
 type PropsTypes = {
@@ -9,11 +10,17 @@ type PropsTypes = {
 };
 
 export default function Layout(props: PropsTypes) {
+  const { state } = useContext(AuthContext);
+
   return (
     <div className={`${styles.main} container`}>
       <div>
-        <div>{props.header}</div>
-        <div>{props.menu} </div>
+        {state.user.isAuthenticated ? (
+          <>
+            <div>{props.header}</div>
+            <div>{props.menu} </div>
+          </>
+        ) : null}
         <div>{props.content}</div>
       </div>
       {/* <div>{props.footer} </div> */}

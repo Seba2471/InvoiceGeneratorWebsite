@@ -9,14 +9,19 @@ import Header from './components/Layout/Header/Header';
 import { useReducer } from 'react';
 import { reducer, initialState } from './reducers/auth/authReducer';
 import AuthContext from './contexts/authContext';
+import Login from './pages/Login/Login';
+import AuthenticatedRoute from './hoc/AuthenticatedRoute';
 
 const header = <Header />;
 const menu = <Menu />;
 
 const content = (
   <Routes>
-    <Route path='/nowa-faktura' element={<InvoiceForm />} />
-    <Route path='/' element={<Home />} />
+    <Route path='/' element={<AuthenticatedRoute />}>
+      <Route path='/nowa-faktura' element={<InvoiceForm />} />
+      <Route path='/' element={<Home />} />
+    </Route>
+    <Route path='/login' element={<Login />} />
   </Routes>
 );
 
