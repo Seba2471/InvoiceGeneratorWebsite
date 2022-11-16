@@ -11,6 +11,7 @@ import { reducer, initialState } from './reducers/auth/authReducer';
 import AuthContext from './contexts/authContext';
 import Login from './pages/Login/Login';
 import AuthenticatedRoute from './hoc/AuthenticatedRoute';
+import Register from './pages/Register/Register';
 
 const header = <Header />;
 const menu = <Menu />;
@@ -22,6 +23,7 @@ const content = (
       <Route path='/' element={<Home />} />
     </Route>
     <Route path='/login' element={<Login />} />
+    <Route path='/register' element={<Register />} />
   </Routes>
 );
 
