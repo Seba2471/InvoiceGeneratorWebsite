@@ -6,6 +6,9 @@ import Menu from './components/Layout/Menu/Menu';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './pages/Home/Home';
 import Header from './components/Layout/Header/Header';
+import { useReducer } from 'react';
+import { reducer, initialState } from './reducers/auth/authReducer';
+import AuthContext from './contexts/authContext';
 
 const header = <Header />;
 const menu = <Menu />;
@@ -20,9 +23,18 @@ const content = (
 const footer = <Footer />;
 
 function App() {
+  const [state, dispatch] = useReducer(reducer, initialState);
+
   return (
     <Router>
-      <Layout header={header} menu={menu} content={content} footer={footer} />
+      <AuthContext.Provider
+        value={{
+          state,
+          dispatch,
+        }}
+      >
+        <Layout header={header} menu={menu} content={content} footer={footer} />
+      </AuthContext.Provider>
     </Router>
   );
 }

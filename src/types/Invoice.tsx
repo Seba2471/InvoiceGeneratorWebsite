@@ -1,4 +1,4 @@
-export type Invoice = {
+export interface Invoice {
   invoiceNumber: string;
   invoiceItems: Array<InvoiceItem>;
   soldDate: string;
@@ -7,22 +7,22 @@ export type Invoice = {
   buyer: InvoicePerson;
   vatRate: number;
   currency: string;
-};
+}
 
-export type InvoiceItem = {
+export interface InvoiceItem {
   name: string;
   quantity: number;
   cost: number;
-};
+}
 
-export type InvoicePerson = {
+export interface InvoicePerson {
   fullName: string;
   nip: string;
   address: InvoicePersonAddres;
-};
+}
 
-export type InvoicePersonAddres = {
+export interface InvoicePersonAddres {
   line1: string;
   line2: string;
   country: string;
-};
+}
