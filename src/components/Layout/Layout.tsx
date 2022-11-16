@@ -14,9 +14,9 @@ export default function Layout(props: PropsTypes) {
       <div>
         <div>{props.header}</div>
         <div>{props.menu} </div>
-        <div className='container'>{props.content}</div>
+        <div>{props.content}</div>
       </div>
-      <div>{props.footer} </div>
+      {/* <div>{props.footer} </div> */}
     </div>
   );
 }

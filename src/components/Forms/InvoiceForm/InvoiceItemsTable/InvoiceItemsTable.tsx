@@ -4,12 +4,15 @@ import Row from './Row/Row';
 import Select from '../../../UI/Form/Select';
 
 type PropsTypes = {
-  className: string;
+  className?: string;
   items: Array<InvoiceItem>;
   vatRate: number;
   currency: string;
   changeItem: Function;
   addItem: Function;
+  removeItem: Function;
+  changeCurrency: Function;
+  changeVatRate: Function;
 };
 
 export default function InvoiceItemsTable(props: PropsTypes) {
@@ -33,7 +36,7 @@ export default function InvoiceItemsTable(props: PropsTypes) {
               Ilość
             </th>
             <th scope='col'>Cena netto</th>
-            <th scope='col'></th>
+            <th />
           </tr>
         </thead>
         <tbody>
@@ -48,18 +51,22 @@ export default function InvoiceItemsTable(props: PropsTypes) {
                 onChange={(e: string, key: string) =>
                   props.changeItem(e, index, key)
                 }
+                onRemove={props.removeItem}
               />
             );
           })}
         </tbody>
       </table>
       <div className='row'>
-        <button className='btn btn-success col-1' onClick={(e) => addItem(e)}>
+        <button
+          className='btn btn-success col-6 col-md-3'
+          onClick={(e) => addItem(e)}
+        >
           Dodaj
         </button>
       </div>
       <div className='row'>
-        <div className='col-1 offset-10'>
+        <div className=' col-12 offset-md-8 col-md-2'>
           <Select
             options={[
               { value: 'EUR', label: 'EURO' },
@@ -67,18 +74,19 @@ export default function InvoiceItemsTable(props: PropsTypes) {
             ]}
             label='Waluta'
             value={props.currency}
-            onChange={(e: any) => console.log(e)}
+            onChange={(value: string) => props.changeCurrency(value)}
           />
         </div>
-        <div className='col-1'>
+        <div className='col-12 col-md-2'>
           <Select
             options={[
-              { value: 'EUR', label: 'EURO' },
-              { value: 'PLN', label: 'PLN' },
+              { value: 0, label: '0%' },
+              { value: 15, label: '15%' },
+              { value: 23, label: '23%' },
             ]}
             label='VAT [%]'
-            value={props.currency}
-            onChange={(e: any) => console.log(e)}
+            value={props.vatRate}
+            onChange={(value: number) => props.changeVatRate(value)}
           />
         </div>
       </div>
