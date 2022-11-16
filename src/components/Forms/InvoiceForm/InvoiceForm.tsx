@@ -56,7 +56,9 @@ export default function InvoiceForm() {
   };
 
   const addItem = (e: Event) => {
-    e.preventDefault();
+    if (e) {
+      e.preventDefault();
+    }
 
     const newItem: InvoiceItem = {
       name: '',
