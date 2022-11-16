@@ -1,0 +1,26 @@
+.main {
+  background-color: #f6f6f6;
+  border-radius: 45px 45px;
+}
+
+@media only screen and (max-width: 768px) {
+  .main {
+    height: 15vh;
+    border-radius: 45px 45px;
+  }
+}
+
+@media only screen and (min-width: 769px) {
+  .main {
+    height: 12vh;
+    border-radius: 45px 45px;
+  }
+}
+
+@media only screen and (min-width: 1441px) {
+  .main {
+    background-color: #f6f6f6;
+    height: 5vh;
+    border-radius: 45px 45px;
+  }
+}

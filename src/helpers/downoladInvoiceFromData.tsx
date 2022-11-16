@@ -14,7 +14,7 @@ export const downoladInvoiceFromData = (data: Invoice) => {
         // create "a" HTML element with href to file & click
         const link = document.createElement('a');
         link.href = href;
-        link.setAttribute('download', `Faktura-${data.InvoiceNumber}.pdf`); //or any other extension
+        link.setAttribute('download', `Faktura-${data.invoiceNumber}.pdf`); //or any other extension
         document.body.appendChild(link);
         link.click();
 

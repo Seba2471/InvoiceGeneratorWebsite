@@ -1,51 +1,33 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import styles from './Menu.module.css';
+import MenuLink from './MenuLink/MenuLink';
+import { homeIcon, invoiceIcon, contractorsIcon, settingsIcon } from './Icons';
 
 export default function Menu() {
-  const activeLinkClass = 'active text-decoration-underline';
-
   return (
-    <nav className='navbar navbar-expand-lg bg-light'>
-      <div className='container-fluid'>
-        <a className='navbar-brand' href='#'>
-          Navbar
-        </a>
-        <button
-          className='navbar-toggler'
-          type='button'
-          data-bs-toggle='collapse'
-          data-bs-target='#navbarNavAltMarkup'
-          aria-controls='navbarNavAltMarkup'
-          aria-expanded='false'
-          aria-label='Toggle navigation'
-        >
-          <span className='navbar-toggler-icon'></span>
-        </button>
-        <div
-          className='collapse navbar-collapse container'
-          id='navbarNavAltMarkup'
-        >
-          <div className='navbar-nav'>
-            <NavLink
-              end
-              to='/'
-              className={({ isActive }) =>
-                isActive ? `nav-link ${activeLinkClass}` : 'nav-link'
-              }
-            >
-              Strona główna
-            </NavLink>
-            <NavLink
-              to='/nowa-faktura'
-              className={({ isActive }) =>
-                isActive ? `nav-link ${activeLinkClass}` : 'nav-link'
-              }
-            >
-              Wygeneruj fakturę
-            </NavLink>
-          </div>
-        </div>
+    <div
+      className={`d-none d-md-flex row mt-3 ps-3 pe-3 ${styles.main} align-items-center`}
+    >
+      <div className='col-3 col-lg-3'>
+        <MenuLink color='#9747FF' label='Strona główna' to='/'>
+          {homeIcon}
+        </MenuLink>
       </div>
-    </nav>
+      <div className='col-4 col-lg-3'>
+        <MenuLink color='#85B6FF' label='Moje faktury' to='/nowa-faktura'>
+          {invoiceIcon}
+        </MenuLink>
+      </div>
+      <div className='col-4 col-lg-3'>
+        <MenuLink color='#4ECB71' label='Kontrahenci' to='/nowa-faktura1'>
+          {contractorsIcon}
+        </MenuLink>
+      </div>
+      <div className='d-none d-lg-block col-4 col-lg-3'>
+        <MenuLink color='#EE9C22' label='Ustawienia' to='/nowa-faktura2'>
+          {settingsIcon}
+        </MenuLink>
+      </div>
+    </div>
   );
 }

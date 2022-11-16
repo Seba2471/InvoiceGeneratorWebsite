@@ -1,6 +1,20 @@
 import React from 'react';
 
-export default function Select(props) {
+type PropsTypes = {
+  className?: string;
+  label: string;
+  options: Array<OptionType>;
+  value: string | number;
+  onChange: Function;
+  error?: string;
+};
+
+type OptionType = {
+  value: string;
+  label: string;
+};
+
+export default function Select(props: PropsTypes) {
   const className = props.className;
 
   return (
@@ -17,7 +31,7 @@ export default function Select(props) {
           </option>
         ))}
       </select>
-      <div className="invalid-feedback">{props.error}</div>
+      <div className='invalid-feedback'>{props.error}</div>
     </div>
   );
 }

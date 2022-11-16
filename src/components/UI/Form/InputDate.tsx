@@ -1,34 +1,25 @@
 import React from 'react';
 
-type Props = {
-  className?: string;
+type PropsTypes = {
   label: string;
-  value: string;
-  type: string;
-  error?: string;
+  className?: string;
   onChange: Function;
+  error?: string;
+  value: string;
 };
 
-function InputText(props: Props) {
+export default function InputDate(props: PropsTypes) {
   const className = props.className;
   return (
     <div className={`form-group ${className}`}>
-      {props.label ? <label> {props.label}</label> : null}
+      <label> {props.label}</label>
       <input
         value={props.value}
         onChange={(e) => props.onChange(e.target.value)}
-        type={props.type}
+        type='date'
         className={`form-control ${props.error ? 'is-invalid' : ''}`}
       />
       <div className='invalid-feedback'>{props.error}</div>
     </div>
   );
 }
-
-InputText.defaultProps = {
-  type: 'text',
-  showError: false,
-  error: '',
-};
-
-export default InputText;
