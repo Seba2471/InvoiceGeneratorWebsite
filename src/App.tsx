@@ -12,6 +12,7 @@ import AuthContext from './contexts/authContext';
 import Login from './pages/Login/Login';
 import AuthenticatedRoute from './hoc/AuthenticatedRoute';
 import Register from './pages/Register/Register';
+import Invoices from './pages/Invoices/Invoices';
 
 const header = <Header />;
 const menu = <Menu />;
@@ -19,7 +20,7 @@ const menu = <Menu />;
 const content = (
   <Routes>
     <Route path='/' element={<AuthenticatedRoute />}>
-      <Route path='/nowa-faktura' element={<InvoiceForm />} />
+      <Route path='/my-invoices' element={<Invoices />} />
       <Route path='/' element={<Home />} />
     </Route>
     <Route path='/login' element={<Login />} />
