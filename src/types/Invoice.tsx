@@ -9,6 +9,15 @@ export interface Invoice {
   currency: string;
 }
 
+export interface InvoiceShortInfo {
+  invoiceNumber: string;
+  issueDate: string;
+  sellerFullName: string;
+  buyerFullName: string;
+  amount: number;
+  currency: string;
+}
+
 export interface InvoiceItem {
   name: string;
   quantity: number;

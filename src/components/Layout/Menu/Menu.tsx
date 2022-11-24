@@ -14,7 +14,7 @@ export default function Menu() {
         </MenuLink>
       </div>
       <div className='col-4 col-lg-3'>
-        <MenuLink color='#85B6FF' label='Moje faktury' to='/nowa-faktura'>
+        <MenuLink color='#85B6FF' label='Moje faktury' to='/my-invoices'>
           {invoiceIcon}
         </MenuLink>
       </div>

@@ -103,7 +103,7 @@ export default function InvoiceForm() {
   };
 
   return (
-    <div className={`${styles.main} p-5`}>
+    <div>
       <h4> Nowa faktura </h4>
       <span> Wypełnij dane faktury</span>
       <form className='mt-4' onSubmit={(e) => generateInvoice(e)}>
