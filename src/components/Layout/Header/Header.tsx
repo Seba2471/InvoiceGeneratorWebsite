@@ -1,16 +1,15 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import logo from '../../../assets/images/logo.png';
-import AuthContext from '../../../contexts/authContext';
-import authActions from '../../../reducers/auth/actions';
 import styles from './Header.module.css';
 import { useNavigate } from 'react-router-dom';
+import useAuth from '../../../hooks/useAuth';
 
 export default function Header() {
-  const { dispatch } = useContext(AuthContext);
+  const [, setAuth] = useAuth();
   const navigate = useNavigate();
 
   const logout = () => {
-    dispatch(authActions.logout());
+    setAuth.logout();
     navigate('/login');
   };
 

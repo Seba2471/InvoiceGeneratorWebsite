@@ -7,7 +7,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './pages/Home/Home';
 import Header from './components/Layout/Header/Header';
 import { useReducer } from 'react';
-import { reducer, initialState } from './reducers/auth/authReducer';
+import { reducer, initialState } from './store/auth/authReducer';
 import AuthContext from './contexts/authContext';
 import Login from './pages/Login/Login';
 import AuthenticatedRoute from './hoc/AuthenticatedRoute';

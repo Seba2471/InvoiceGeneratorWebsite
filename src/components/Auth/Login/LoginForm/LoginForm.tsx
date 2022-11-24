@@ -29,7 +29,7 @@ export default function LoginForm(props: { onLogin: Function }) {
 
   const submitForm = (e: React.FormEvent) => {
     e.preventDefault();
-    props.onLogin(form);
+    props.onLogin(form.email.value, form.password.value);
   };
 
   const changeHandler = (value: string, fieldName: keyof LoginFormTypes) => {

@@ -1,6 +1,6 @@
 import React, { createContext } from 'react';
-import { Store } from '../reducers/auth/authReducer';
-import { Action } from '../reducers/auth/actions';
+import { Store } from '../store/auth/authReducer';
+import { Action } from '../store/auth/actions';
 
 type Context = {
   state: Store;

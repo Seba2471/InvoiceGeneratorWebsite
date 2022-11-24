@@ -1,4 +1,4 @@
 export interface User {
-  token: string;
-  isAuthenticated: boolean;
+  email: string;
+  id: string;
 }

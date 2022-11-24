@@ -1,16 +1,16 @@
-import { User } from '../../types/User';
+import { Store } from './authReducer';
 
 export const login = (
-  user: User,
+  store: Store,
 ): {
   type: 'LOGIN';
   payload: {
-    user: User;
+    store: Store;
   };
 } => ({
   type: 'LOGIN',
   payload: {
-    user,
+    store,
   },
 });
 
