@@ -1,16 +1,20 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import logo from '../../assets/images/logo.png';
-import AuthContext from '../../contexts/authContext';
-import authActions from '../../reducers/auth/actions';
 import { useNavigate } from 'react-router-dom';
 import RightBar from '../../components/Auth/RightBar/RightBar';
 import RegisterForm from '../../components/Auth/Register/RegisterForm/RegisterForm';
 
+type RegisterFormType = {
+  email: string;
+  password: string;
+  replyPasword: string;
+};
+
 export default function Register() {
-  const { dispatch } = useContext(AuthContext);
   let navigate = useNavigate();
 
-  const register = () => {
+  const register = (form: RegisterFormType) => {
+    console.log(form);
     navigate('/login');
   };
 
@@ -20,7 +24,9 @@ export default function Register() {
         <img className={`img-fluid`} src={logo} alt='logo' />
 
         <div className='col-8 offset-2'>
-          <RegisterForm onRegister={() => register()} />
+          <RegisterForm
+            onRegister={(value: RegisterFormType) => register(value)}
+          />
           <div className='mt-5'>
             <h4 className='text-center'> Masz już konto ? </h4>
             <h5

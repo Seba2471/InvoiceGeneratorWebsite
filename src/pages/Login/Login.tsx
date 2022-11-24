@@ -1,20 +1,22 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import logo from '../../assets/images/logo.png';
 import LoginForm from '../../components/Auth/Login/LoginForm/LoginForm';
-import AuthContext from '../../contexts/authContext';
-import authActions from '../../reducers/auth/actions';
 import styles from './Login.module.css';
 import { useNavigate } from 'react-router-dom';
 import RightBar from '../../components/Auth/RightBar/RightBar';
+import { axiosInstance } from '../../axios';
+import useAuth from '../../hooks/useAuth';
 
 export default function Login() {
-  const { dispatch } = useContext(AuthContext);
+  const [, setAuth] = useAuth();
   let navigate = useNavigate();
 
-  const login = () => {
-    dispatch(
-      authActions.login({ token: 'Zalogowałem', isAuthenticated: true }),
-    );
+  const login = async (email: string, password: string) => {
+    const response = await axiosInstance.post('Auth/login', {
+      email,
+      password,
+    });
+    setAuth.login(response.data);
     navigate('/');
   };
 
@@ -24,7 +26,11 @@ export default function Login() {
         <img className={`img-fluid ${styles.logo}`} src={logo} alt='logo' />
 
         <div className='col-8 offset-2'>
-          <LoginForm onLogin={() => login()} />
+          <LoginForm
+            onLogin={(email: string, password: string) =>
+              login(email, password)
+            }
+          />
           <div className='mt-5'>
             <h4 className='text-center'> Nie masz jeszcze konta ? </h4>
             <h5

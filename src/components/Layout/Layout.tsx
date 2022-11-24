@@ -15,7 +15,7 @@ export default function Layout(props: PropsTypes) {
   return (
     <div className={`${styles.main} container`}>
       <div>
-        {state.user.isAuthenticated ? (
+        {state.isAuthenticated ? (
           <>
             <div>{props.header}</div>
             <div>{props.menu} </div>

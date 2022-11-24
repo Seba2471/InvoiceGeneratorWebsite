@@ -5,5 +5,5 @@ import AuthContext from '../contexts/authContext';
 export default function AuthenticatedRoute() {
   const { state } = useContext(AuthContext);
 
-  return state.user.isAuthenticated ? <Outlet /> : <Navigate to='/login' />;
+  return state.isAuthenticated ? <Outlet /> : <Navigate to='/login' />;
 }

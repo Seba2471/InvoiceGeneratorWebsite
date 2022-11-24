@@ -1,37 +1,70 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './LoginForm.module.css';
+import InputEmail from '../../../UI/Form/InputEmail';
+import InputPassword from '../../../UI/Form/InputPassword';
+import Button from '../../../UI/Button/Button';
+import { validateRules } from '../../../../helpers/Validation/validations';
+import { FormProperty } from '../../../../types/FormProperty';
+
+type LoginFormTypes = {
+  email: FormProperty;
+  password: FormProperty;
+};
 
 export default function LoginForm(props: { onLogin: Function }) {
+  const [form, setForm] = useState<LoginFormTypes>({
+    email: {
+      value: '',
+      error: '',
+      showError: false,
+      rules: ['email', 'required'],
+    },
+    password: {
+      value: '',
+      error: '',
+      showError: false,
+      rules: ['required'],
+    },
+  });
+
+  const submitForm = (e: React.FormEvent) => {
+    e.preventDefault();
+    props.onLogin(form.email.value, form.password.value);
+  };
+
+  const changeHandler = (value: string, fieldName: keyof LoginFormTypes) => {
+    const errorMessage = validateRules(form[fieldName].rules, value);
+
+    setForm({
+      ...form,
+      [fieldName]: {
+        ...form[fieldName],
+        value,
+        showError: true,
+        error: errorMessage,
+      },
+    });
+  };
+
   return (
-    <div className='main'>
-      <h1 className={`text-center ${styles.header}`}>Logowanie </h1>
-      <div className='input-group input-group-lg mt-4'>
-        <input
-          type='text'
-          className='form-control'
-          aria-label='Sizing example input'
-          aria-describedby='inputGroup-sizing-lg'
-          placeholder='Email'
-        />
-      </div>
-      <div className='input-group input-group-lg mt-2'>
-        <input
-          type='password'
-          className='form-control'
-          aria-label='Sizing example input'
-          aria-describedby='inputGroup-sizing-lg'
-          placeholder='Hasło'
-        />
-      </div>
+    <form className='main' onSubmit={(e) => submitForm(e)}>
+      <h1 className={`text-center ${styles.header}`}> Logowanie </h1>
+      <InputEmail
+        placeHolder='Email'
+        value={form.email.value}
+        onChange={(value: string) => changeHandler(value, 'email')}
+        error={form.email.error}
+        showError={form.email.showError}
+      />
+      <InputPassword
+        placeHolder='Hasło'
+        value={form.password.value}
+        onChange={(value: string) => changeHandler(value, 'password')}
+        error={form.password.error}
+        showError={form.password.showError}
+      />
       <div className='mt-2 ms-2'>Zapomniałem hasła</div>
-      <button
-        className={`btn ${styles.loginButton}`}
-        style={{ backgroundColor: '#85b6ff', color: 'white' }}
-        onClick={() => props.onLogin()}
-        value='Zaloguj'
-      >
-        Zaloguj
-      </button>
-    </div>
+      <Button>Zaloguj się</Button>
+    </form>
   );
 }
