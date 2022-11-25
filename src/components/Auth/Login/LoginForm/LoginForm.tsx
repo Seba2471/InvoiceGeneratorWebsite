@@ -26,10 +26,45 @@ export default function LoginForm(props: { onLogin: Function }) {
       rules: ['required'],
     },
   });
+  const [loading, setLoading] = useState(false);
+  const [loginError, setLoginError] = useState('');
 
-  const submitForm = (e: React.FormEvent) => {
+  const submitForm = async (e: React.FormEvent) => {
     e.preventDefault();
-    props.onLogin(form.email.value, form.password.value);
+
+    const errors = {
+      email: validateRules(form.email.rules, form.email.value),
+      password: validateRules(form.password.rules, form.password.value),
+    };
+
+    if (errors.email !== '' || errors.password !== '') {
+      setForm({
+        ...form,
+        email: { ...form.email, error: errors.email, showError: true },
+        password: { ...form.password, error: errors.password, showError: true },
+      });
+    } else {
+      setLoading(true);
+      const error = await props.onLogin(form.email.value, form.password.value);
+      setLoading(false);
+
+      if (error) {
+        setForm({
+          email: { ...form.email, error: '', showError: false },
+          password: {
+            ...form.password,
+            value: '',
+            error: '',
+            showError: false,
+          },
+        });
+      }
+      if (error.LoginFailed) {
+        setLoginError('Nieprawidłowy login lub hasło');
+      } else {
+        setLoginError('Coś poszło nie tak... Spróbuj później');
+      }
+    }
   };
 
   const changeHandler = (value: string, fieldName: keyof LoginFormTypes) => {
@@ -63,8 +98,12 @@ export default function LoginForm(props: { onLogin: Function }) {
         error={form.password.error}
         showError={form.password.showError}
       />
+      <input className={`d-none ${loginError ? 'is-invalid' : ''}`} />
+      <div id='loginErrorsFeedback' className='invalid-feedback'>
+        {loginError}
+      </div>
       <div className='mt-2 ms-2'>Zapomniałem hasła</div>
-      <Button>Zaloguj się</Button>
+      <Button loading={loading}>Zaloguj się</Button>
     </form>
   );
 }

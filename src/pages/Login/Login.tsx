@@ -12,12 +12,20 @@ export default function Login() {
   let navigate = useNavigate();
 
   const login = async (email: string, password: string) => {
-    const response = await axiosInstance.post('Auth/login', {
-      email,
-      password,
-    });
-    setAuth.login(response.data);
-    navigate('/');
+    try {
+      const response = await axiosInstance.post('Auth/login', {
+        email,
+        password,
+      });
+      setAuth.login(response.data);
+      navigate('/');
+    } catch (e: any) {
+      if (e.response) {
+        return e.response.data.errors;
+      } else {
+        return { [e.message]: 'something went wrong' };
+      }
+    }
   };
 
   return (
