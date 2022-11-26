@@ -5,6 +5,8 @@ import InputPassword from '../../../UI/Form/InputPassword';
 import Button from '../../../UI/Button/Button';
 import { validateRules } from '../../../../helpers/Validation/validations';
 import { FormProperty } from '../../../../types/FormProperty';
+import clearFormFields from '../../../../helpers/clearFormFields';
+import ErrorFeedback from '../../../UI/Form/ErrorFeedback';
 
 type LoginFormTypes = {
   email: FormProperty;
@@ -29,6 +31,23 @@ export default function LoginForm(props: { onLogin: Function }) {
   const [loading, setLoading] = useState(false);
   const [loginError, setLoginError] = useState('');
 
+  const clearForm = ({
+    clearEmail,
+    clearPassword,
+  }: {
+    clearEmail?: boolean;
+    clearPassword?: boolean;
+  }) => {
+    clearFormFields<LoginFormTypes>(
+      form,
+      [
+        { fieldName: 'email', clearValue: clearEmail || true },
+        { fieldName: 'password', clearValue: clearPassword || true },
+      ],
+      setForm,
+    );
+  };
+
   const submitForm = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -48,21 +67,12 @@ export default function LoginForm(props: { onLogin: Function }) {
       const error = await props.onLogin(form.email.value, form.password.value);
       setLoading(false);
 
-      if (error) {
-        setForm({
-          email: { ...form.email, error: '', showError: false },
-          password: {
-            ...form.password,
-            value: '',
-            error: '',
-            showError: false,
-          },
-        });
-      }
       if (error.LoginFailed) {
         setLoginError('Nieprawidłowy login lub hasło');
+        clearForm({ clearEmail: false });
       } else {
         setLoginError('Coś poszło nie tak... Spróbuj później');
+        clearForm({});
       }
     }
   };
@@ -98,10 +108,7 @@ export default function LoginForm(props: { onLogin: Function }) {
         error={form.password.error}
         showError={form.password.showError}
       />
-      <input className={`d-none ${loginError ? 'is-invalid' : ''}`} />
-      <div id='loginErrorsFeedback' className='invalid-feedback'>
-        {loginError}
-      </div>
+      <ErrorFeedback error={loginError} />
       <div className='mt-2 ms-2'>Zapomniałem hasła</div>
       <Button loading={loading}>Zaloguj się</Button>
     </form>
