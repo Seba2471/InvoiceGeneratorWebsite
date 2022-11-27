@@ -3,19 +3,30 @@ import logo from '../../assets/images/logo.png';
 import { useNavigate } from 'react-router-dom';
 import RightBar from '../../components/Auth/RightBar/RightBar';
 import RegisterForm from '../../components/Auth/Register/RegisterForm/RegisterForm';
-
-type RegisterFormType = {
-  email: string;
-  password: string;
-  replyPasword: string;
-};
+import { axiosInstance } from '../../axios';
 
 export default function Register() {
   let navigate = useNavigate();
 
-  const register = (form: RegisterFormType) => {
-    console.log(form);
-    navigate('/login');
+  const register = async (
+    email: string,
+    password: string,
+    confirmPassword: string,
+  ) => {
+    try {
+      await axiosInstance.post('Auth/register', {
+        email,
+        password,
+        confirmPassword,
+      });
+      navigate('/login');
+    } catch (e: any) {
+      if (e.response) {
+        return e.response.data.errors;
+      } else {
+        return { [e.message]: 'something went wrong' };
+      }
+    }
   };
 
   return (
@@ -25,7 +36,11 @@ export default function Register() {
 
         <div className='col-8 offset-2'>
           <RegisterForm
-            onRegister={(value: RegisterFormType) => register(value)}
+            onRegister={(
+              email: string,
+              password: string,
+              confirmPassword: string,
+            ) => register(email, password, confirmPassword)}
           />
           <div className='mt-5'>
             <h4 className='text-center'> Masz już konto ? </h4>

@@ -6,7 +6,6 @@ import InputText from '../../UI/Form/InputText';
 import InputDate from '../../UI/Form/InputDate';
 import PersonForm from './PersonForm/PersonForm';
 import InvoiceItemsTable from './InvoiceItemsTable/InvoiceItemsTable';
-import styles from './InvoiceForm.module.css';
 import InvoiceItemsMobileTable from './InvoiceItemsMobileTable/InvoiceItemsMobileTable';
 
 export default function InvoiceForm() {
