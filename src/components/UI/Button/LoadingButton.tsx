@@ -3,7 +3,7 @@ import React from 'react';
 type PropsTypes = {
   className: string;
   loading: boolean;
-  children: JSX.Element;
+  children: JSX.Element | string;
 };
 
 export default function LoadingButton(props: PropsTypes) {

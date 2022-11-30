@@ -3,7 +3,7 @@ import logo from '../../assets/images/logo.png';
 import { useNavigate } from 'react-router-dom';
 import RightBar from '../../components/Auth/RightBar/RightBar';
 import RegisterForm from '../../components/Auth/Register/RegisterForm/RegisterForm';
-import { axiosInstance } from '../../axios';
+import axiosInstance from '../../axios';
 
 export default function Register() {
   let navigate = useNavigate();

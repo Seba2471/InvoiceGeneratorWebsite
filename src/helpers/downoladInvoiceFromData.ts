@@ -1,10 +1,10 @@
-import { axiosInstance } from '../axios';
+import axiosInstance from '../axios';
 import { Invoice } from '../types/Invoice';
 
-export const downoladInvoiceFromData = (data: Invoice) => {
+export const downoladInvoiceFromData = async (data: Invoice) => {
   try {
-    axiosInstance
-      .post('home', data, {
+    await axiosInstance
+      .post('invoice', data, {
         responseType: 'blob',
       })
       .then((response) => {
@@ -22,7 +22,7 @@ export const downoladInvoiceFromData = (data: Invoice) => {
         document.body.removeChild(link);
         URL.revokeObjectURL(href);
       });
-  } catch (error) {
-    console.log(error);
+  } catch (error: any) {
+    return error;
   }
 };

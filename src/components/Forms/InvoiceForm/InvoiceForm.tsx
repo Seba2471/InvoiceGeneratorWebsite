@@ -7,6 +7,8 @@ import InputDate from '../../UI/Form/InputDate';
 import PersonForm from './PersonForm/PersonForm';
 import InvoiceItemsTable from './InvoiceItemsTable/InvoiceItemsTable';
 import InvoiceItemsMobileTable from './InvoiceItemsMobileTable/InvoiceItemsMobileTable';
+import ErrorAlert from '../../UI/Alerts/ErrorAlert';
+import LoadingButton from '../../UI/Button/LoadingButton';
 
 export default function InvoiceForm() {
   const [invoiceItems, setInvoiceItems] = useState<Array<InvoiceItem>>([]);
@@ -37,6 +39,8 @@ export default function InvoiceForm() {
   });
   const [invoiceCurrency, setInvoiceCurrency] = useState<string>('PLN');
   const [invoiceVatRate, setInvoiceVatRate] = useState<number>(0);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const changeItem = (value: string, index: number, key: string) => {
     let newItems = [...invoiceItems];
@@ -76,9 +80,8 @@ export default function InvoiceForm() {
     setInvoiceItems(newList);
   };
 
-  const generateInvoice = (e: any) => {
+  const generateInvoice = async (e: any) => {
     e.preventDefault();
-
     const invoiceData: Invoice = {
       invoiceNumber: invoiceNumber,
       soldDate: invoiceSoldDate,
@@ -89,8 +92,12 @@ export default function InvoiceForm() {
       vatRate: invoiceVatRate,
       currency: invoiceCurrency,
     };
-
-    downoladInvoiceFromData(invoiceData);
+    setLoading(true);
+    const error = await downoladInvoiceFromData(invoiceData);
+    setLoading(false);
+    if (error) {
+      setError('Nie udało się wygenerować faktury. Spróbuj ponownie poźniej.');
+    }
   };
 
   const changeCurrency = (value: string) => {
@@ -210,9 +217,13 @@ export default function InvoiceForm() {
             </div>
           </div>
         </div>
-        <button className='btn btn-success p-3 ps-5 pe-5'>
+        <LoadingButton
+          className='btn btn-success p-3 ps-5 pe-5 col-4'
+          loading={loading}
+        >
           Wygeneruj fakturę
-        </button>
+        </LoadingButton>
+        <ErrorAlert error={error} />
       </form>
     </div>
   );
