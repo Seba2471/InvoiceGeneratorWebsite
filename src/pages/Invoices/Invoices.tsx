@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { InvoiceShortInfo } from '../../types/InvoiceType';
 import InvoicesTable from '../../components/InvoicesTable/InvoicesTable';
 import invoiceServices from '../../services/InvoiceServices';
@@ -49,7 +49,7 @@ export default function Invoices() {
       theme: 'light',
     });
 
-  const getInvoices = async () => {
+  const getInvoices = useCallback(async () => {
     setLoading(true);
     const data = await invoiceServices.getUserInvoices(pagination.page);
     if (data.totalPages < pagination.page) {
@@ -61,24 +61,21 @@ export default function Invoices() {
         page: 1,
       });
     } else {
-      setPagination({
+      setPagination((x) => ({
         itemsFrom: data.itemsFrom,
         itemsTo: data.itemsTo,
         totalItemsCount: data.totalItemsCount,
         totalPages: data.totalPages,
-        page: pagination.page,
-      });
+        page: x.page,
+      }));
       setInvoices(data.items);
     }
     setLoading(false);
-  };
+  }, [setPagination, pagination.page]);
 
   useEffect(() => {
-    async function getUserInvoices() {
-      await getInvoices();
-    }
-    getUserInvoices();
-  }, []);
+    getInvoices();
+  }, [getInvoices]);
 
   const deleteInvoice = async (invoiceId: string) => {
     const deleteInvoice = async () => {
@@ -126,11 +123,8 @@ export default function Invoices() {
     } else {
       setSearchParams();
     }
-    async function getUserInvoices() {
-      await getInvoices();
-    }
-    getUserInvoices();
-  }, [pagination.page]);
+    getInvoices();
+  }, [getInvoices, setSearchParams, pagination.page]);
 
   const itemText = `${pagination.itemsFrom} - ${pagination.itemsTo} z
   ${pagination.totalItemsCount}`;
