@@ -1,5 +1,5 @@
 import React from 'react';
-import { InvoiceItem } from '../../../../types/Invoice';
+import { InvoiceItem } from '../../../../types/InvoiceType';
 import Select from '../../../UI/Form/Select';
 import MobileRow from './MobileRow/MobileRow';
 

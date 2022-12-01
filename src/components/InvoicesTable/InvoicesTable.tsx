@@ -1,22 +1,23 @@
 import React from 'react';
-import { InvoiceShortInfo } from '../../types/Invoice';
+import { InvoiceShortInfo } from '../../types/InvoiceType';
 import Actions from './Actions/Actions';
 
 export default function InvoicesTable(props: {
   invoices: Array<InvoiceShortInfo>;
   deleteInvoice: Function;
   downoladInvoice: Function;
+  loading: { loading: boolean; invoiceId: string };
 }) {
-  const deleteInvoice = (invoiceNumber: string) => {
-    props.deleteInvoice(invoiceNumber);
+  const deleteInvoice = (invoiceId: string) => {
+    props.deleteInvoice(invoiceId);
   };
 
-  const downoladInvoice = (invoiceNumber: string) => {
-    props.downoladInvoice(invoiceNumber);
+  const downoladInvoice = (invoiceId: string, invoiceNumber: string) => {
+    props.downoladInvoice(invoiceId, invoiceNumber);
   };
 
   return (
-    <table className='table mt-5'>
+    <table className='table'>
       <thead>
         <tr className='text-center'>
           <th className='col-1'> Nr faktury</th>
@@ -29,7 +30,7 @@ export default function InvoicesTable(props: {
       </thead>
       <tbody className='text-center align-middle'>
         {props.invoices.map((invoice) => (
-          <tr key={invoice.invoiceNumber}>
+          <tr key={invoice.id}>
             <th> {invoice.invoiceNumber}</th>
             <th> {invoice.issueDate} </th>
             <th> {invoice.sellerFullName} </th>
@@ -39,8 +40,12 @@ export default function InvoicesTable(props: {
             </th>
             <th>
               <Actions
-                onDelete={() => deleteInvoice(invoice.invoiceNumber)}
-                onDownolad={() => downoladInvoice(invoice.invoiceNumber)}
+                onDelete={() => deleteInvoice(invoice.id)}
+                onDownolad={() =>
+                  downoladInvoice(invoice.id, invoice.invoiceNumber)
+                }
+                loading={props.loading.invoiceId === invoice.id}
+                disabled={props.loading.loading}
               />
             </th>
           </tr>
