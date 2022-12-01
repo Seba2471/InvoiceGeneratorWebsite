@@ -10,6 +10,7 @@ export interface Invoice {
 }
 
 export interface InvoiceShortInfo {
+  id: string;
   invoiceNumber: string;
   issueDate: string;
   sellerFullName: string;

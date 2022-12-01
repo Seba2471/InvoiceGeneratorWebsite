@@ -1,5 +1,5 @@
 import axiosInstance from '../axios';
-import { Invoice } from '../types/Invoice';
+import { Invoice } from '../types/InvoiceType';
 
 export const downoladInvoiceFromData = async (data: Invoice) => {
   try {

@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { downoladInvoiceFromData } from '../../../helpers/downoladInvoiceFromData';
-import { Invoice, InvoiceItem, InvoicePerson } from '../../../types/Invoice';
+import {
+  Invoice,
+  InvoiceItem,
+  InvoicePerson,
+} from '../../../types/InvoiceType';
 import moment from 'moment';
 import InputText from '../../UI/Form/InputText';
 import InputDate from '../../UI/Form/InputDate';

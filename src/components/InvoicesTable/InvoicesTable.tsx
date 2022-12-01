@@ -1,5 +1,5 @@
 import React from 'react';
-import { InvoiceShortInfo } from '../../types/Invoice';
+import { InvoiceShortInfo } from '../../types/InvoiceType';
 import Actions from './Actions/Actions';
 
 export default function InvoicesTable(props: {
@@ -29,7 +29,7 @@ export default function InvoicesTable(props: {
       </thead>
       <tbody className='text-center align-middle'>
         {props.invoices.map((invoice) => (
-          <tr key={invoice.invoiceNumber}>
+          <tr key={invoice.id}>
             <th> {invoice.invoiceNumber}</th>
             <th> {invoice.issueDate} </th>
             <th> {invoice.sellerFullName} </th>

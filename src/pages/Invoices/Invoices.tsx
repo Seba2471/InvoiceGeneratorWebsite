@@ -1,29 +1,37 @@
 import React, { useEffect, useState } from 'react';
-import { InvoiceShortInfo } from '../../types/Invoice';
+import { InvoiceShortInfo } from '../../types/InvoiceType';
 import InvoicesTable from '../../components/InvoicesTable/InvoicesTable';
+import invoiceServices from '../../services/InvoiceServices';
+import Pagination from '../../components/UI/Pagination/Pagination';
+import { useSearchParams } from 'react-router-dom';
+import Spinner from '../../components/UI/Spinner/Spinner';
 
 export default function Invoices() {
+  let [searchParams, setSearchParams] = useSearchParams();
   const [invoices, setInvoices] = useState<Array<InvoiceShortInfo>>([]);
+  const [pagination, setPagination] = useState({
+    totalPages: 1,
+    page: Number(searchParams.get('page')) | 1,
+  });
+  const [loading, setLoading] = useState(false);
+
+  const getInvoices = async () => {
+    setLoading(true);
+    const data = await invoiceServices.getUserInvoices(pagination.page);
+    if (data.totalPages < pagination.page) {
+      setPagination({ totalPages: data.totalPages, page: 1 });
+    } else {
+      setPagination({ totalPages: data.totalPages, page: pagination.page });
+      setInvoices(data.items);
+    }
+    setLoading(false);
+  };
 
   useEffect(() => {
-    setInvoices([
-      {
-        invoiceNumber: '10/11/2022',
-        issueDate: '18-11-2022',
-        sellerFullName: 'Sebastian Siejak',
-        buyerFullName: 'Krzysztof Jerzyna',
-        amount: 50000,
-        currency: 'EURO',
-      },
-      {
-        invoiceNumber: '11/11/2022',
-        issueDate: '16-11-2022',
-        sellerFullName: 'Erdol Bob Budowniczy Sp. zoo',
-        buyerFullName: 'Piotr Siejak',
-        amount: 300,
-        currency: 'PLN',
-      },
-    ]);
+    async function getUserInvoices() {
+      await getInvoices();
+    }
+    getUserInvoices();
   }, []);
 
   const deleteInvoice = (invoiceNumber: string) => {
@@ -33,16 +41,45 @@ export default function Invoices() {
     console.log(`Downolad ${invoiceNumber}`);
   };
 
+  useEffect(() => {
+    if (pagination.page !== 1) {
+      setSearchParams({
+        page: pagination.page.toString(),
+      });
+    } else {
+      setSearchParams();
+    }
+    async function getUserInvoices() {
+      await getInvoices();
+    }
+    getUserInvoices();
+  }, [pagination.page]);
+
   return (
-    <div>
+    <div className='row'>
       <h4>Moje faktury </h4>
-      <InvoicesTable
-        invoices={invoices}
-        deleteInvoice={(invoiceNumber: string) => deleteInvoice(invoiceNumber)}
-        downoladInvoice={(invoiceNumber: string) =>
-          downoladInvoice(invoiceNumber)
-        }
-      />
+      {loading ? (
+        <div className='col-12 text-center'>
+          <Spinner />
+        </div>
+      ) : (
+        <>
+          <InvoicesTable
+            invoices={invoices}
+            deleteInvoice={(invoiceNumber: string) =>
+              deleteInvoice(invoiceNumber)
+            }
+            downoladInvoice={(invoiceNumber: string) =>
+              downoladInvoice(invoiceNumber)
+            }
+          />
+          <Pagination
+            page={pagination.page}
+            totalPages={pagination.totalPages}
+            setPage={(page: number) => setPagination({ ...pagination, page })}
+          />
+        </>
+      )}
     </div>
   );
 }
