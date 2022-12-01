@@ -6,17 +6,18 @@ export default function InvoicesTable(props: {
   invoices: Array<InvoiceShortInfo>;
   deleteInvoice: Function;
   downoladInvoice: Function;
+  loading: { loading: boolean; invoiceId: string };
 }) {
-  const deleteInvoice = (invoiceNumber: string) => {
-    props.deleteInvoice(invoiceNumber);
+  const deleteInvoice = (invoiceId: string) => {
+    props.deleteInvoice(invoiceId);
   };
 
-  const downoladInvoice = (invoiceNumber: string) => {
-    props.downoladInvoice(invoiceNumber);
+  const downoladInvoice = (invoiceId: string, invoiceNumber: string) => {
+    props.downoladInvoice(invoiceId, invoiceNumber);
   };
 
   return (
-    <table className='table mt-5'>
+    <table className='table'>
       <thead>
         <tr className='text-center'>
           <th className='col-1'> Nr faktury</th>
@@ -39,8 +40,12 @@ export default function InvoicesTable(props: {
             </th>
             <th>
               <Actions
-                onDelete={() => deleteInvoice(invoice.invoiceNumber)}
-                onDownolad={() => downoladInvoice(invoice.invoiceNumber)}
+                onDelete={() => deleteInvoice(invoice.id)}
+                onDownolad={() =>
+                  downoladInvoice(invoice.id, invoice.invoiceNumber)
+                }
+                loading={props.loading.invoiceId === invoice.id}
+                disabled={props.loading.loading}
               />
             </th>
           </tr>

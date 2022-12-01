@@ -5,6 +5,10 @@ import invoiceServices from '../../services/InvoiceServices';
 import Pagination from '../../components/UI/Pagination/Pagination';
 import { useSearchParams } from 'react-router-dom';
 import Spinner from '../../components/UI/Spinner/Spinner';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Invoices() {
   let [searchParams, setSearchParams] = useSearchParams();
@@ -12,16 +16,58 @@ export default function Invoices() {
   const [pagination, setPagination] = useState({
     totalPages: 1,
     page: Number(searchParams.get('page')) | 1,
+    itemsFrom: 1,
+    itemsTo: 10,
+    totalItemsCount: 10,
   });
   const [loading, setLoading] = useState(false);
+  const [downloadLoading, setDownloadLoading] = useState({
+    loading: false,
+    invoiceId: '',
+  });
+  const errorNotify = (message: string) =>
+    toast.error(message, {
+      position: 'top-right',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'light',
+    });
+
+  const successNotify = (message: string) =>
+    toast.success(message, {
+      position: 'top-right',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'light',
+    });
 
   const getInvoices = async () => {
     setLoading(true);
     const data = await invoiceServices.getUserInvoices(pagination.page);
     if (data.totalPages < pagination.page) {
-      setPagination({ totalPages: data.totalPages, page: 1 });
+      setPagination({
+        itemsFrom: data.itemsFrom,
+        itemsTo: data.itemsTo,
+        totalItemsCount: data.totalItemsCount,
+        totalPages: data.totalPages,
+        page: 1,
+      });
     } else {
-      setPagination({ totalPages: data.totalPages, page: pagination.page });
+      setPagination({
+        itemsFrom: data.itemsFrom,
+        itemsTo: data.itemsTo,
+        totalItemsCount: data.totalItemsCount,
+        totalPages: data.totalPages,
+        page: pagination.page,
+      });
       setInvoices(data.items);
     }
     setLoading(false);
@@ -34,11 +80,42 @@ export default function Invoices() {
     getUserInvoices();
   }, []);
 
-  const deleteInvoice = (invoiceNumber: string) => {
-    console.log(`Delete ${invoiceNumber}`);
+  const deleteInvoice = async (invoiceId: string) => {
+    const deleteInvoice = async () => {
+      const success = await invoiceServices.deleteUserInvoices(invoiceId);
+      console.log(success);
+      if (success) {
+        await getInvoices();
+        successNotify('Faktura została usunięta!');
+      } else {
+        errorNotify('Nie udało się usunąć faktury!');
+      }
+    };
+    confirmAlert({
+      message: 'Czy na pewno chcesz usunąć fakturę ?',
+      buttons: [
+        {
+          label: 'Tak',
+          onClick: async () => await deleteInvoice(),
+        },
+        {
+          label: 'Nie',
+        },
+      ],
+    });
   };
-  const downoladInvoice = (invoiceNumber: string) => {
-    console.log(`Downolad ${invoiceNumber}`);
+  const downoladInvoice = async (invoiceId: string, invoiceNumber: string) => {
+    setDownloadLoading({ loading: true, invoiceId });
+    const success = await invoiceServices.downoladInvoices(
+      invoiceId,
+      invoiceNumber,
+    );
+    if (success) {
+      successNotify('Faktura została pobrana!');
+    } else {
+      errorNotify('Nie udało się pobrać faktury!');
+    }
+    setDownloadLoading({ loading: false, invoiceId: '' });
   };
 
   useEffect(() => {
@@ -55,6 +132,9 @@ export default function Invoices() {
     getUserInvoices();
   }, [pagination.page]);
 
+  const itemText = `${pagination.itemsFrom} - ${pagination.itemsTo} z
+  ${pagination.totalItemsCount}`;
+
   return (
     <div className='row'>
       <h4>Moje faktury </h4>
@@ -64,14 +144,18 @@ export default function Invoices() {
         </div>
       ) : (
         <>
+          <div className='mt-3'>
+            <span> {itemText}</span>
+          </div>
           <InvoicesTable
             invoices={invoices}
-            deleteInvoice={(invoiceNumber: string) =>
-              deleteInvoice(invoiceNumber)
+            deleteInvoice={async (invoiceId: string) =>
+              await deleteInvoice(invoiceId)
             }
-            downoladInvoice={(invoiceNumber: string) =>
-              downoladInvoice(invoiceNumber)
+            downoladInvoice={(invoiceId: string, invoiceNumber: string) =>
+              downoladInvoice(invoiceId, invoiceNumber)
             }
+            loading={downloadLoading}
           />
           <Pagination
             page={pagination.page}
@@ -80,6 +164,7 @@ export default function Invoices() {
           />
         </>
       )}
+      <ToastContainer />
     </div>
   );
 }
