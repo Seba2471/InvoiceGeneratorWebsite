@@ -2,6 +2,7 @@ export type availableRules = {
   required: Function;
   email: Function;
   min: Function;
+  number: Function;
 };
 
 export const validate: availableRules = {
@@ -15,6 +16,9 @@ export const validate: availableRules = {
     return value.length >= data.length
       ? ''
       : 'Minimalna długość hasła to 6 znaków';
+  },
+  number(value: any) {
+    return !isNaN(Number(value.toString())) ? '' : 'Wartości musi być liczbą';
   },
 };
 

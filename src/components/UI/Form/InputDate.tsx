@@ -5,6 +5,7 @@ type PropsTypes = {
   className?: string;
   onChange: Function;
   error?: string;
+  showError?: boolean;
   value: string;
 };
 
@@ -17,7 +18,9 @@ export default function InputDate(props: PropsTypes) {
         value={props.value}
         onChange={(e) => props.onChange(e.target.value)}
         type='date'
-        className={`form-control ${props.error ? 'is-invalid' : ''}`}
+        className={`form-control ${
+          props.error && props.showError ? 'is-invalid' : ''
+        }`}
       />
       <div className='invalid-feedback'>{props.error}</div>
     </div>

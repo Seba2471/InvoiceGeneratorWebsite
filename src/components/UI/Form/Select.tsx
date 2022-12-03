@@ -7,6 +7,7 @@ type PropsTypes = {
   value: string | number;
   onChange: Function;
   error?: string;
+  showError?: boolean;
 };
 
 type OptionType = {
@@ -23,7 +24,9 @@ export default function Select(props: PropsTypes) {
       <select
         value={props.value}
         onChange={(e) => props.onChange(e.target.value)}
-        className={`form-control ${props.error ? 'is-invalid' : ''}`}
+        className={`form-control ${
+          props.error && props.showError ? 'is-invalid' : ''
+        }`}
       >
         {props.options.map((option) => (
           <option value={option.value} key={option.value}>

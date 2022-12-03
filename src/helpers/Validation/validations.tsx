@@ -1,4 +1,4 @@
-import { ruleObject } from './../../types/FormProperty';
+import { ruleObject } from '../../types/FormProperty';
 import { validate, availableRules } from './availableValidationRules';
 
 export function validateRules(rules: Array<string | ruleObject>, value: any) {

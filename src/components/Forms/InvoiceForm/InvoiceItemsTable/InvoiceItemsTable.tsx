@@ -1,13 +1,14 @@
 import React from 'react';
-import { InvoiceItem } from '../../../../types/InvoiceType';
 import Row from './Row/Row';
 import Select from '../../../UI/Form/Select';
+import { InvoiceFormItemType } from '../InvoiceFormType';
+import { FormProperty } from '../../../../types/FormProperty';
 
 type PropsTypes = {
   className?: string;
-  items: Array<InvoiceItem>;
-  vatRate: number;
-  currency: string;
+  items: Array<InvoiceFormItemType>;
+  vatRate: FormProperty<number>;
+  currency: FormProperty<string>;
   changeItem: Function;
   addItem: Function;
   removeItem: Function;
@@ -73,7 +74,9 @@ export default function InvoiceItemsTable(props: PropsTypes) {
               { value: 'PLN', label: 'PLN' },
             ]}
             label='Waluta'
-            value={props.currency}
+            value={props.currency.value}
+            error={props.currency.error}
+            showError={props.currency.showError}
             onChange={(value: string) => props.changeCurrency(value)}
           />
         </div>
@@ -85,7 +88,9 @@ export default function InvoiceItemsTable(props: PropsTypes) {
               { value: 23, label: '23%' },
             ]}
             label='VAT [%]'
-            value={props.vatRate}
+            value={props.vatRate.value}
+            error={props.vatRate.error}
+            showError={props.vatRate.showError}
             onChange={(value: number) => props.changeVatRate(value)}
           />
         </div>

@@ -1,10 +1,10 @@
 import React from 'react';
-import { InvoiceItem } from '../../../../types/InvoiceType';
 import Select from '../../../UI/Form/Select';
+import { InvoiceFormItemType } from '../InvoiceFormType';
 import MobileRow from './MobileRow/MobileRow';
 
 type PropsTypes = {
-  items: Array<InvoiceItem>;
+  items: Array<InvoiceFormItemType>;
   currency: string;
   vatRate: number;
   changeItem: Function;
@@ -23,9 +23,9 @@ export default function InvoiceItemsMobileTable(props: PropsTypes) {
           <MobileRow
             key={index}
             index={index}
-            name={row.name}
-            quantity={row.quantity}
-            cost={row.cost}
+            name={row.name.value}
+            quantity={row.quantity.value}
+            cost={row.cost.value}
             onChange={(e: string, key: string) =>
               props.changeItem(e, index, key)
             }

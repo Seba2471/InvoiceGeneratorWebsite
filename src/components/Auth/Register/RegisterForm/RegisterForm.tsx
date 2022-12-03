@@ -9,9 +9,9 @@ import InputPassword from '../../../UI/Form/InputPassword';
 import styles from './RegisterForm.module.css';
 
 type RegisterFormTypes = {
-  email: FormProperty;
-  password: FormProperty;
-  confirmPassword: FormProperty;
+  email: FormProperty<string>;
+  password: FormProperty<string>;
+  confirmPassword: FormProperty<string>;
 };
 
 export default function RegisterForm(props: { onRegister: Function }) {

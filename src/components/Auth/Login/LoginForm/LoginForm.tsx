@@ -9,8 +9,8 @@ import clearFormFields from '../../../../helpers/clearFormFields';
 import ErrorFeedback from '../../../UI/Form/ErrorFeedback';
 
 type LoginFormTypes = {
-  email: FormProperty;
-  password: FormProperty;
+  email: FormProperty<string>;
+  password: FormProperty<string>;
 };
 
 export default function LoginForm(props: { onLogin: Function }) {

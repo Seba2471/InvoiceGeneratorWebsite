@@ -5,8 +5,8 @@ export type ruleObject = {
   length?: number;
 };
 
-export type FormProperty = {
-  value: string;
+export type FormProperty<T> = {
+  value: T;
   error: string;
   showError: boolean;
   rules: Array<keyof availableRules | ruleObject>;

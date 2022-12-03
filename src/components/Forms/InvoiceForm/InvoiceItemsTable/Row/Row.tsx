@@ -1,12 +1,13 @@
 import React from 'react';
+import { FormProperty } from '../../../../../types/FormProperty';
 import InputText from '../../../../UI/Form/InputText';
 
 type PropsTypes = {
   index: number;
-  name: string;
+  name: FormProperty<string>;
   onChange: Function;
-  quantity: number;
-  cost: number;
+  quantity: FormProperty<number>;
+  cost: FormProperty<number>;
   onRemove: Function;
 };
 
@@ -22,7 +23,9 @@ export default function Row(props: PropsTypes) {
       <th scope='col'>
         <InputText
           label=''
-          value={props.name}
+          value={props.name.value}
+          error={props.name.error}
+          showError={props.name.showError}
           onChange={(value: string) => props.onChange(value, 'name')}
         />
       </th>
@@ -30,7 +33,9 @@ export default function Row(props: PropsTypes) {
         <InputText
           label=''
           type='number'
-          value={props.quantity.toString()}
+          value={props.quantity.value.toString()}
+          error={props.quantity.error}
+          showError={props.quantity.showError}
           onChange={(value: number) => props.onChange(value, 'quantity')}
         />
       </th>
@@ -38,7 +43,9 @@ export default function Row(props: PropsTypes) {
         <InputText
           label=''
           type='number'
-          value={props.cost.toString()}
+          value={props.cost.value.toString()}
+          error={props.cost.error}
+          showError={props.cost.showError}
           onChange={(value: number) => props.onChange(value, 'cost')}
         />
       </th>

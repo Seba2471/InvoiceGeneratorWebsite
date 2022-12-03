@@ -1,4 +1,6 @@
 import axiosInstance from '../axios';
+import { InvoiceFormType } from '../components/Forms/InvoiceForm/InvoiceFormType';
+import mapInvoiceFormToInvoice from '../helpers/mappers/mapInvoiceFormToInvoice';
 
 const downoladInvoice = (data: Blob, fileName: string) => {
   const href = URL.createObjectURL(data);
@@ -45,6 +47,18 @@ const invoiceServices = {
         },
       );
       downoladInvoice(response.data, invoiceNumber);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  },
+  generateInvoice: async (formData: InvoiceFormType) => {
+    try {
+      const data = mapInvoiceFormToInvoice(formData);
+      const response = await axiosInstance.post('invoice', data, {
+        responseType: 'blob',
+      });
+      downoladInvoice(response.data, data.invoiceNumber);
       return true;
     } catch (e) {
       return false;

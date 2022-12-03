@@ -6,6 +6,7 @@ type Props = {
   value: string;
   type: string;
   error?: string;
+  showError: boolean;
   onChange: Function;
 };
 
@@ -18,7 +19,9 @@ function InputText(props: Props) {
         value={props.value}
         onChange={(e) => props.onChange(e.target.value)}
         type={props.type}
-        className={`form-control ${props.error ? 'is-invalid' : ''}`}
+        className={`form-control ${
+          props.error && props.showError ? 'is-invalid' : ''
+        }`}
       />
       <div className='invalid-feedback'>{props.error}</div>
     </div>
