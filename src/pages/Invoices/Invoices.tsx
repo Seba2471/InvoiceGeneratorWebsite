@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { InvoiceShortInfo } from '../../types/InvoiceType';
+import { InvoiceShortInfo } from '../../types/Invoice/InvoiceType';
 import InvoicesTable from '../../components/InvoicesTable/InvoicesTable';
 import invoiceServices from '../../services/InvoiceServices';
 import Pagination from '../../components/UI/Pagination/Pagination';

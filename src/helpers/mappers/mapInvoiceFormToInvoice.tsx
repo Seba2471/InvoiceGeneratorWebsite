@@ -1,5 +1,5 @@
-import { InvoiceFormType } from '../../components/Forms/InvoiceForm/InvoiceFormType';
-import { Invoice } from '../../types/InvoiceType';
+import { InvoiceFormType } from '../../types/Invoice/Form/InvoiceFormType';
+import { Invoice } from '../../types/Invoice/InvoiceType';
 import mapInvoiceFormItemToInvoiceItem from './mapInvoiceFormItemToInvoiceItem';
 
 const mapInvoiceFormToInvoice = (form: InvoiceFormType) => {

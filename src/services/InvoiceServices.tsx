@@ -1,5 +1,5 @@
 import axiosInstance from '../axios';
-import { InvoiceFormType } from '../components/Forms/InvoiceForm/InvoiceFormType';
+import { InvoiceFormType } from '../types/Invoice/Form/InvoiceFormType';
 import mapInvoiceFormToInvoice from '../helpers/mappers/mapInvoiceFormToInvoice';
 
 const downoladInvoice = (data: Blob, fileName: string) => {

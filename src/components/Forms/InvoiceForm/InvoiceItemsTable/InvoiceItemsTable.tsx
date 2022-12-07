@@ -1,12 +1,15 @@
 import React from 'react';
 import Row from './Row/Row';
 import Select from '../../../UI/Form/Select';
-import { InvoiceFormItemType } from '../InvoiceFormType';
+import { InvoiceFormItemType } from '../../../../types/Invoice/Form/InvoiceFormType';
 import { FormProperty } from '../../../../types/FormProperty';
+import ErrorAlert from '../../../UI/Alerts/ErrorAlert';
 
 type PropsTypes = {
   className?: string;
   items: Array<InvoiceFormItemType>;
+  error: string;
+  showError: boolean;
   vatRate: FormProperty<number>;
   currency: FormProperty<string>;
   changeItem: Function;
@@ -59,6 +62,7 @@ export default function InvoiceItemsTable(props: PropsTypes) {
         </tbody>
       </table>
       <div className='row'>
+        <ErrorAlert error={props.error} />
         <button
           className='btn btn-success col-6 col-md-3'
           onClick={(e) => addItem(e)}

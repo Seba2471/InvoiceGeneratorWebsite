@@ -1,6 +1,6 @@
 import React from 'react';
 import Select from '../../../UI/Form/Select';
-import { InvoiceFormItemType } from '../InvoiceFormType';
+import { InvoiceFormItemType } from '../../../../types/Invoice/Form/InvoiceFormType';
 import MobileRow from './MobileRow/MobileRow';
 
 type PropsTypes = {

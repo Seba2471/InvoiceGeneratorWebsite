@@ -26,5 +26,5 @@ export type InvoiceFormType = {
   buyer: InvoiceFormPersonType;
   vatRate: FormProperty<number>;
   currency: FormProperty<string>;
-  invoiceItems: Array<InvoiceFormItemType>;
+  invoiceItems: FormProperty<Array<InvoiceFormItemType>>;
 };

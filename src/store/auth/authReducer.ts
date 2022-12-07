@@ -1,5 +1,5 @@
 import type { Action } from './actions';
-import type { User } from '../../types/User';
+import type { User } from '../../types/Auth/User';
 
 export type Store = {
   user: User;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { InvoiceShortInfo } from '../../types/InvoiceType';
+import { InvoiceShortInfo } from '../../types/Invoice/InvoiceType';
 import Actions from './Actions/Actions';
 
 export default function InvoicesTable(props: {

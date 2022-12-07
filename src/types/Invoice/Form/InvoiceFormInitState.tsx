@@ -6,7 +6,7 @@ import {
   InvoiceFormType,
 } from './InvoiceFormType';
 
-const initPerson: InvoiceFormPersonType = {
+export const initPerson: InvoiceFormPersonType = {
   fullName: {
     value: '',
     error: '',
@@ -41,14 +41,14 @@ const initPerson: InvoiceFormPersonType = {
   },
 };
 
-const initString: FormProperty<string> = {
+export const initString: FormProperty<string> = {
   value: '',
   error: '',
   showError: false,
   rules: ['required'],
 };
 
-const initInvoiceFormValue: InvoiceFormType = {
+export const initInvoiceFormValue: InvoiceFormType = {
   invoiceNumber: initString,
   issueDate: {
     value: moment().format('YYYY-MM-DD'),
@@ -70,8 +70,18 @@ const initInvoiceFormValue: InvoiceFormType = {
     showError: false,
     rules: ['required'],
   },
-  currency: initString,
-  invoiceItems: [],
+  currency: {
+    value: 'PLN',
+    error: '',
+    showError: false,
+    rules: ['required'],
+  },
+  invoiceItems: {
+    value: [],
+    error: '',
+    showError: false,
+    rules: [{ rule: 'notEmptyArray', message: 'Nie dodałeś przedmiotów' }],
+  },
 };
 
 export const emptyInvoiceFormItem: InvoiceFormItemType = {
@@ -94,5 +104,3 @@ export const emptyInvoiceFormItem: InvoiceFormItemType = {
     rules: ['required', 'number'],
   },
 };
-
-export default initInvoiceFormValue;

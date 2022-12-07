@@ -3,11 +3,12 @@ export type availableRules = {
   email: Function;
   min: Function;
   number: Function;
+  notEmptyArray: Function;
 };
 
 export const validate: availableRules = {
   required(value: any) {
-    return value ? '' : 'Pole wymagane';
+    return value !== '' ? '' : 'Pole wymagane';
   },
   email(value: string) {
     return validateEmail(value) ? '' : 'Email jest nie poprawny';
@@ -19,6 +20,9 @@ export const validate: availableRules = {
   },
   number(value: any) {
     return !isNaN(Number(value.toString())) ? '' : 'Wartości musi być liczbą';
+  },
+  notEmptyArray(value: Array<any>, data: { message: string }) {
+    return value.length > 0 ? '' : data.message;
   },
 };
 

@@ -4,23 +4,29 @@ import InputDate from '../../UI/Form/InputDate';
 import PersonForm from './PersonForm/PersonForm';
 import InvoiceItemsTable from './InvoiceItemsTable/InvoiceItemsTable';
 import InvoiceItemsMobileTable from './InvoiceItemsMobileTable/InvoiceItemsMobileTable';
-import ErrorAlert from '../../UI/Alerts/ErrorAlert';
 import LoadingButton from '../../UI/Button/LoadingButton';
-import initInvoiceFormValue, {
+import {
+  initInvoiceFormValue,
   emptyInvoiceFormItem,
-} from './InvoiceFormInitState';
+} from '../../../types/Invoice/Form/InvoiceFormInitState';
 import {
   InvoiceFormItemType,
   InvoiceFormPersonAddresType,
   InvoiceFormPersonType,
   InvoiceFormType,
-} from './InvoiceFormType';
+} from '../../../types/Invoice/Form/InvoiceFormType';
 import changeFieldValueInObject from '../../../helpers/changeFieldValueInObject';
+import validateInvoiceForm from '../../../helpers/Validation/validInvoiceForm';
 import invoiceServices from '../../../services/InvoiceServices';
+import { validateRules } from '../../../helpers/Validation/validations';
+import errorNotify from '../../../helpers/notify/errorNotify';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import successNotify from '../../../helpers/notify/successNotify';
+import clearInvoiceForm from '../../../helpers/clearInvoiceForm';
 
 export default function InvoiceForm() {
   const [form, setForm] = useState<InvoiceFormType>(initInvoiceFormValue);
-  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
   const changeItem = (
@@ -28,17 +34,28 @@ export default function InvoiceForm() {
     index: number,
     key: keyof InvoiceFormItemType,
   ) => {
-    let newItems = [...form.invoiceItems];
+    const error = validateRules(
+      form.invoiceItems.rules,
+      form.invoiceItems.value,
+    );
 
-    let item = form.invoiceItems[index];
+    let newItems = [...form.invoiceItems.value];
 
-    console.log(item);
+    let item = form.invoiceItems.value[index];
 
     const newItem = changeFieldValueInObject(item, value, key);
 
     newItems[index] = newItem;
 
-    setForm({ ...form, invoiceItems: newItems });
+    setForm({
+      ...form,
+      invoiceItems: {
+        ...form.invoiceItems,
+        value: newItems,
+        error,
+        showError: true,
+      },
+    });
   };
 
   const addItem = (e: Event) => {
@@ -46,24 +63,51 @@ export default function InvoiceForm() {
       e.preventDefault();
     }
 
-    const newArray = [...form.invoiceItems, emptyInvoiceFormItem];
+    const newArray = [...form.invoiceItems.value, emptyInvoiceFormItem];
 
-    setForm({ ...form, invoiceItems: newArray });
+    const error = validateRules(form.invoiceItems.rules, newArray);
+    setForm({
+      ...form,
+      invoiceItems: {
+        ...form.invoiceItems,
+        value: newArray,
+        error,
+        showError: true,
+      },
+    });
   };
 
   const removeItem = (index: number) => {
-    const newArray = [...form.invoiceItems];
+    const newArray = [...form.invoiceItems.value];
     newArray.splice(index, 1);
-    setForm({ ...form, invoiceItems: newArray });
+    setForm({
+      ...form,
+      invoiceItems: {
+        ...form.invoiceItems,
+        value: newArray,
+      },
+    });
   };
 
   const generateInvoice = async (e: any) => {
     e.preventDefault();
-    setLoading(true);
-    const error = await invoiceServices.generateInvoice(form);
-    setLoading(false);
-    if (error) {
-      setError('Nie udało się wygenerować faktury. Spróbuj ponownie poźniej.');
+    const validateResult = validateInvoiceForm(form);
+    if (!validateResult.isValid) {
+      errorNotify('Nie poprawne dane do wygenerowania faktury');
+      setForm(validateResult.data);
+    } else {
+      setLoading(true);
+      const successGenerate = await invoiceServices.generateInvoice(form);
+      setLoading(false);
+      if (successGenerate) {
+        successNotify('Faktura została wygenerowana');
+        console.log(clearInvoiceForm());
+        setForm({ ...initInvoiceFormValue });
+      } else {
+        errorNotify(
+          'Nie udało się wygenerować faktury. Spróbuj ponownie poźniej.',
+        );
+      }
     }
   };
 
@@ -85,9 +129,6 @@ export default function InvoiceForm() {
       value,
       personFieldName,
     );
-
-    console.log(newPerson);
-
     setForm({
       ...form,
       [fieldName]: { ...newPerson },
@@ -194,7 +235,9 @@ export default function InvoiceForm() {
           <div className='col-md-12'>
             <div className='d-none d-md-block'>
               <InvoiceItemsTable
-                items={form.invoiceItems}
+                items={form.invoiceItems.value}
+                error={form.invoiceItems.error}
+                showError={form.invoiceItems.showError}
                 vatRate={form.vatRate}
                 currency={form.currency}
                 changeItem={changeItem}
@@ -210,7 +253,7 @@ export default function InvoiceForm() {
             </div>
             <div className='d-md-none'>
               <InvoiceItemsMobileTable
-                items={form.invoiceItems}
+                items={form.invoiceItems.value}
                 vatRate={form.vatRate.value}
                 currency={form.currency.value}
                 changeItem={changeItem}
@@ -232,8 +275,8 @@ export default function InvoiceForm() {
         >
           Wygeneruj fakturę
         </LoadingButton>
-        <ErrorAlert error={error} />
       </form>
+      <ToastContainer />
     </div>
   );
 }
