@@ -18,18 +18,6 @@ const downoladInvoice = (data: Blob, fileName: string) => {
 };
 
 const invoiceServices = {
-  getUserInvoices: async (page: number) => {
-    const params = new URLSearchParams({
-      pageSize: '10',
-      pageNumber: page.toString(),
-    });
-
-    const url = 'invoice?' + params;
-
-    const response = await axiosInstance.get(url);
-
-    return await response.data;
-  },
   deleteUserInvoices: async (invoiceId: string) => {
     try {
       await axiosInstance.delete(`invoice/${invoiceId}`);
