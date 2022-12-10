@@ -136,7 +136,7 @@ export default function Invoices() {
 
   const dataTabel = (
     <>
-      <div className='mt-3'>
+      <div className='mt-3 col-12'>
         <span> {itemText}</span>
       </div>
       <InvoicesTable

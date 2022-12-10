@@ -233,7 +233,7 @@ export default function InvoiceForm() {
             />
           </div>
           <div className='col-md-12'>
-            <div className='d-none d-md-block'>
+            <div className='d-none d-md-block m-3'>
               <InvoiceItemsTable
                 items={form.invoiceItems.value}
                 error={form.invoiceItems.error}
@@ -270,7 +270,7 @@ export default function InvoiceForm() {
           </div>
         </div>
         <LoadingButton
-          className='btn btn-success p-3 ps-5 pe-5 col-4'
+          className='btn btn-success p-3 ps-5 pe-5 col-12 col-md-6 offset-md-3 col-lg-4 offset-lg-0 mt-4'
           loading={loading}
         >
           Wygeneruj fakturę
