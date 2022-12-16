@@ -13,7 +13,7 @@ type PropsTypes = {
 };
 
 export default function Button(props: PropsTypes) {
-  const className = props.className;
+  const className = props.className || '';
   const loading = props.loading || false;
   const buttonStyles = {
     backgroundColor: props.backgroundColor || '#85b6ff',
@@ -25,9 +25,9 @@ export default function Button(props: PropsTypes) {
 
   const spinner = (
     <span
-      className='spinner-border spinner-border-sm'
-      role='status'
-      aria-hidden='true'
+      className="spinner-border spinner-border-sm"
+      role="status"
+      aria-hidden="true"
     />
   );
 

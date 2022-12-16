@@ -92,25 +92,27 @@ export default function LoginForm(props: { onLogin: Function }) {
   };
 
   return (
-    <form className='main' onSubmit={(e) => submitForm(e)}>
+    <form className="main" onSubmit={(e) => submitForm(e)}>
       <h1 className={`text-center ${styles.header}`}> Logowanie </h1>
       <InputEmail
-        placeHolder='Email'
+        placeHolder="Email"
         value={form.email.value}
         onChange={(value: string) => changeHandler(value, 'email')}
         error={form.email.error}
         showError={form.email.showError}
       />
       <InputPassword
-        placeHolder='Hasło'
+        placeHolder="Hasło"
         value={form.password.value}
         onChange={(value: string) => changeHandler(value, 'password')}
         error={form.password.error}
         showError={form.password.showError}
       />
       <ErrorFeedback error={loginError} />
-      <div className='mt-2 ms-2'>Zapomniałem hasła</div>
-      <Button loading={loading}>Zaloguj się</Button>
+      <div className="mt-2 ms-2">Zapomniałem hasła</div>
+      <Button className={'p-2'} padding={'0'} loading={loading}>
+        Zaloguj się
+      </Button>
     </form>
   );
 }

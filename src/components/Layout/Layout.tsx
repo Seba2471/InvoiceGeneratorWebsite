@@ -21,7 +21,7 @@ export default function Layout(props: PropsTypes) {
             <div>{props.menu} </div>
           </>
         ) : null}
-        <div className={`${styles.content} p-5`}>{props.content}</div>
+        <div className={`${styles.content}`}>{props.content}</div>
       </div>
       {/* <div>{props.footer} </div> */}
     </div>

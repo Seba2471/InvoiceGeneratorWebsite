@@ -167,7 +167,7 @@ export default function Invoices() {
   );
 
   return (
-    <div className="row">
+    <div className="row p-5">
       <h4>Moje faktury </h4>
       {loading ? (
         spinner
