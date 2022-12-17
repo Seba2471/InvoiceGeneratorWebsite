@@ -3,14 +3,14 @@
   border-radius: 45px 45px;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 767px) {
   .main {
-    height: 15vh;
-    border-radius: 45px 45px;
+    height: 8vh;
+    border-radius: 0 0;
   }
 }
 
-@media only screen and (min-width: 769px) {
+@media only screen and (min-width: 768px) {
   .main {
     height: 12vh;
     border-radius: 45px 45px;
