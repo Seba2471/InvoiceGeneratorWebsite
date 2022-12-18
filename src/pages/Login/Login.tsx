@@ -29,18 +29,21 @@ export default function Login() {
   };
 
   return (
-    <div className='row' style={{ minHeight: '100vh' }}>
-      <div className='col-6 align-self-center'>
-        <img className={`img-fluid ${styles.logo}`} src={logo} alt='logo' />
+    <div
+      className="row ps-3 pe-3 ps-md-5 pe-md-0 mb-5"
+      style={{ minHeight: '100vh' }}
+    >
+      <div className="col-12 col-md-8 align-self-center">
+        <img className={`img-fluid ${styles.logo}`} src={logo} alt="logo" />
 
-        <div className='col-8 offset-2'>
+        <div className="col-12 col-lg-8 offset-lg-2 col-xl-6 offset-xl-3">
           <LoginForm
             onLogin={(email: string, password: string) =>
               login(email, password)
             }
           />
-          <div className='mt-5'>
-            <h4 className='text-center'> Nie masz jeszcze konta ? </h4>
+          <div className="mt-5">
+            <h5 className="text-center"> Nie masz jeszcze konta ? </h5>
             <h5
               onClick={() => navigate('/register')}
               className={`text-center ${styles.registerLink}`}
@@ -50,7 +53,9 @@ export default function Login() {
           </div>
         </div>
       </div>
-      <RightBar />
+      <div className="d-none d-md-flex col-md-4">
+        <RightBar className="rounded-right" />
+      </div>
     </div>
   );
 }

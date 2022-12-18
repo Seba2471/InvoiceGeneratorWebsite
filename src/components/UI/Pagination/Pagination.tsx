@@ -1,6 +1,9 @@
-import { totalmem } from 'os';
 import React from 'react';
 import PageItem from './PageItem';
+import {
+  HiOutlineChevronDoubleLeft,
+  HiOutlineChevronDoubleRight,
+} from 'react-icons/hi';
 
 type PropsTypes = {
   page: number;
@@ -14,7 +17,9 @@ export default function Pagination(props: PropsTypes) {
       className={`page-item ${props.page === 1 ? 'disabled' : ''}`}
       onClick={() => (props.page > 1 ? props.setPage(props.page - 1) : null)}
     >
-      <span className='page-link'>Poprzednia</span>
+      <span className="page-link">
+        <HiOutlineChevronDoubleLeft />
+      </span>
     </li>
   );
 
@@ -29,7 +34,9 @@ export default function Pagination(props: PropsTypes) {
           : null
       }
     >
-      <span className='page-link'>Następna</span>
+      <span className="page-link">
+        <HiOutlineChevronDoubleRight />
+      </span>
     </li>
   );
 
@@ -78,12 +85,12 @@ export default function Pagination(props: PropsTypes) {
   };
 
   return (
-    <nav aria-label='Page navigation'>
-      <ul className='pagination'>
+    <nav aria-label="Page navigation m-0">
+      <ul className="pagination pagination-sm">
         {previusButton}
         {previusPages()}
         <PageItem
-          className='active'
+          className="active"
           setPage={props.setPage}
           page={props.page}
         />

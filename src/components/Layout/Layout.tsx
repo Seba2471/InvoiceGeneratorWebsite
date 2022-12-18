@@ -17,11 +17,11 @@ export default function Layout(props: PropsTypes) {
       <div>
         {state.isAuthenticated ? (
           <>
-            <div>{props.header}</div>
-            <div>{props.menu} </div>
+            <div className="mt-2">{props.header}</div>
+            <div className="mt-0">{props.menu} </div>
           </>
         ) : null}
-        <div className={`${styles.content} p-5`}>{props.content}</div>
+        <div className={`mt-md-3 mt-2 ${styles.content}`}>{props.content}</div>
       </div>
       {/* <div>{props.footer} </div> */}
     </div>

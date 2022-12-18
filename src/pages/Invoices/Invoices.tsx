@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { InvoiceShortInfo } from '../../types/Invoice/InvoiceType';
-import InvoicesTable from '../../components/InvoicesTable/InvoicesTable';
+import InvoicesTable from '../../components/Invoices/InvoicesTable/InvoicesTable';
 import invoiceServices from '../../services/InvoiceServices';
 import Pagination from '../../components/UI/Pagination/Pagination';
 import { useSearchParams } from 'react-router-dom';
@@ -35,46 +35,49 @@ export default function Invoices() {
     message: '',
   });
 
-  const fetchInvoice = useCallback((page: string) => {
-    const controller = new AbortController();
-    setLoading(true);
-    const params = new URLSearchParams({
-      pageSize: '10',
-      pageNumber: page,
-    });
+  const fetchInvoice = useCallback(
+    (page: string) => {
+      const controller = new AbortController();
+      setLoading(true);
+      const params = new URLSearchParams({
+        pageSize: '10',
+        pageNumber: page,
+      });
 
-    const url = 'invoice?' + params;
-    axiosGet(url, controller.signal).then((response) => {
-      if (response?.data) {
-        if (response.data.totalPages < pagination.page) {
-          setPagination({
-            itemsFrom: response.data.itemsFrom,
-            itemsTo: response.data.itemsTo,
-            totalItemsCount: response.data.totalItemsCount,
-            totalPages: response.data.totalPages,
-            page: 1,
-          });
+      const url = 'invoice?' + params;
+      axiosGet(url, controller.signal).then((response) => {
+        if (response?.data) {
+          if (response.data.totalPages < pagination.page) {
+            setPagination({
+              itemsFrom: response.data.itemsFrom,
+              itemsTo: response.data.itemsTo,
+              totalItemsCount: response.data.totalItemsCount,
+              totalPages: response.data.totalPages,
+              page: 1,
+            });
+          } else {
+            setPagination((x) => ({
+              itemsFrom: response.data.itemsFrom,
+              itemsTo: response.data.itemsTo,
+              totalItemsCount: response.data.totalItemsCount,
+              totalPages: response.data.totalPages,
+              page: x.page,
+            }));
+          }
+          setInvoices(response.data.items);
         } else {
-          setPagination((x) => ({
-            itemsFrom: response.data.itemsFrom,
-            itemsTo: response.data.itemsTo,
-            totalItemsCount: response.data.totalItemsCount,
-            totalPages: response.data.totalPages,
-            page: x.page,
-          }));
+          if (response.error !== 'Request was canceled') {
+            setError({ show: true, message: 'Nie udało się pobrać faktur!' });
+          }
         }
-        setInvoices(response.data.items);
-      } else {
-        if (response.error !== 'Request was canceled') {
-          setError({ show: true, message: 'Nie udało się pobrać faktur!' });
-        }
-      }
-    });
-    setLoading(false);
-    return () => {
-      controller.abort();
-    };
-  }, []);
+      });
+      setLoading(false);
+      return () => {
+        controller.abort();
+      };
+    },
+    [pagination.page],
+  );
 
   useEffect(() => {
     return fetchInvoice('1');
@@ -83,9 +86,8 @@ export default function Invoices() {
   const deleteInvoice = async (invoiceId: string) => {
     const deleteInvoice = async () => {
       const success = await invoiceServices.deleteUserInvoices(invoiceId);
-      console.log(success);
       if (success) {
-        // await getInvoices();
+        fetchInvoice(pagination.page.toString());
         successNotify('Faktura została usunięta!');
       } else {
         errorNotify('Nie udało się usunąć faktury!');
@@ -129,6 +131,7 @@ export default function Invoices() {
     if (invoices.length !== 0) {
       return fetchInvoice(pagination.page.toString());
     }
+    // eslint-disable-next-line
   }, [fetchInvoice, setSearchParams, pagination.page]);
 
   const itemText = `${pagination.itemsFrom} - ${pagination.itemsTo} z
@@ -136,7 +139,7 @@ export default function Invoices() {
 
   const dataTabel = (
     <>
-      <div className='mt-3 col-12'>
+      <div className="mt-3 col-12">
         <span> {itemText}</span>
       </div>
       <InvoicesTable
@@ -158,13 +161,13 @@ export default function Invoices() {
   );
 
   const spinner = (
-    <div className='col-12 text-center'>
+    <div className="col-12 text-center">
       <Spinner />
     </div>
   );
 
   return (
-    <div className='row'>
+    <div className="row p-5">
       <h4>Moje faktury </h4>
       {loading ? (
         spinner
