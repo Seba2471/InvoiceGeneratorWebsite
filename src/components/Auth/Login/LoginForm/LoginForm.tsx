@@ -67,7 +67,7 @@ export default function LoginForm(props: { onLogin: Function }) {
       const error = await props.onLogin(form.email.value, form.password.value);
       setLoading(false);
 
-      if (error.LoginFailed) {
+      if (error?.LoginFailed) {
         setLoginError('Nieprawidłowy login lub hasło');
         clearForm({ clearEmail: false });
       } else {
