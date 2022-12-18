@@ -4,7 +4,7 @@ import LoginForm from '../../components/Auth/Login/LoginForm/LoginForm';
 import styles from './Login.module.css';
 import { useNavigate } from 'react-router-dom';
 import RightBar from '../../components/Auth/RightBar/RightBar';
-import axiosInstance from '../../axios';
+import { axiosInstance } from '../../axios';
 import useAuth from '../../hooks/useAuth';
 
 export default function Login() {

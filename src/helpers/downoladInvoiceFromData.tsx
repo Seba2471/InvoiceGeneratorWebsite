@@ -1,9 +1,9 @@
-import axiosInstance from '../axios';
+import { axiosAuthInstance } from '../axios';
 import { Invoice } from '../types/Invoice/InvoiceType';
 
 export const downoladInvoiceFromData = async (data: Invoice) => {
   try {
-    await axiosInstance
+    await axiosAuthInstance
       .post('invoice', data, {
         responseType: 'blob',
       })
