@@ -23,7 +23,7 @@ export default function Layout(props: PropsTypes) {
         ) : null}
         <div className={`mt-md-3 mt-2 ${styles.content}`}>{props.content}</div>
       </div>
-      {/* <div>{props.footer} </div> */}
+      <div className="mt-3">{props.footer} </div>
     </div>
   );
 }

@@ -12,18 +12,21 @@ import Login from './pages/Login/Login';
 import AuthenticatedRoute from './hoc/AuthenticatedRoute';
 import Register from './pages/Register/Register';
 import Invoices from './pages/Invoices/Invoices';
+import PageUnderConstruction from './pages/PageUnderConstruction/PageUnderConstruction';
 
 const header = <Header />;
 const menu = <Menu />;
 
 const content = (
   <Routes>
-    <Route path='/' element={<AuthenticatedRoute />}>
-      <Route path='/my-invoices' element={<Invoices />} />
-      <Route path='/' element={<Home />} />
+    <Route path="/" element={<AuthenticatedRoute />}>
+      <Route path="/my-invoices" element={<Invoices />} />
+      <Route path="/contractors" element={<PageUnderConstruction />} />
+      <Route path="/settings" element={<PageUnderConstruction />} />
+      <Route path="/" element={<Home />} />
     </Route>
-    <Route path='/login' element={<Login />} />
-    <Route path='/register' element={<Register />} />
+    <Route path="/login" element={<Login />} />
+    <Route path="/register" element={<Register />} />
   </Routes>
 );
 
