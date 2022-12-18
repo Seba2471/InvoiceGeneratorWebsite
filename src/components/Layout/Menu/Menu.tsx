@@ -30,12 +30,12 @@ export default function Menu() {
         </MenuLink>
       </div>
       <div className="col-3 col-lg-3 d-none d-md-block">
-        <MenuLink color="#4ECB71" label="Kontrahenci" to="/nowa-faktura1">
+        <MenuLink color="#4ECB71" label="Kontrahenci" to="/contractors">
           {contractorsIcon}
         </MenuLink>
       </div>
       <div className="d-none d-lg-block col-1 col-lg-3 d-none d-lg-block">
-        <MenuLink color="#EE9C22" label="Ustawienia" to="/nowa-faktura2">
+        <MenuLink color="#EE9C22" label="Ustawienia" to="/settings">
           {settingsIcon}
         </MenuLink>
       </div>
