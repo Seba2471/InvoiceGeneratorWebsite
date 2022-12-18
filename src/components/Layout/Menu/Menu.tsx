@@ -48,16 +48,19 @@ export default function Menu() {
       <div className="col-2 d-md-none">
         <BurgerMenu
           options={[
-            'Strona główna',
-            'Moje faktury',
-            'Kontrahenci',
-            'Ustawienia',
-            'Wyloguj',
+            { name: 'Strona główna', path: '/' },
+            { name: 'Moje faktury', path: '/my-invoices' },
+            { name: 'Kontrahenci', path: '/contractors' },
+            { name: 'Ustawienia', path: '/settings' },
+            { name: 'Wyloguj', path: '/logout' },
           ]}
         />
       </div>
       <div className="d-none d-md-flex col-md-2 d-lg-none justify-content-center d-flex">
-        <BurgerMenu options={['Ustawienia']} width="50%" />
+        <BurgerMenu
+          options={[{ name: 'Ustawienia', path: '/settings' }]}
+          width="50%"
+        />
       </div>
     </div>
   );

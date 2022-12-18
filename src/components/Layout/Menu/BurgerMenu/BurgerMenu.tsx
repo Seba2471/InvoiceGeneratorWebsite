@@ -3,19 +3,28 @@ import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MenuIcon from '@mui/icons-material/Menu';
+import { useNavigate } from 'react-router-dom';
+import useAuth from '../../../../hooks/useAuth';
 const ITEM_HEIGHT = 55;
 
 export default function BurgerMenu(props: {
-  options: Array<string>;
+  options: Array<{ name: string; path: string }>;
   width?: string;
 }) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const navigate = useNavigate();
+  const [, setAuth] = useAuth();
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = () => {
+  const handleClose = (path: string) => {
     setAnchorEl(null);
+    if (path === '/logout') {
+      setAuth.logout();
+    } else {
+      navigate(`${path}`);
+    }
   };
 
   const menuWith = props.width || '100%';
@@ -48,8 +57,8 @@ export default function BurgerMenu(props: {
         }}
       >
         {props.options.map((option, index) => (
-          <MenuItem key={index} onClick={handleClose}>
-            {option}
+          <MenuItem key={index} onClick={() => handleClose(option.path)}>
+            {option.name}
           </MenuItem>
         ))}
       </Menu>
