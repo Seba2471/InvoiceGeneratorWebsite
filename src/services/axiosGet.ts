@@ -1,4 +1,4 @@
-import axiosInstance from '../axios';
+import { axiosAuthInstance } from '../axios';
 import axios, { AxiosError } from 'axios';
 
 interface IErrorResponse {
@@ -7,10 +7,9 @@ interface IErrorResponse {
 
 export default async function axiosGet(url: string, signal: AbortSignal) {
   try {
-    const response = await axiosInstance.get(url, {
+    const response = await axiosAuthInstance.get(url, {
       signal,
     });
-
     const data = response?.data;
 
     return { data };
