@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
+import avatar from '../../../../assets/images/avatar.svg';
 import styles from './LoginForm.module.css';
-import InputEmail from '../../../UI/Form/InputEmail';
-import InputPassword from '../../../UI/Form/InputPassword';
-import Button from '../../../UI/Button/Button';
-import { validateRules } from '../../../../helpers/Validation/validations';
 import { FormProperty } from '../../../../types/FormProperty';
+import { validateRules } from '../../../../helpers/Validation/validations';
 import clearFormFields from '../../../../helpers/clearFormFields';
+import LoginInput from '../../../UI/Form/LoginInput/LoginInput';
 import ErrorFeedback from '../../../UI/Form/ErrorFeedback';
+import Spinner from '../../../UI/Spinner/Spinner';
 
 type LoginFormTypes = {
   email: FormProperty<string>;
@@ -28,6 +28,7 @@ export default function LoginForm(props: { onLogin: Function }) {
       rules: ['required'],
     },
   });
+
   const [loading, setLoading] = useState(false);
   const [loginError, setLoginError] = useState('');
 
@@ -92,27 +93,39 @@ export default function LoginForm(props: { onLogin: Function }) {
   };
 
   return (
-    <form className="main" onSubmit={(e) => submitForm(e)}>
-      <h1 className={`text-center ${styles.header}`}> Logowanie </h1>
-      <InputEmail
-        placeHolder="Email"
-        value={form.email.value}
-        onChange={(value: string) => changeHandler(value, 'email')}
-        error={form.email.error}
-        showError={form.email.showError}
-      />
-      <InputPassword
-        placeHolder="Hasło"
-        value={form.password.value}
-        onChange={(value: string) => changeHandler(value, 'password')}
-        error={form.password.error}
-        showError={form.password.showError}
-      />
-      <ErrorFeedback error={loginError} />
-      <div className="mt-2 ms-2">Zapomniałem hasła</div>
-      <Button className={'p-2'} padding={'0'} loading={loading}>
-        Zaloguj się
-      </Button>
-    </form>
+    <div className={`${styles.loginContent}`}>
+      <form onSubmit={submitForm}>
+        <img src={avatar} alt="avatar" />
+        <h2 className={`title`}>Logowanie</h2>
+        <LoginInput
+          placeHolder={'Email'}
+          value={form.email.value}
+          onChange={(value: string) => changeHandler(value, 'email')}
+          error={form.email.error}
+          showError={form.email.showError}
+        />
+        <LoginInput
+          placeHolder={'Hasło'}
+          type={'password'}
+          value={form.password.value}
+          onChange={(value: string) => changeHandler(value, 'password')}
+          error={form.password.error}
+          showError={form.password.showError}
+        />
+        <ErrorFeedback error={loginError} />
+        <a className={`${styles.passUrl} mt-2`} href="/">
+          Nie pamiętasz hasła?
+        </a>
+        {loading ? (
+          <Spinner color="#38d39f" />
+        ) : (
+          <input type="submit" className={`${styles.btn}`} value="Login" />
+        )}
+        <div className={`${styles.registerUrl} mt-2`}>
+          Nie masz jeszcze konta ? <br />
+          <a href="/register">Zarejestruj się!</a>
+        </div>
+      </form>
+    </div>
   );
 }
