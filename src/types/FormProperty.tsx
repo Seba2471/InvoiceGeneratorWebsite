@@ -1,10 +1,5 @@
-import { availableRules } from '../helpers/Validation/availableValidationRules';
-
-export type ruleObject = {
-  rule: keyof availableRules;
-  length?: number;
-  message?: string;
-};
+import { availableRules } from './Validation/availableRules';
+import { ruleObject } from './Validation/ruleObject';
 
 export type FormProperty<T> = {
   value: T;

@@ -1,5 +1,6 @@
-import { ruleObject } from '../../types/FormProperty';
-import { validate, availableRules } from './availableValidationRules';
+import { availableRules } from '../../types/Validation/availableRules';
+import { ruleObject } from '../../types/Validation/ruleObject';
+import { validate } from './availableValidationRules';
 
 export function validateRules(rules: Array<string | ruleObject>, value: any) {
   let error = '';
