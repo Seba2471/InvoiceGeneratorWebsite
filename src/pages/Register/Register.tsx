@@ -1,9 +1,11 @@
 import React from 'react';
-import logo from '../../assets/images/logo.png';
-import { useNavigate } from 'react-router-dom';
-import RightBar from '../../components/Auth/RightBar/RightBar';
-import RegisterForm from '../../components/Auth/Register/RegisterForm/RegisterForm';
+import styles from './Register.module.css';
+import bg from '../../assets/images/bg.svg';
+import wave from '../../assets/images/wave.png';
+// import LoginForm from '../../components/Auth/Login/LoginForm/LoginForm';
 import { axiosInstance } from '../../axios';
+import { useNavigate } from 'react-router-dom';
+import RegisterForm from '../../components/Auth/Register/RegisterForm/RegisterForm';
 
 export default function Register() {
   let navigate = useNavigate();
@@ -30,35 +32,19 @@ export default function Register() {
   };
 
   return (
-    <div
-      className="row ps-3 pe-3 ps-md-5 pe-md-0 mb-5"
-      style={{ minHeight: '100vh' }}
-    >
-      <div className="col-12 col-md-8 align-self-center">
-        <img className={`img-fluid`} src={logo} alt="logo" />
-
-        <div className="col-12 col-lg-8 offset-lg-2 col-xl-6 offset-xl-3">
-          <RegisterForm
-            onRegister={(
-              email: string,
-              password: string,
-              confirmPassword: string,
-            ) => register(email, password, confirmPassword)}
-          />
-          <div className="mt-5">
-            <h4 className="text-center"> Masz już konto ? </h4>
-            <h5
-              onClick={() => navigate('/login')}
-              className={`text-center`}
-              style={{ color: '#85b6ff' }}
-            >
-              Zaloguj się!
-            </h5>
-          </div>
+    <div>
+      <img className={`${styles.wave}`} src={wave} alt="wave" />
+      <div className={`${styles.container}`}>
+        <div className={`${styles.img}`}>
+          <img src={bg} alt="bg" />
         </div>
-      </div>
-      <div className="d-none d-md-flex col-md-4">
-        <RightBar className="rounded-right" />
+        <RegisterForm
+          onRegister={(
+            email: string,
+            password: string,
+            confirmPassword: string,
+          ) => register(email, password, confirmPassword)}
+        />
       </div>
     </div>
   );

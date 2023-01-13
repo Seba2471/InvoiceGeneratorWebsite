@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import clearFormFields from '../../../../helpers/clearFormFields';
-import { validateRules } from '../../../../helpers/Validation/validations';
-import { FormProperty } from '../../../../types/FormProperty';
-import Button from '../../../UI/Button/Button';
-import ErrorFeedback from '../../../UI/Form/ErrorFeedback';
-import InputEmail from '../../../UI/Form/InputEmail';
-import InputPassword from '../../../UI/Form/InputPassword';
+import avatar from '../../../../assets/images/avatar.svg';
 import styles from './RegisterForm.module.css';
+import { FormProperty } from '../../../../types/FormProperty';
+import { validateRules } from '../../../../helpers/Validation/validations';
+import clearFormFields from '../../../../helpers/clearFormFields';
+import LoginInput from '../../../UI/Form/LoginInput/LoginInput';
+import ErrorFeedback from '../../../UI/Form/ErrorFeedback';
+import Spinner from '../../../UI/Spinner/Spinner';
 
 type RegisterFormTypes = {
   email: FormProperty<string>;
@@ -86,7 +86,7 @@ export default function RegisterForm(props: { onRegister: Function }) {
         form.confirmPassword.value,
       );
       if (error.DuplicateUserName) {
-        setRegisterError('Użytkownik o takim adresie email już istnieje');
+        setRegisterError('Taki użytkownik już istnieje!');
         clearForm({ clearEmail: true });
       } else {
         setRegisterError('Coś poszło nie tak... Spróbuj później');
@@ -109,33 +109,45 @@ export default function RegisterForm(props: { onRegister: Function }) {
       },
     });
   };
-
   return (
-    <form className='main' onSubmit={(e) => submitForm(e)}>
-      <h1 className={`text-center ${styles.header}`}>Rejestracja </h1>
-      <InputEmail
-        placeHolder='Email'
-        value={form.email.value}
-        onChange={(value: string) => changeHandler(value, 'email')}
-        error={form.email.error}
-        showError={form.email.showError}
-      />
-      <InputPassword
-        placeHolder='Hasło'
-        value={form.password.value}
-        onChange={(value: string) => changeHandler(value, 'password')}
-        error={form.password.error}
-        showError={form.password.showError}
-      />
-      <InputPassword
-        placeHolder='Powtórz hasło'
-        value={form.confirmPassword.value}
-        onChange={(value: string) => changeHandler(value, 'confirmPassword')}
-        error={form.confirmPassword.error}
-        showError={form.confirmPassword.showError}
-      />
-      <ErrorFeedback error={registerError} />
-      <Button loading={loading}>Zarejestuj się</Button>
-    </form>
+    <div className={`${styles.loginContent}`}>
+      <form onSubmit={submitForm}>
+        <img src={avatar} alt="avatar" />
+        <h2 className={`title`}>Rejestracja</h2>
+        <LoginInput
+          placeHolder={'Email'}
+          value={form.email.value}
+          onChange={(value: string) => changeHandler(value, 'email')}
+          error={form.email.error}
+          showError={form.email.showError}
+        />
+        <LoginInput
+          placeHolder={'Hasło'}
+          type={'password'}
+          value={form.password.value}
+          onChange={(value: string) => changeHandler(value, 'password')}
+          error={form.password.error}
+          showError={form.password.showError}
+        />
+        <LoginInput
+          placeHolder={'Powtórz hasło'}
+          type={'password'}
+          value={form.confirmPassword.value}
+          onChange={(value: string) => changeHandler(value, 'confirmPassword')}
+          error={form.confirmPassword.error}
+          showError={form.confirmPassword.showError}
+        />
+        <ErrorFeedback fontSize="1.1rem" error={registerError} />
+        {loading ? (
+          <Spinner color="#38d39f" />
+        ) : (
+          <input type="submit" className={`${styles.btn}`} value="Zarejestuj" />
+        )}
+        <div className={`${styles.loginUrl} mt-2`}>
+          Masz już konto ? <br />
+          <a href="/login">Zaloguj się!</a>
+        </div>
+      </form>
+    </div>
   );
 }
