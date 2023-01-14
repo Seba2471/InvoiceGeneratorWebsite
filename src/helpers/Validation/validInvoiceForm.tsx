@@ -27,6 +27,8 @@ function validatedObjectFormPropertyType<T extends Object>(data: T) {
         field.showError = true;
       }
     }
+
+    return key;
   });
 
   return { isValid, data: newData };
