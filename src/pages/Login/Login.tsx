@@ -1,11 +1,9 @@
 import React from 'react';
-import styles from './Login.module.css';
-import bg from '../../assets/images/bg.svg';
-import wave from '../../assets/images/wave.png';
-import LoginForm from '../../components/Auth/Login/LoginForm/LoginForm';
-import { axiosInstance } from '../../axios';
-import useAuth from '../../hooks/useAuth';
+import LoginForm from '../../../components/Auth/Login/LoginForm/LoginForm';
+import { axiosInstance } from '../../../axios';
+import useAuth from '../../../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
+import Auth from '../../../components/Auth/Auth';
 
 export default function NewLogin() {
   const [, setAuth] = useAuth();
@@ -28,17 +26,11 @@ export default function NewLogin() {
     }
   };
 
-  return (
-    <div>
-      <img className={`${styles.wave}`} src={wave} alt="wave" />
-      <div className={`${styles.container}`}>
-        <div className={`${styles.img}`}>
-          <img src={bg} alt="bg" />
-        </div>
-        <LoginForm
-          onLogin={(email: string, password: string) => login(email, password)}
-        />
-      </div>
-    </div>
+  const content = (
+    <LoginForm
+      onLogin={(email: string, password: string) => login(email, password)}
+    />
   );
+
+  return <Auth content={content} />;
 }

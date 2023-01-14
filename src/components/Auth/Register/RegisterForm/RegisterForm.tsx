@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import avatar from '../../../../assets/images/avatar.svg';
 import styles from './RegisterForm.module.css';
-import { validateRules } from '../../../../helpers/Validation/validations';
+import { validateRules } from '../../../../helpers/validation/validations';
 import clearFormFields from '../../../../helpers/clearFormFields';
 import LoginInput from '../../../UI/Form/LoginInput/LoginInput';
 import ErrorFeedback from '../../../UI/Form/ErrorFeedback';

@@ -1,11 +1,8 @@
 import React from 'react';
-import styles from './Register.module.css';
-import bg from '../../assets/images/bg.svg';
-import wave from '../../assets/images/wave.png';
-// import LoginForm from '../../components/Auth/Login/LoginForm/LoginForm';
-import { axiosInstance } from '../../axios';
+import { axiosInstance } from '../../../axios';
 import { useNavigate } from 'react-router-dom';
-import RegisterForm from '../../components/Auth/Register/RegisterForm/RegisterForm';
+import RegisterForm from '../../../components/Auth/Register/RegisterForm/RegisterForm';
+import Auth from '../../../components/Auth/Auth';
 
 export default function Register() {
   let navigate = useNavigate();
@@ -31,21 +28,13 @@ export default function Register() {
     }
   };
 
-  return (
-    <div>
-      <img className={`${styles.wave}`} src={wave} alt="wave" />
-      <div className={`${styles.container}`}>
-        <div className={`${styles.img}`}>
-          <img src={bg} alt="bg" />
-        </div>
-        <RegisterForm
-          onRegister={(
-            email: string,
-            password: string,
-            confirmPassword: string,
-          ) => register(email, password, confirmPassword)}
-        />
-      </div>
-    </div>
+  const content = (
+    <RegisterForm
+      onRegister={(email: string, password: string, confirmPassword: string) =>
+        register(email, password, confirmPassword)
+      }
+    />
   );
+
+  return <Auth content={content} />;
 }
