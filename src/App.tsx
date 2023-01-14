@@ -9,11 +9,11 @@ import { useReducer } from 'react';
 import { reducer, initialState } from './store/auth/authReducer';
 import AuthContext from './contexts/authContext';
 import AuthenticatedRoute from './hoc/AuthenticatedRoute';
-import Register from './pages/Register/Register';
+import Register from './pages/Auth/Register/Register';
 import Invoices from './pages/Invoices/Invoices';
 import PageUnderConstruction from './pages/PageUnderConstruction/PageUnderConstruction';
-import Login from './pages/Login/Login';
-import RestartPassword from './pages/Login/RestartPassword/RestartPassword';
+import Login from './pages/Auth/Login/Login';
+import RestartPassword from './pages/Auth/Login/RestartPassword/RestartPassword';
 
 const header = <Header />;
 const menu = <Menu />;

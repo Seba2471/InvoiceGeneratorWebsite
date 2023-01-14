@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { validateRules } from '../../../../helpers/Validation/validations';
+import { validateRules } from '../../../../helpers/validation/validations';
 import { FormProperty } from '../../../../types/Forms/FormProperty';
 import SuccessAlert from '../../../UI/Alerts/SuccessAlert';
 import LoginInput from '../../../UI/Form/LoginInput/LoginInput';

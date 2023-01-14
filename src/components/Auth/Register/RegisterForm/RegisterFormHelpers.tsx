@@ -1,4 +1,4 @@
-import isTheSameAsOtherProperty from '../../../../helpers/Validation/isTheSameAsOtherProperty';
+import isTheSameAsOtherProperty from '../../../../helpers/validation/isTheSameAsOtherProperty';
 import { RegisterFormTypes } from '../../../../types/Forms/RegisterFormType';
 
 export const comparePassword = (
