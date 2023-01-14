@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import avatar from '../../../../assets/images/avatar.svg';
 import styles from './LoginForm.module.css';
-import { FormProperty } from '../../../../types/FormProperty';
+import { FormProperty } from '../../../../types/Forms/FormProperty';
 import { validateRules } from '../../../../helpers/Validation/validations';
 import clearFormFields from '../../../../helpers/clearFormFields';
 import LoginInput from '../../../UI/Form/LoginInput/LoginInput';

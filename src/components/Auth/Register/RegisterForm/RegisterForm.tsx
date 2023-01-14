@@ -1,18 +1,13 @@
 import React, { useState } from 'react';
 import avatar from '../../../../assets/images/avatar.svg';
 import styles from './RegisterForm.module.css';
-import { FormProperty } from '../../../../types/FormProperty';
 import { validateRules } from '../../../../helpers/Validation/validations';
 import clearFormFields from '../../../../helpers/clearFormFields';
 import LoginInput from '../../../UI/Form/LoginInput/LoginInput';
 import ErrorFeedback from '../../../UI/Form/ErrorFeedback';
 import Spinner from '../../../UI/Spinner/Spinner';
-
-type RegisterFormTypes = {
-  email: FormProperty<string>;
-  password: FormProperty<string>;
-  confirmPassword: FormProperty<string>;
-};
+import { RegisterFormTypes } from '../../../../types/Forms/RegisterFormType';
+import { comparePassword } from './RegisterFormHelpers';
 
 export default function RegisterForm(props: { onRegister: Function }) {
   const [form, setForm] = useState<RegisterFormTypes>({
@@ -97,6 +92,24 @@ export default function RegisterForm(props: { onRegister: Function }) {
   };
 
   const changeHandler = (value: string, fieldName: keyof RegisterFormTypes) => {
+    const notTheSamePasswordMessage = 'Podane hasła muszą być takie same';
+
+    if (
+      (fieldName === 'confirmPassword' && value.length >= 6) ||
+      (fieldName === 'password' && value.length >= 6)
+    ) {
+      const newForm = comparePassword(
+        value,
+        fieldName,
+        form,
+        notTheSamePasswordMessage,
+      );
+
+      if (newForm) {
+        setForm(newForm);
+        return;
+      }
+    }
     const errorMessage = validateRules(form[fieldName].rules, value);
 
     setForm({
@@ -137,7 +150,12 @@ export default function RegisterForm(props: { onRegister: Function }) {
           error={form.confirmPassword.error}
           showError={form.confirmPassword.showError}
         />
-        <ErrorFeedback fontSize="1.1rem" error={registerError} />
+        <ErrorFeedback
+          className="mt-3"
+          textAlign="center"
+          fontSize="1.2rem"
+          error={registerError}
+        />
         {loading ? (
           <Spinner color="#38d39f" />
         ) : (

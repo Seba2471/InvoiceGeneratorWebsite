@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { FormProperty } from '../../../types/FormProperty';
+import { FormProperty } from '../../Forms/FormProperty';
 import {
   InvoiceFormItemType,
   InvoiceFormPersonType,

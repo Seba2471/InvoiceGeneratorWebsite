@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormProperty } from '../../../../types/FormProperty';
+import { FormProperty } from '../../../../types/Forms/FormProperty';
 import InputText from '../../../UI/Form/InputText';
 
 type PropsTypes = {
@@ -19,28 +19,28 @@ export default function PersonForm(props: PropsTypes) {
     <div>
       <h5> {props.header} </h5>
       <InputText
-        label='Imię i nazwisko'
+        label="Imię i nazwisko"
         value={props.fullName.value}
         error={props.fullName.error}
         showError={props.fullName.showError}
         onChange={(e: string) => props.onChangeFullName(e)}
       />
       <InputText
-        label='Linia 1'
+        label="Linia 1"
         value={props.line1.value}
         error={props.line1.error}
         showError={props.line1.showError}
         onChange={(e: string) => props.onChangeAddresLine1(e)}
       />
       <InputText
-        label='Linia 2'
+        label="Linia 2"
         value={props.line2.value}
         error={props.line2.error}
         showError={props.line2.showError}
         onChange={(e: string) => props.onChangeAddresLine2(e)}
       />
       <InputText
-        label='NIP'
+        label="NIP"
         value={props.nip.value}
         error={props.nip.error}
         showError={props.nip.showError}
