@@ -113,7 +113,7 @@ export default function LoginForm(props: { onLogin: Function }) {
           showError={form.password.showError}
         />
         <ErrorFeedback error={loginError} />
-        <a className={`${styles.passUrl} mt-2`} href="/">
+        <a className={`${styles.passUrl} mt-2`} href="/password_restart">
           Nie pamiętasz hasła?
         </a>
         {loading ? (

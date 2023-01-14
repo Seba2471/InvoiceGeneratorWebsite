@@ -13,6 +13,7 @@ import Register from './pages/Register/Register';
 import Invoices from './pages/Invoices/Invoices';
 import PageUnderConstruction from './pages/PageUnderConstruction/PageUnderConstruction';
 import Login from './pages/Login/Login';
+import RestartPassword from './pages/Login/RestartPassword/RestartPassword';
 
 const header = <Header />;
 const menu = <Menu />;
@@ -27,6 +28,7 @@ const content = (
     </Route>
     <Route path="/register" element={<Register />} />
     <Route path="/login" element={<Login />} />
+    <Route path="/password_restart" element={<RestartPassword />} />
   </Routes>
 );
 
