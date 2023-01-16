@@ -155,7 +155,7 @@ export default function InvoiceForm() {
   };
 
   return (
-    <div>
+    <div className="row">
       <h4> Nowa faktura </h4>
       <span> Wypełnij dane faktury</span>
       <form className="mt-4" onSubmit={(e) => generateInvoice(e)}>

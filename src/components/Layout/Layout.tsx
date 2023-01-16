@@ -13,10 +13,10 @@ export default function Layout(props: PropsTypes) {
   const { state } = useContext(AuthContext);
 
   return (
-    <div>
+    <div className="container">
       {state.isAuthenticated ? (
         <>
-          <div className={`${styles.main} container`}>
+          <div className={`${styles.main}`}>
             <div className="mt-2">{props.header}</div>
             <div className="mt-0">{props.menu} </div>
             <div className={`mt-md-3 mt-2 ${styles.content}`}>
