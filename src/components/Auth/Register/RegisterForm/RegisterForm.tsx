@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
-import avatar from '../../../../assets/images/avatar.svg';
-import styles from './RegisterForm.module.css';
+import { useNavigate } from 'react-router-dom';
 import { validateRules } from '../../../../helpers/validation/validations';
 import clearFormFields from '../../../../helpers/clearFormFields';
-import LoginInput from '../../../UI/Form/LoginInput/AuthInput';
 import ErrorFeedback from '../../../UI/Form/ErrorFeedback';
-import Spinner from '../../../UI/Spinner/Spinner';
 import { RegisterFormTypes } from '../../../../types/Forms/RegisterFormType';
 import { comparePassword } from './RegisterFormHelpers';
+import Title from '../../Title/Title';
+import AuthInput from '../../../UI/Form/AuthInput/AuthInput';
+import ButtonWithSpinner from '../../../UI/Buttons/ButtonWithSpinner/ButtonWithSpinner';
+import Button from '../../../UI/Buttons/Button/Button';
+import './RegisterForm.scss';
+import Underline from '../../Underline/Underline';
 
 export default function RegisterForm(props: { onRegister: Function }) {
+  const navigate = useNavigate();
   const [form, setForm] = useState<RegisterFormTypes>({
     email: {
       value: '',
@@ -123,18 +127,17 @@ export default function RegisterForm(props: { onRegister: Function }) {
     });
   };
   return (
-    <div className={`${styles.loginContent}`}>
-      <form onSubmit={submitForm}>
-        <img src={avatar} alt="avatar" />
-        <h2 className={`title`}>Rejestracja</h2>
-        <LoginInput
+    <div className="register-form">
+      <Title title="Rejestracja" />
+      <form className="register-form__form" onSubmit={submitForm}>
+        <AuthInput
           placeHolder={'Email'}
           value={form.email.value}
           onChange={(value: string) => changeHandler(value, 'email')}
           error={form.email.error}
           showError={form.email.showError}
         />
-        <LoginInput
+        <AuthInput
           placeHolder={'Hasło'}
           type={'password'}
           value={form.password.value}
@@ -142,7 +145,7 @@ export default function RegisterForm(props: { onRegister: Function }) {
           error={form.password.error}
           showError={form.password.showError}
         />
-        <LoginInput
+        <AuthInput
           placeHolder={'Powtórz hasło'}
           type={'password'}
           value={form.confirmPassword.value}
@@ -151,21 +154,19 @@ export default function RegisterForm(props: { onRegister: Function }) {
           showError={form.confirmPassword.showError}
         />
         <ErrorFeedback
-          className="mt-3"
           textAlign="center"
           fontSize="1.2rem"
           error={registerError}
         />
-        {/* {loading ? (
-          <Spinner color="#38d39f" />
-        ) : (
-          <input type="submit" className={`${styles.btn}`} value="Zarejestuj" />
-        )} */}
-        <div className={`${styles.loginUrl} mt-2`}>
-          Masz już konto ? <br />
-          <a href="/login">Zaloguj się!</a>
-        </div>
+        <ButtonWithSpinner
+          value="Zarejestruj się"
+          loading={loading}
+          action={() => null}
+        />
       </form>
+      <Underline />
+      <p className="register-form__login-text">Masz już konto ? </p>
+      <Button value="Zaloguj się" action={() => navigate('/login')} />
     </div>
   );
 }

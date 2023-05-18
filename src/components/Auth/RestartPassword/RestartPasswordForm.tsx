@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { validateRules } from '../../../helpers/validation/validations';
 import { FormProperty } from '../../../types/Forms/FormProperty';
 import SuccessAlert from '../../UI/Alerts/SuccessAlert';
-import LoginInput from '../../UI/Form/LoginInput/AuthInput';
+import LoginInput from '../../UI/Form/AuthInput/AuthInput';
 import Spinner from '../../UI/Spinner/Spinner';
 import styles from './RestartPasswordForm.module.css';
 import avatar from '../../../assets/images/avatar.svg';

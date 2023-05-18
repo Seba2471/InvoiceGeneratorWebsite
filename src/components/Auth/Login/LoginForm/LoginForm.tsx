@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FormProperty } from '../../../../types/Forms/FormProperty';
 import { validateRules } from '../../../../helpers/validation/validations';
 import clearFormFields from '../../../../helpers/clearFormFields';
-import LoginInput from '../../../UI/Form/LoginInput/AuthInput';
+import LoginInput from '../../../UI/Form/AuthInput/AuthInput';
 import ErrorFeedback from '../../../UI/Form/ErrorFeedback';
 import { useNavigate } from 'react-router-dom';
 import Underline from '../../Underline/Underline';

@@ -31,7 +31,7 @@ export default function AuthInput(props: PropsTypes) {
         onChange={(e) => props.onChange(e.target.value)}
       />
       <div className="invalid-feedback" style={{ textAlign: 'left' }}>
-        <p style={{ margin: '0' }}>{props.error}</p>
+        <p>{props.error}</p>
       </div>
     </div>
   );

@@ -2,8 +2,11 @@
 
 .auth-title {
   display: flex;
+  position: relative;
   flex-direction: column;
   align-items: center;
+  // margin-top: 10em;
+  padding-top: 7em;
 
   &__avatar {
     width: 45%;
