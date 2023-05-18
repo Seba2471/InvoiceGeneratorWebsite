@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { validateRules } from '../../../../helpers/validation/validations';
-import { FormProperty } from '../../../../types/Forms/FormProperty';
-import SuccessAlert from '../../../UI/Alerts/SuccessAlert';
-import LoginInput from '../../../UI/Form/LoginInput/LoginInput';
-import Spinner from '../../../UI/Spinner/Spinner';
+import { validateRules } from '../../../helpers/validation/validations';
+import { FormProperty } from '../../../types/Forms/FormProperty';
+import SuccessAlert from '../../UI/Alerts/SuccessAlert';
+import LoginInput from '../../UI/Form/LoginInput/AuthInput';
+import Spinner from '../../UI/Spinner/Spinner';
 import styles from './RestartPasswordForm.module.css';
-import avatar from '../../../../assets/images/avatar.svg';
-import ErrorAlert from '../../../UI/Alerts/ErrorAlert';
+import avatar from '../../../assets/images/avatar.svg';
+import ErrorAlert from '../../UI/Alerts/ErrorAlert';
 
 export default function RestartPasswordForm(props: { onRestart: Function }) {
   const [email, setEmail] = useState<FormProperty<string>>({
@@ -52,9 +52,12 @@ export default function RestartPasswordForm(props: { onRestart: Function }) {
     });
   };
 
-  const btn = loading ? (
-    <Spinner className="mt-3" color="#38d39f" />
-  ) : (
+  // const btn = loading ? (
+  //   <Spinner className="mt-3" color="#38d39f" />
+  // ) : (
+  //   <input type="submit" className={`${styles.btn}`} value="Odzyskaj hasło" />
+  // );
+  const btn = (
     <input type="submit" className={`${styles.btn}`} value="Odzyskaj hasło" />
   );
 

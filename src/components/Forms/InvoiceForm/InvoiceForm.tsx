@@ -4,7 +4,7 @@ import InputDate from '../../UI/Form/InputDate';
 import PersonForm from './PersonForm/PersonForm';
 import InvoiceItemsTable from './InvoiceItemsTable/InvoiceItemsTable';
 import InvoiceItemsMobileTable from './InvoiceItemsMobileTable/InvoiceItemsMobileTable';
-import LoadingButton from '../../UI/Button/LoadingButton';
+import LoadingButton from '../../UI/Buttons/LoadingButton';
 import {
   initInvoiceFormValue,
   emptyInvoiceFormItem,

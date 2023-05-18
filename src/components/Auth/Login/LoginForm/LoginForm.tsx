@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
-import avatar from '../../../../assets/images/avatar.svg';
-import styles from './LoginForm.module.css';
 import { FormProperty } from '../../../../types/Forms/FormProperty';
 import { validateRules } from '../../../../helpers/validation/validations';
 import clearFormFields from '../../../../helpers/clearFormFields';
-import LoginInput from '../../../UI/Form/LoginInput/LoginInput';
+import LoginInput from '../../../UI/Form/LoginInput/AuthInput';
 import ErrorFeedback from '../../../UI/Form/ErrorFeedback';
-import Spinner from '../../../UI/Spinner/Spinner';
+import { useNavigate } from 'react-router-dom';
+import Underline from '../../Underline/Underline';
+import './LoginForm.scss';
+import ButtonWithSpinner from '../../../UI/Buttons/ButtonWithSpinner/ButtonWithSpinner';
+import Button from '../../../UI/Buttons/Button/Button';
+import Title from '../../Title/Title';
 
 type LoginFormTypes = {
   email: FormProperty<string>;
@@ -14,6 +17,8 @@ type LoginFormTypes = {
 };
 
 export default function LoginForm(props: { onLogin: Function }) {
+  const navigate = useNavigate();
+
   const [form, setForm] = useState<LoginFormTypes>({
     email: {
       value: '',
@@ -51,7 +56,7 @@ export default function LoginForm(props: { onLogin: Function }) {
 
   const submitForm = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    setLoginError('');
     const errors = {
       email: validateRules(form.email.rules, form.email.value),
       password: validateRules(form.password.rules, form.password.value),
@@ -77,7 +82,6 @@ export default function LoginForm(props: { onLogin: Function }) {
       }
     }
   };
-
   const changeHandler = (value: string, fieldName: keyof LoginFormTypes) => {
     const errorMessage = validateRules(form[fieldName].rules, value);
 
@@ -93,11 +97,12 @@ export default function LoginForm(props: { onLogin: Function }) {
   };
 
   return (
-    <div className={`${styles.loginContent}`}>
-      <form onSubmit={submitForm}>
-        <img src={avatar} alt="avatar" />
-        <h2 className={`title`}>Logowanie</h2>
+    <div className="login-form">
+      <Title title="Logowanie" />
+      <form className="login-form__form" onSubmit={submitForm}>
         <LoginInput
+          className="login-form__input-group"
+          inputClassName="login-form__input"
           placeHolder={'Email'}
           value={form.email.value}
           onChange={(value: string) => changeHandler(value, 'email')}
@@ -105,6 +110,8 @@ export default function LoginForm(props: { onLogin: Function }) {
           showError={form.email.showError}
         />
         <LoginInput
+          className="login-form__input-group"
+          inputClassName="login-form__input"
           placeHolder={'Hasło'}
           type={'password'}
           value={form.password.value}
@@ -112,20 +119,22 @@ export default function LoginForm(props: { onLogin: Function }) {
           error={form.password.error}
           showError={form.password.showError}
         />
-        <ErrorFeedback error={loginError} />
-        <a className={`${styles.passUrl} mt-2`} href="/password_restart">
+        <ErrorFeedback fontSize="1.6rem" error={loginError} />
+        <a
+          className="login-form__link login-form__restart-password-link"
+          href="/password_restart"
+        >
           Nie pamiętasz hasła?
         </a>
-        {loading ? (
-          <Spinner color="#38d39f" />
-        ) : (
-          <input type="submit" className={`${styles.btn}`} value="Login" />
-        )}
-        <div className={`${styles.registerUrl} mt-2`}>
-          Nie masz jeszcze konta ? <br />
-          <a href="/register">Zarejestruj się!</a>
-        </div>
+        <ButtonWithSpinner
+          value="Zaloguj"
+          loading={loading}
+          action={() => null}
+        />
       </form>
+      <Underline />
+      <p className="login-form__register-text">Nie masz jeszcze konta ?</p>
+      <Button value="Zarejestruj się" action={() => navigate('/register')} />
     </div>
   );
 }

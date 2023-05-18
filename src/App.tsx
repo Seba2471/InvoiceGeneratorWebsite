@@ -1,4 +1,3 @@
-import './App.css';
 import Layout from './components/Layout/Layout';
 import Footer from './components/Layout/Footer/Footer';
 import Menu from './components/Layout/Menu/Menu';
@@ -13,7 +12,7 @@ import Register from './pages/Auth/Register/Register';
 import Invoices from './pages/Invoices/Invoices';
 import PageUnderConstruction from './pages/PageUnderConstruction/PageUnderConstruction';
 import Login from './pages/Auth/Login/Login';
-import RestartPassword from './pages/Auth/Login/RestartPassword/RestartPassword';
+import RestartPassword from './pages/Auth/RestartPassword/RestartPassword';
 
 const header = <Header />;
 const menu = <Menu />;

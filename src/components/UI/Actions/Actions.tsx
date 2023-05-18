@@ -18,9 +18,8 @@ export default function Actions(props: {
 
   return (
     <div className={className}>
-      {props.loading ? (
-        <Spinner className={`${hideDownolad ? 'd-none' : ''}`} size="xs" />
-      ) : (
+      {props.loading ? null : (
+        // <Spinner className={`${hideDownolad ? 'd-none' : ''}`} size="xs" />
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width={size}

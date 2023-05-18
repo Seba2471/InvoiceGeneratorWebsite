@@ -1,19 +1,13 @@
 import React from 'react';
+import './Spinner.scss';
 
-export default function Spinner(props: {
-  size?: string;
-  className?: string;
-  color?: string;
-}) {
-  const size = props.size || 'xl';
+export default function Spinner() {
   return (
-    <span
-      style={{ color: props.color?.toString() }}
-      className={`align-middle spinner-border spinner-border-${size} ${
-        props.color ? '' : 'text-primary'
-      } ${props.className}`}
-      role="status"
-      aria-hidden="true"
-    />
+    <div className="lds-ring">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
   );
 }

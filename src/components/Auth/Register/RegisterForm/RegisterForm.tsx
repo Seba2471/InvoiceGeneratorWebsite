@@ -3,7 +3,7 @@ import avatar from '../../../../assets/images/avatar.svg';
 import styles from './RegisterForm.module.css';
 import { validateRules } from '../../../../helpers/validation/validations';
 import clearFormFields from '../../../../helpers/clearFormFields';
-import LoginInput from '../../../UI/Form/LoginInput/LoginInput';
+import LoginInput from '../../../UI/Form/LoginInput/AuthInput';
 import ErrorFeedback from '../../../UI/Form/ErrorFeedback';
 import Spinner from '../../../UI/Spinner/Spinner';
 import { RegisterFormTypes } from '../../../../types/Forms/RegisterFormType';
@@ -156,11 +156,11 @@ export default function RegisterForm(props: { onRegister: Function }) {
           fontSize="1.2rem"
           error={registerError}
         />
-        {loading ? (
+        {/* {loading ? (
           <Spinner color="#38d39f" />
         ) : (
           <input type="submit" className={`${styles.btn}`} value="Zarejestuj" />
-        )}
+        )} */}
         <div className={`${styles.loginUrl} mt-2`}>
           Masz już konto ? <br />
           <a href="/login">Zaloguj się!</a>

@@ -2,7 +2,7 @@ import React from 'react';
 import { axiosInstance } from '../../../axios';
 import { useNavigate } from 'react-router-dom';
 import RegisterForm from '../../../components/Auth/Register/RegisterForm/RegisterForm';
-import Auth from '../../../components/Auth/Auth';
+import Auth from '../../../components/Layout/AuthLayout/AuthLayaout';
 
 export default function Register() {
   let navigate = useNavigate();

@@ -11,9 +11,8 @@ export default function DownloadAction(props: {
   const size = props.size || 32;
   return (
     <div>
-      {props.loading ? (
-        <Spinner size="xs" />
-      ) : (
+      {props.loading ? // <Spinner size="xs" />
+      null : (
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width={size}

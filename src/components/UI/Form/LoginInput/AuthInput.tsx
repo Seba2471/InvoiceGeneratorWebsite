@@ -1,4 +1,5 @@
 import React, { useId } from 'react';
+import './AuthInput.scss';
 
 type PropsTypes = {
   value: string;
@@ -11,18 +12,15 @@ type PropsTypes = {
   type?: string;
 };
 
-export default function LoginInput(props: PropsTypes) {
+export default function AuthInput(props: PropsTypes) {
   const id = useId();
-
-  const className = props.className || 'mt-2';
-  const inputClassName = props.inputClassName || '';
   const type = props.type || 'text';
 
   return (
-    <div className={`input-group-lg ${className}`}>
+    <div className={`auth-input__input-group`}>
       <input
         type={type.toString()}
-        className={`form-control ${inputClassName} ${
+        className={`form-control auth-input__input ${
           props.error && props.showError ? 'is-invalid' : ''
         } ${!props.error && props.value !== '' ? 'is-valid' : ''}`}
         aria-label={`password-input-${id}`}
@@ -33,7 +31,7 @@ export default function LoginInput(props: PropsTypes) {
         onChange={(e) => props.onChange(e.target.value)}
       />
       <div className="invalid-feedback" style={{ textAlign: 'left' }}>
-        {props.error}
+        <p style={{ margin: '0' }}>{props.error}</p>
       </div>
     </div>
   );

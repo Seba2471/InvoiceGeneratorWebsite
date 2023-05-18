@@ -1,6 +1,6 @@
 import React from 'react';
-import Auth from '../../../../components/Auth/Auth';
-import RestartPasswordForm from '../../../../components/Auth/Login/RestartPassword/RestartPasswordForm';
+import Auth from '../../../components/Layout/AuthLayout/AuthLayaout';
+import RestartPasswordForm from '../../../components/Auth/RestartPassword/RestartPasswordForm';
 
 export default function RestartPassword() {
   function timeout(ms: number) {
