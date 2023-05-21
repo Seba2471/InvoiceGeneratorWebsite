@@ -11,7 +11,7 @@ export default function RestartPassword() {
     //Mock backend
     await timeout(2000);
     console.log('Password has been restarted');
-    return false;
+    return true;
   };
 
   const content = <RestartPasswordForm onRestart={restartPassword} />;

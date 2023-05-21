@@ -1,0 +1,16 @@
+.alert {
+  width: 100%;
+}
+
+.alert__message {
+  margin: 0;
+  padding: 0.5em;
+}
+
+@media (min-width: 992px) {
+  .alert__message {
+    padding: 0.7em;
+    font-size: 2.5rem;
+    width: 100%;
+  }
+}

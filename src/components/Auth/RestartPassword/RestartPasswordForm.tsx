@@ -3,10 +3,13 @@ import { validateRules } from '../../../helpers/validation/validations';
 import { FormProperty } from '../../../types/Forms/FormProperty';
 import SuccessAlert from '../../UI/Alerts/SuccessAlert';
 import LoginInput from '../../UI/Form/AuthInput/AuthInput';
-import Spinner from '../../UI/Spinner/Spinner';
-import styles from './RestartPasswordForm.module.css';
-import avatar from '../../../assets/images/avatar.svg';
 import ErrorAlert from '../../UI/Alerts/ErrorAlert';
+import Title from '../Title/Title';
+import ButtonWithSpinner from '../../UI/Buttons/ButtonWithSpinner/ButtonWithSpinner';
+import Underline from '../Underline/Underline';
+import Button from '../../UI/Buttons/Button/Button';
+import { useNavigate } from 'react-router-dom';
+import './RestartPassword.scss';
 
 export default function RestartPasswordForm(props: { onRestart: Function }) {
   const [email, setEmail] = useState<FormProperty<string>>({
@@ -15,15 +18,15 @@ export default function RestartPasswordForm(props: { onRestart: Function }) {
     showError: false,
     rules: ['email', 'required'],
   });
-
   const [loading, setLoading] = useState(false);
   const [successRestart, setSuccessRestart] = useState(false);
-  const [errorRestart, setErrorRestart] = useState(false);
+  const [showFeedback, setShowFeedback] = useState(false);
+
+  const navigate = useNavigate();
 
   const restartPassword = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     const errorMessage = validateRules(email.rules, email.value);
-
     if (errorMessage) {
       setEmail({
         ...email,
@@ -31,13 +34,16 @@ export default function RestartPasswordForm(props: { onRestart: Function }) {
         error: errorMessage,
       });
     } else {
+      setShowFeedback(false);
       setLoading(true);
       const result = await props.onRestart(email.value);
       setLoading(false);
       if (result) {
         setSuccessRestart(true);
+        setShowFeedback(true);
       } else {
-        setErrorRestart(true);
+        setSuccessRestart(false);
+        setShowFeedback(true);
       }
     }
   };
@@ -52,51 +58,43 @@ export default function RestartPasswordForm(props: { onRestart: Function }) {
     });
   };
 
-  // const btn = loading ? (
-  //   <Spinner className="mt-3" color="#38d39f" />
-  // ) : (
-  //   <input type="submit" className={`${styles.btn}`} value="Odzyskaj hasło" />
-  // );
-  const btn = (
-    <input type="submit" className={`${styles.btn}`} value="Odzyskaj hasło" />
-  );
-
-  const form = (
-    <LoginInput
-      placeHolder={'Email'}
-      value={email.value}
-      onChange={(value: string) => {
-        changeHandler(value);
-      }}
-      error={email.error}
-      showError={email.showError}
+  const actionFeedback = successRestart ? (
+    <SuccessAlert
+      message={`Sukces! Link do zmiany hasła został wysłany na twój adres ${email.value}`}
     />
+  ) : (
+    <ErrorAlert error={`Coś poszło nie tak! Spróbuj później!`} />
   );
-
   return (
-    <div className={`${styles.loginContent}`}>
-      <form onSubmit={(e: React.SyntheticEvent) => restartPassword(e)}>
-        <img src={avatar} alt="avatar" />
-        <h2>Zapomniałeś hasła ?</h2>
-        {successRestart || errorRestart ? (
-          successRestart ? (
-            <SuccessAlert
-              message={`Sukces! Link do zmiany hasła został wysłany na twój adres ${email.value}`}
-            />
-          ) : (
-            <ErrorAlert
-              error={`Coś poszło nie tak! Spróbuj ponownie później!`}
-            />
-          )
-        ) : (
-          <div>
-            {form} {btn}
-          </div>
+    <div className="restart-password-form">
+      <Title title="Resetuj hasło" />
+      <form
+        className="restart-password-form__form"
+        onSubmit={(e: React.SyntheticEvent) => restartPassword(e)}
+      >
+        {successRestart || showFeedback ? null : (
+          <LoginInput
+            placeHolder={'Email'}
+            value={email.value}
+            onChange={(value: string) => {
+              changeHandler(value);
+            }}
+            error={email.error}
+            showError={email.showError}
+          />
         )}
-        <div className={`${styles.registerUrl} mt-2`}>
-          Wróc do strony <a href="/login">logowania!</a>
-        </div>
+        {showFeedback ? actionFeedback : null}
+        {successRestart ? null : (
+          <ButtonWithSpinner
+            value="Resetuj hasło"
+            loading={loading}
+            action={() => null}
+          />
+        )}
       </form>
+      <Underline />
+      <p className="restart-password-form__login-text">Wróc do strony</p>
+      <Button value="Logowania" action={() => navigate('/login')} />
     </div>
   );
 }
