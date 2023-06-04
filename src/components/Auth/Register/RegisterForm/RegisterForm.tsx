@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { validateRules } from '../../../../helpers/validation/validations';
 import clearFormFields from '../../../../helpers/clearFormFields';
-import ErrorFeedback from '../../../UI/Form/ErrorFeedback';
+import ErrorFeedback from '../../../UI/Form/ErrorFeedback/ErrorFeedback';
 import { RegisterFormTypes } from '../../../../types/Forms/RegisterFormType';
 import { comparePassword } from './RegisterFormHelpers';
 import Title from '../../Shared/Title/Title';
@@ -153,11 +153,7 @@ export default function RegisterForm(props: { onRegister: Function }) {
           error={form.confirmPassword.error}
           showError={form.confirmPassword.showError}
         />
-        <ErrorFeedback
-          textAlign="center"
-          fontSize="1.2rem"
-          error={registerError}
-        />
+        <ErrorFeedback error={registerError} />
         <ButtonWithSpinner
           value="Zarejestruj się"
           loading={loading}

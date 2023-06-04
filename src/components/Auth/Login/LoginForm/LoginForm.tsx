@@ -3,7 +3,7 @@ import { FormProperty } from '../../../../types/Forms/FormProperty';
 import { validateRules } from '../../../../helpers/validation/validations';
 import clearFormFields from '../../../../helpers/clearFormFields';
 import LoginInput from '../../../UI/Form/AuthInput/AuthInput';
-import ErrorFeedback from '../../../UI/Form/ErrorFeedback';
+import ErrorFeedback from '../../../UI/Form/ErrorFeedback/ErrorFeedback';
 import { useNavigate } from 'react-router-dom';
 import Underline from '../../Shared/Underline/Underline';
 import './LoginForm.scss';
@@ -119,7 +119,7 @@ export default function LoginForm(props: { onLogin: Function }) {
           error={form.password.error}
           showError={form.password.showError}
         />
-        <ErrorFeedback fontSize="1.6rem" error={loginError} />
+        <ErrorFeedback error={loginError} />
         <a
           className="login-form__link login-form__restart-password-link"
           href="/password_restart"
