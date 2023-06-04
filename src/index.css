@@ -19,3 +19,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+pre {
+  font-family: monaco, 'andale mono', 'lucida console', 'courier new', monospace;
+}

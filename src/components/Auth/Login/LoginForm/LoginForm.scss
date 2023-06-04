@@ -39,11 +39,11 @@
     @include auth-form-media-768px;
 
     &__restart-password-link {
-      font-size: 2rem;
+      font-size: 1.7rem;
     }
 
     &__register-text {
-      font-size: 2.5rem;
+      font-size: 2rem;
     }
   }
 }
@@ -52,11 +52,11 @@
   .login-form {
     @include auth-form-media-992px;
     &__restart-password-link {
-      font-size: 2rem;
+      font-size: 1.5rem;
     }
 
     &__register-text {
-      font-size: 2.5rem;
+      font-size: 2rem;
     }
   }
 }

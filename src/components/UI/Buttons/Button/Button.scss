@@ -2,7 +2,7 @@
 
 .btn {
   width: 100%;
-  padding: 1em 1.5em;
+  padding: 0.8em 1.2em;
   margin: 0.5em;
   border-radius: 8px;
   border: none;
@@ -24,11 +24,6 @@
 //media
 @media (min-width: 768px) {
   .btn {
-    font-size: 2rem;
-  }
-}
-@media (min-width: 992px) {
-  .btn {
-    font-size: 2.2rem;
+    font-size: 1.8rem;
   }
 }

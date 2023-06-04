@@ -8,7 +8,7 @@
 
   &__wave-img {
     position: absolute;
-    top: -65vw;
+    top: -68vw;
     right: -45vw;
     transform: rotate(180deg);
     height: 100vh;
@@ -30,14 +30,15 @@
     width: 100%;
     min-height: 100vh;
     justify-content: center;
+    margin-top: 1.5em;
   }
 }
 
 @media (min-width: 768px) {
   .auth {
     &__wave-img {
-      top: -40vw;
-      right: -10vw;
+      top: -50vw;
+      right: -22vw;
     }
 
     &__img {
@@ -45,7 +46,7 @@
     }
 
     &__form {
-      margin-top: 10em;
+      margin-top: 2.5em;
     }
   }
 }
@@ -53,16 +54,12 @@
 @media (min-width: 992px) {
   .auth {
     &__wave-img {
-      top: -20vw;
+      top: -10vw;
       right: 0;
     }
 
     &__img {
       display: none;
-    }
-
-    &__form {
-      margin-top: 10em;
     }
   }
 }
