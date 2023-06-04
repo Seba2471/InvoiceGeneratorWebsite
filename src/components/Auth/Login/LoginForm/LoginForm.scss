@@ -1,23 +1,12 @@
 @import '/src/assets//scss/mixins/colors';
+@import '../../Shared/FormStyle';
 
 .login-form {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 1em;
-  width: 90%;
+  @include auth-form;
 
   &__link {
     text-decoration: none;
     color: black;
-  }
-
-  &__form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
   }
 
   &__restart-password-link {
@@ -47,7 +36,7 @@
 
 @media (min-width: 768px) {
   .login-form {
-    width: 70%;
+    @include auth-form-media-768px;
 
     &__restart-password-link {
       font-size: 2rem;
@@ -61,8 +50,7 @@
 
 @media (min-width: 992px) {
   .login-form {
-    width: 50%;
-
+    @include auth-form-media-992px;
     &__restart-password-link {
       font-size: 2rem;
     }

@@ -1,0 +1,17 @@
+@import '../../Shared/FormStyle';
+
+.confirm-email-form {
+  @include auth-form;
+}
+
+//media
+@media (min-width: 768px) {
+  .confirm-email-form {
+    @include auth-form-media-768px;
+  }
+}
+@media (min-width: 992px) {
+  .confirm-email-form {
+    @include auth-form-media-992px;
+  }
+}

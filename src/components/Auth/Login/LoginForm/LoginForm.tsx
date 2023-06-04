@@ -5,11 +5,11 @@ import clearFormFields from '../../../../helpers/clearFormFields';
 import LoginInput from '../../../UI/Form/AuthInput/AuthInput';
 import ErrorFeedback from '../../../UI/Form/ErrorFeedback';
 import { useNavigate } from 'react-router-dom';
-import Underline from '../../Underline/Underline';
+import Underline from '../../Shared/Underline/Underline';
 import './LoginForm.scss';
 import ButtonWithSpinner from '../../../UI/Buttons/ButtonWithSpinner/ButtonWithSpinner';
 import Button from '../../../UI/Buttons/Button/Button';
-import Title from '../../Title/Title';
+import Title from '../../Shared/Title/Title';
 
 type LoginFormTypes = {
   email: FormProperty<string>;

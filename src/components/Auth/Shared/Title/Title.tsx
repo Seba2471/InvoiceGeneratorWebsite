@@ -1,5 +1,5 @@
 import Underline from '../Underline/Underline';
-import avatar from '../../../assets/images/avatar.svg';
+import avatar from '../../../../assets/images/avatar.svg';
 import './Title.scss';
 
 export default function Title(props: { title: string }) {

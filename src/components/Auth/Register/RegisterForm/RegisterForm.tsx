@@ -5,12 +5,12 @@ import clearFormFields from '../../../../helpers/clearFormFields';
 import ErrorFeedback from '../../../UI/Form/ErrorFeedback';
 import { RegisterFormTypes } from '../../../../types/Forms/RegisterFormType';
 import { comparePassword } from './RegisterFormHelpers';
-import Title from '../../Title/Title';
+import Title from '../../Shared/Title/Title';
 import AuthInput from '../../../UI/Form/AuthInput/AuthInput';
 import ButtonWithSpinner from '../../../UI/Buttons/ButtonWithSpinner/ButtonWithSpinner';
 import Button from '../../../UI/Buttons/Button/Button';
 import './RegisterForm.scss';
-import Underline from '../../Underline/Underline';
+import Underline from '../../Shared/Underline/Underline';
 
 export default function RegisterForm(props: { onRegister: Function }) {
   const navigate = useNavigate();

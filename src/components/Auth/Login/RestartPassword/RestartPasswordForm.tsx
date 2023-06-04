@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { validateRules } from '../../../helpers/validation/validations';
-import { FormProperty } from '../../../types/Forms/FormProperty';
-import SuccessAlert from '../../UI/Alerts/SuccessAlert';
-import LoginInput from '../../UI/Form/AuthInput/AuthInput';
-import ErrorAlert from '../../UI/Alerts/ErrorAlert';
-import Title from '../Title/Title';
-import ButtonWithSpinner from '../../UI/Buttons/ButtonWithSpinner/ButtonWithSpinner';
-import Underline from '../Underline/Underline';
-import Button from '../../UI/Buttons/Button/Button';
+import { validateRules } from '../../../../helpers/validation/validations';
+import { FormProperty } from '../../../../types/Forms/FormProperty';
+import SuccessAlert from '../../../UI/Alerts/SuccessAlert';
+import LoginInput from '../../../UI/Form/AuthInput/AuthInput';
+import ErrorAlert from '../../../UI/Alerts/ErrorAlert';
+import Title from '../../Shared/Title/Title';
+import ButtonWithSpinner from '../../../UI/Buttons/ButtonWithSpinner/ButtonWithSpinner';
+import Underline from '../../Shared/Underline/Underline';
+import Button from '../../../UI/Buttons/Button/Button';
 import { useNavigate } from 'react-router-dom';
 import './RestartPassword.scss';
 
