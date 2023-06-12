@@ -8,8 +8,8 @@
 
   &__wave-img {
     position: absolute;
-    top: -68vw;
-    right: -45vw;
+    top: -50vw;
+    right: -30vw;
     transform: rotate(180deg);
     height: 100vh;
     z-index: -5;
@@ -37,8 +37,8 @@
 @media (min-width: 768px) {
   .auth {
     &__wave-img {
-      top: -50vw;
-      right: -22vw;
+      top: -25vw;
+      right: -12vw;
     }
 
     &__img {
@@ -55,7 +55,7 @@
   .auth {
     &__wave-img {
       top: -10vw;
-      right: 0;
+      right: -20vw;
     }
 
     &__img {
