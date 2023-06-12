@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FiHome, FiBarChart2, FiSettings } from 'react-icons/fi';
-import { IoDocuments, IoPeople } from 'react-icons/io5';
+import { IoDocuments, IoPeople, IoLogOutOutline } from 'react-icons/io5';
 import { NavLink } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import './Hamburger.scss';
@@ -122,6 +122,25 @@ export default function Nav() {
             >
               <FiSettings className="navbar__nav-link-icon" />
               <span>Ustawienia</span>
+            </NavLink>
+          </div>
+          <div
+            className={`${
+              location.pathname === '/settings'
+                ? 'navbar__nav-item navbar__nav-item--show'
+                : 'navbar__nav-item'
+            }`}
+          >
+            <NavLink
+              to="/logout"
+              className={({ isActive }) =>
+                isActive
+                  ? 'navbar__nav-link navbar__nav-link--active'
+                  : 'navbar__nav-link'
+              }
+            >
+              <IoLogOutOutline className="navbar__nav-link-icon" />
+              <span>Wyloguj</span>
             </NavLink>
           </div>
         </div>
