@@ -1,0 +1,55 @@
+@import '/src/assets/scss/mixins/colors';
+
+.auth-input {
+  &__input-group {
+    font-size: 1.8rem;
+    margin-top: 0.5em;
+    width: 100%;
+
+    .invalid-feedback {
+      p {
+        margin: 0;
+      }
+    }
+  }
+
+  &__input {
+    border-radius: 8px;
+    transition: box-shadow 0.3s;
+    font-size: 1.8rem;
+    padding: 0.5em;
+    padding-left: 1em;
+
+    &:focus {
+      border: 1px solid $main;
+      box-shadow: 0px 0px 7px 1px $main;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .auth-input {
+    &__input-group {
+      font-size: 2rem;
+    }
+    &__input {
+      font-size: 2.5rem;
+      &::placeholder {
+        font-size: 2.2rem;
+      }
+    }
+  }
+}
+@media (min-width: 992px) {
+  .auth-input {
+    &__input-group {
+      font-size: 2.4rem;
+    }
+    &__input {
+      font-size: 2.2rem;
+      &::placeholder {
+        font-size: 2.2rem;
+      }
+    }
+  }
+}

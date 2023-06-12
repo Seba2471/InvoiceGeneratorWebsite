@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
-import styles from './LoginForm.module.css';
-import InputEmail from '../../../UI/Form/InputEmail';
-import InputPassword from '../../../UI/Form/InputPassword';
-import Button from '../../../UI/Button/Button';
-import { validateRules } from '../../../../helpers/Validation/validations';
-import { FormProperty } from '../../../../types/FormProperty';
+import { FormProperty } from '../../../../types/Forms/FormProperty';
+import { validateRules } from '../../../../helpers/validation/validations';
 import clearFormFields from '../../../../helpers/clearFormFields';
-import ErrorFeedback from '../../../UI/Form/ErrorFeedback';
+import LoginInput from '../../../UI/Form/AuthInput/AuthInput';
+import ErrorFeedback from '../../../UI/Form/ErrorFeedback/ErrorFeedback';
+import { useNavigate } from 'react-router-dom';
+import Underline from '../../Shared/Underline/Underline';
+import './LoginForm.scss';
+import ButtonWithSpinner from '../../../UI/Buttons/ButtonWithSpinner/ButtonWithSpinner';
+import Button from '../../../UI/Buttons/Button/Button';
+import Title from '../../Shared/Title/Title';
 
 type LoginFormTypes = {
   email: FormProperty<string>;
@@ -14,6 +17,8 @@ type LoginFormTypes = {
 };
 
 export default function LoginForm(props: { onLogin: Function }) {
+  const navigate = useNavigate();
+
   const [form, setForm] = useState<LoginFormTypes>({
     email: {
       value: '',
@@ -28,6 +33,7 @@ export default function LoginForm(props: { onLogin: Function }) {
       rules: ['required'],
     },
   });
+
   const [loading, setLoading] = useState(false);
   const [loginError, setLoginError] = useState('');
 
@@ -50,7 +56,7 @@ export default function LoginForm(props: { onLogin: Function }) {
 
   const submitForm = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    setLoginError('');
     const errors = {
       email: validateRules(form.email.rules, form.email.value),
       password: validateRules(form.password.rules, form.password.value),
@@ -76,7 +82,6 @@ export default function LoginForm(props: { onLogin: Function }) {
       }
     }
   };
-
   const changeHandler = (value: string, fieldName: keyof LoginFormTypes) => {
     const errorMessage = validateRules(form[fieldName].rules, value);
 
@@ -92,27 +97,44 @@ export default function LoginForm(props: { onLogin: Function }) {
   };
 
   return (
-    <form className="main" onSubmit={(e) => submitForm(e)}>
-      <h1 className={`text-center ${styles.header}`}> Logowanie </h1>
-      <InputEmail
-        placeHolder="Email"
-        value={form.email.value}
-        onChange={(value: string) => changeHandler(value, 'email')}
-        error={form.email.error}
-        showError={form.email.showError}
-      />
-      <InputPassword
-        placeHolder="Hasło"
-        value={form.password.value}
-        onChange={(value: string) => changeHandler(value, 'password')}
-        error={form.password.error}
-        showError={form.password.showError}
-      />
-      <ErrorFeedback error={loginError} />
-      <div className="mt-2 ms-2">Zapomniałem hasła</div>
-      <Button className={'p-2'} padding={'0'} loading={loading}>
-        Zaloguj się
-      </Button>
-    </form>
+    <div className="login-form">
+      <Title title="Logowanie" />
+      <form className="login-form__form" onSubmit={submitForm}>
+        <LoginInput
+          className="login-form__input-group"
+          inputClassName="login-form__input"
+          placeHolder={'Email'}
+          value={form.email.value}
+          onChange={(value: string) => changeHandler(value, 'email')}
+          error={form.email.error}
+          showError={form.email.showError}
+        />
+        <LoginInput
+          className="login-form__input-group"
+          inputClassName="login-form__input"
+          placeHolder={'Hasło'}
+          type={'password'}
+          value={form.password.value}
+          onChange={(value: string) => changeHandler(value, 'password')}
+          error={form.password.error}
+          showError={form.password.showError}
+        />
+        <ErrorFeedback error={loginError} />
+        <a
+          className="login-form__link login-form__restart-password-link"
+          href="/password_restart"
+        >
+          Nie pamiętasz hasła?
+        </a>
+        <ButtonWithSpinner
+          value="Zaloguj"
+          loading={loading}
+          action={() => null}
+        />
+      </form>
+      <Underline />
+      <p className="login-form__register-text">Nie masz jeszcze konta ?</p>
+      <Button value="Zarejestruj się" action={() => navigate('/register')} />
+    </div>
   );
 }

@@ -1,0 +1,93 @@
+@import '../../../assets//scss/mixins/colors';
+.auth {
+  display: flex;
+  position: relative;
+  overflow: hidden;
+  // overflow-y: scroll;
+  width: 100%;
+
+  &__wave-img {
+    position: absolute;
+    top: -68vw;
+    right: -45vw;
+    transform: rotate(180deg);
+    height: 100vh;
+    z-index: -5;
+  }
+
+  &__wrapper {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 1200px;
+  }
+
+  &__img {
+    display: none;
+  }
+
+  &__form {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+    justify-content: center;
+    margin-top: 1.5em;
+  }
+}
+
+@media (min-width: 768px) {
+  .auth {
+    &__wave-img {
+      top: -50vw;
+      right: -22vw;
+    }
+
+    &__img {
+      display: none;
+    }
+
+    &__form {
+      margin-top: 2.5em;
+    }
+  }
+}
+
+@media (min-width: 992px) {
+  .auth {
+    &__wave-img {
+      top: -10vw;
+      right: 0;
+    }
+
+    &__img {
+      display: none;
+    }
+  }
+}
+@media (min-width: 1200px) {
+  .auth {
+    &__wave-img {
+      top: -25%;
+    }
+
+    &__img {
+      position: absolute;
+      display: block;
+      height: 30vw;
+      top: 50%;
+      transform: translateY(-30%);
+      left: -1em;
+    }
+  }
+}
+@media (min-width: 1800px) {
+  .auth {
+    &__wave-img {
+      top: -12%;
+    }
+
+    &__img {
+      transform: translateY(-50%);
+      left: 1em;
+    }
+  }
+}

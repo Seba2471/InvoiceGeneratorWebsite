@@ -1,4 +1,4 @@
-import { FormProperty } from '../../../types/FormProperty';
+import { FormProperty } from '../../Forms/FormProperty';
 
 export type InvoiceFormPersonAddresType = {
   line1: FormProperty<string>;

@@ -1,20 +1,19 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { validateRules } from '../../../../helpers/validation/validations';
 import clearFormFields from '../../../../helpers/clearFormFields';
-import { validateRules } from '../../../../helpers/Validation/validations';
-import { FormProperty } from '../../../../types/FormProperty';
-import Button from '../../../UI/Button/Button';
-import ErrorFeedback from '../../../UI/Form/ErrorFeedback';
-import InputEmail from '../../../UI/Form/InputEmail';
-import InputPassword from '../../../UI/Form/InputPassword';
-import styles from './RegisterForm.module.css';
-
-type RegisterFormTypes = {
-  email: FormProperty<string>;
-  password: FormProperty<string>;
-  confirmPassword: FormProperty<string>;
-};
+import ErrorFeedback from '../../../UI/Form/ErrorFeedback/ErrorFeedback';
+import { RegisterFormTypes } from '../../../../types/Forms/RegisterFormType';
+import { comparePassword } from './RegisterFormHelpers';
+import Title from '../../Shared/Title/Title';
+import AuthInput from '../../../UI/Form/AuthInput/AuthInput';
+import ButtonWithSpinner from '../../../UI/Buttons/ButtonWithSpinner/ButtonWithSpinner';
+import Button from '../../../UI/Buttons/Button/Button';
+import './RegisterForm.scss';
+import Underline from '../../Shared/Underline/Underline';
 
 export default function RegisterForm(props: { onRegister: Function }) {
+  const navigate = useNavigate();
   const [form, setForm] = useState<RegisterFormTypes>({
     email: {
       value: '',
@@ -86,7 +85,7 @@ export default function RegisterForm(props: { onRegister: Function }) {
         form.confirmPassword.value,
       );
       if (error.DuplicateUserName) {
-        setRegisterError('Użytkownik o takim adresie email już istnieje');
+        setRegisterError('Taki użytkownik już istnieje!');
         clearForm({ clearEmail: true });
       } else {
         setRegisterError('Coś poszło nie tak... Spróbuj później');
@@ -97,6 +96,24 @@ export default function RegisterForm(props: { onRegister: Function }) {
   };
 
   const changeHandler = (value: string, fieldName: keyof RegisterFormTypes) => {
+    const notTheSamePasswordMessage = 'Podane hasła muszą być takie same';
+
+    if (
+      (fieldName === 'confirmPassword' && value.length >= 6) ||
+      (fieldName === 'password' && value.length >= 6)
+    ) {
+      const newForm = comparePassword(
+        value,
+        fieldName,
+        form,
+        notTheSamePasswordMessage,
+      );
+
+      if (newForm) {
+        setForm(newForm);
+        return;
+      }
+    }
     const errorMessage = validateRules(form[fieldName].rules, value);
 
     setForm({
@@ -109,33 +126,43 @@ export default function RegisterForm(props: { onRegister: Function }) {
       },
     });
   };
-
   return (
-    <form className='main' onSubmit={(e) => submitForm(e)}>
-      <h1 className={`text-center ${styles.header}`}>Rejestracja </h1>
-      <InputEmail
-        placeHolder='Email'
-        value={form.email.value}
-        onChange={(value: string) => changeHandler(value, 'email')}
-        error={form.email.error}
-        showError={form.email.showError}
-      />
-      <InputPassword
-        placeHolder='Hasło'
-        value={form.password.value}
-        onChange={(value: string) => changeHandler(value, 'password')}
-        error={form.password.error}
-        showError={form.password.showError}
-      />
-      <InputPassword
-        placeHolder='Powtórz hasło'
-        value={form.confirmPassword.value}
-        onChange={(value: string) => changeHandler(value, 'confirmPassword')}
-        error={form.confirmPassword.error}
-        showError={form.confirmPassword.showError}
-      />
-      <ErrorFeedback error={registerError} />
-      <Button loading={loading}>Zarejestuj się</Button>
-    </form>
+    <div className="register-form">
+      <Title title="Rejestracja" />
+      <form className="register-form__form" onSubmit={submitForm}>
+        <AuthInput
+          placeHolder={'Email'}
+          value={form.email.value}
+          onChange={(value: string) => changeHandler(value, 'email')}
+          error={form.email.error}
+          showError={form.email.showError}
+        />
+        <AuthInput
+          placeHolder={'Hasło'}
+          type={'password'}
+          value={form.password.value}
+          onChange={(value: string) => changeHandler(value, 'password')}
+          error={form.password.error}
+          showError={form.password.showError}
+        />
+        <AuthInput
+          placeHolder={'Powtórz hasło'}
+          type={'password'}
+          value={form.confirmPassword.value}
+          onChange={(value: string) => changeHandler(value, 'confirmPassword')}
+          error={form.confirmPassword.error}
+          showError={form.confirmPassword.showError}
+        />
+        <ErrorFeedback error={registerError} />
+        <ButtonWithSpinner
+          value="Zarejestruj się"
+          loading={loading}
+          action={() => null}
+        />
+      </form>
+      <Underline />
+      <p className="register-form__login-text">Masz już konto ? </p>
+      <Button value="Zaloguj się" action={() => navigate('/login')} />
+    </div>
   );
 }

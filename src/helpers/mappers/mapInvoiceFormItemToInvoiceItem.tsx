@@ -1,4 +1,4 @@
-import { FormProperty } from '../../types/FormProperty';
+import { FormProperty } from '../../types/Forms/FormProperty';
 import { InvoiceFormItemType } from '../../types/Invoice/Form/InvoiceFormType';
 import { InvoiceItem } from '../../types/Invoice/InvoiceType';
 

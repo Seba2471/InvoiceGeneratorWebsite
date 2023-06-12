@@ -1,0 +1,29 @@
+@import '/src/assets/scss/mixins/colors';
+
+.btn {
+  width: 100%;
+  padding: 0.8em 1.2em;
+  margin: 0.5em;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  background-color: $main;
+  text-align: center;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  font-size: 1.5rem;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: $secondary;
+    color: #fff;
+  }
+}
+
+//media
+@media (min-width: 768px) {
+  .btn {
+    font-size: 1.8rem;
+  }
+}

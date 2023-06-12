@@ -4,7 +4,7 @@ import InputDate from '../../UI/Form/InputDate';
 import PersonForm from './PersonForm/PersonForm';
 import InvoiceItemsTable from './InvoiceItemsTable/InvoiceItemsTable';
 import InvoiceItemsMobileTable from './InvoiceItemsMobileTable/InvoiceItemsMobileTable';
-import LoadingButton from '../../UI/Button/LoadingButton';
+import LoadingButton from '../../UI/Buttons/LoadingButton';
 import {
   initInvoiceFormValue,
   emptyInvoiceFormItem,
@@ -16,9 +16,9 @@ import {
   InvoiceFormType,
 } from '../../../types/Invoice/Form/InvoiceFormType';
 import changeFieldValueInObject from '../../../helpers/changeFieldValueInObject';
-import validateInvoiceForm from '../../../helpers/Validation/validInvoiceForm';
+import validateInvoiceForm from '../../../helpers/validation/validInvoiceForm';
 import invoiceServices from '../../../services/InvoiceServices';
-import { validateRules } from '../../../helpers/Validation/validations';
+import { validateRules } from '../../../helpers/validation/validations';
 import errorNotify from '../../../helpers/notify/errorNotify';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -155,15 +155,15 @@ export default function InvoiceForm() {
   };
 
   return (
-    <div>
+    <div className="row">
       <h4> Nowa faktura </h4>
       <span> Wypełnij dane faktury</span>
-      <form className='mt-4' onSubmit={(e) => generateInvoice(e)}>
-        <div className='row'>
-          <div className='col-12 col-md-12 col-lg-4'>
+      <form className="mt-4" onSubmit={(e) => generateInvoice(e)}>
+        <div className="row">
+          <div className="col-12 col-md-12 col-lg-4">
             <InputText
-              className='col-lg-12 col-md-4'
-              label='Numer faktury'
+              className="col-lg-12 col-md-4"
+              label="Numer faktury"
               value={form.invoiceNumber.value}
               error={form.invoiceNumber.error}
               showError={form.invoiceNumber.showError}
@@ -172,27 +172,27 @@ export default function InvoiceForm() {
               }
             />
           </div>
-          <div className='col-12 col-md-5 col-lg-4 mt-md-3 mt-lg-0'>
+          <div className="col-12 col-md-5 col-lg-4 mt-md-3 mt-lg-0">
             <InputDate
-              label='Data sprzedaży'
+              label="Data sprzedaży"
               value={form.soldDate.value}
               error={form.soldDate.error}
               showError={form.soldDate.showError}
               onChange={(value: string) => changeInputValue(value, 'soldDate')}
             />
           </div>
-          <div className='col-12 col-md-5 col-lg-4 mt-md-3 mt-lg-0'>
+          <div className="col-12 col-md-5 col-lg-4 mt-md-3 mt-lg-0">
             <InputDate
-              label='Data wystawienia'
+              label="Data wystawienia"
               value={form.issueDate.value}
               error={form.issueDate.error}
               showError={form.issueDate.showError}
               onChange={(value: string) => changeInputValue(value, 'issueDate')}
             />
           </div>
-          <div className='col-12 col-md-5 mt-4 offset-md-1'>
+          <div className="col-12 col-md-5 mt-4 offset-md-1">
             <PersonForm
-              header='Sprzedający'
+              header="Sprzedający"
               fullName={form.seller.fullName}
               nip={form.seller.nip}
               line1={form.seller.address.line1}
@@ -211,9 +211,9 @@ export default function InvoiceForm() {
               }
             />
           </div>
-          <div className='col-12 col-md-5 mt-4'>
+          <div className="col-12 col-md-5 mt-4">
             <PersonForm
-              header='Nabywca'
+              header="Nabywca"
               fullName={form.buyer.fullName}
               nip={form.buyer.nip}
               line1={form.buyer.address.line1}
@@ -232,8 +232,8 @@ export default function InvoiceForm() {
               }
             />
           </div>
-          <div className='col-md-12'>
-            <div className='d-none d-md-block m-3'>
+          <div className="col-md-12">
+            <div className="d-none d-md-block m-3">
               <InvoiceItemsTable
                 items={form.invoiceItems.value}
                 error={form.invoiceItems.error}
@@ -251,7 +251,7 @@ export default function InvoiceForm() {
                 removeItem={removeItem}
               />
             </div>
-            <div className='d-md-none'>
+            <div className="d-md-none">
               <InvoiceItemsMobileTable
                 items={form.invoiceItems.value}
                 vatRate={form.vatRate.value}
@@ -270,7 +270,7 @@ export default function InvoiceForm() {
           </div>
         </div>
         <LoadingButton
-          className='btn btn-success p-3 ps-5 pe-5 col-12 col-md-6 offset-md-3 col-lg-4 offset-lg-0 mt-4'
+          className="btn btn-success p-3 ps-5 pe-5 col-12 col-md-6 offset-md-3 col-lg-4 offset-lg-0 mt-4"
           loading={loading}
         >
           Wygeneruj fakturę

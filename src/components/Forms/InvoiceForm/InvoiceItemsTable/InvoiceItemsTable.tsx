@@ -2,7 +2,7 @@ import React from 'react';
 import Row from './Row/Row';
 import Select from '../../../UI/Form/Select';
 import { InvoiceFormItemType } from '../../../../types/Invoice/Form/InvoiceFormType';
-import { FormProperty } from '../../../../types/FormProperty';
+import { FormProperty } from '../../../../types/Forms/FormProperty';
 import ErrorAlert from '../../../UI/Alerts/ErrorAlert';
 
 type PropsTypes = {
@@ -29,17 +29,17 @@ export default function InvoiceItemsTable(props: PropsTypes) {
 
   return (
     <div className={`${className} row`}>
-      <table className='table mt-5'>
+      <table className="table mt-5">
         <thead>
           <tr>
-            <th scope='col'>LP</th>
-            <th className='col-8' scope='col'>
+            <th scope="col">LP</th>
+            <th className="col-8" scope="col">
               Nazwa towaru / usługi
             </th>
-            <th className='col-1' scope='col'>
+            <th className="col-1" scope="col">
               Ilość
             </th>
-            <th scope='col'>Cena netto</th>
+            <th scope="col">Cena netto</th>
             <th />
           </tr>
         </thead>
@@ -61,37 +61,37 @@ export default function InvoiceItemsTable(props: PropsTypes) {
           })}
         </tbody>
       </table>
-      <div className='row'>
+      <div className="row">
         <ErrorAlert error={props.error} />
         <button
-          className='btn btn-success col-6 col-md-3'
+          className="btn btn-success col-6 col-md-3"
           onClick={(e) => addItem(e)}
         >
           Dodaj
         </button>
       </div>
-      <div className='row'>
-        <div className=' col-12 offset-md-8 col-md-2'>
+      <div className="row">
+        <div className=" col-12 offset-md-8 col-md-2">
           <Select
             options={[
               { value: 'EUR', label: 'EURO' },
               { value: 'PLN', label: 'PLN' },
             ]}
-            label='Waluta'
+            label="Waluta"
             value={props.currency.value}
             error={props.currency.error}
             showError={props.currency.showError}
             onChange={(value: string) => props.changeCurrency(value)}
           />
         </div>
-        <div className='col-12 col-md-2'>
+        <div className="col-12 col-md-2">
           <Select
             options={[
               { value: 0, label: '0%' },
               { value: 15, label: '15%' },
               { value: 23, label: '23%' },
             ]}
-            label='VAT [%]'
+            label="VAT [%]"
             value={props.vatRate.value}
             error={props.vatRate.error}
             showError={props.vatRate.showError}

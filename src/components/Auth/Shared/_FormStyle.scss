@@ -1,0 +1,27 @@
+@mixin auth-form {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1em;
+  width: 90%;
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+}
+
+//media
+
+@mixin auth-form-media-768px {
+  @media (min-width: 768px) {
+    width: 60%;
+  }
+}
+
+@mixin auth-form-media-992px {
+  width: 40%;
+}

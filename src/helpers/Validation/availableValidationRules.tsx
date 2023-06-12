@@ -1,10 +1,4 @@
-export type availableRules = {
-  required: Function;
-  email: Function;
-  min: Function;
-  number: Function;
-  notEmptyArray: Function;
-};
+import { availableRules } from '../../types/Validation/availableRules';
 
 export const validate: availableRules = {
   required(value: any) {

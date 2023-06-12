@@ -1,5 +1,5 @@
-import { FormProperty } from '../types/FormProperty';
-import { validateRules } from './Validation/validations';
+import { FormProperty } from '../types/Forms/FormProperty';
+import { validateRules } from './validation/validations';
 
 function changeFieldValueInObject<T>(
   form: T,

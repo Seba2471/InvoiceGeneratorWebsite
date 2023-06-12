@@ -16,8 +16,8 @@ type PropsTypes = {
 
 export default function InvoiceItemsMobileTable(props: PropsTypes) {
   return (
-    <div className='mt-3 mb-4'>
-      <h5 className='text-center'> Towary/usługi </h5>
+    <div className="mt-3 mb-4">
+      <h5 className="text-center"> Towary/usługi </h5>
       {props.items.map((row, index) => {
         return (
           <MobileRow
@@ -34,31 +34,31 @@ export default function InvoiceItemsMobileTable(props: PropsTypes) {
         );
       })}
       <button
-        className='btn btn-success mt-3 col-12'
+        className="btn btn-success mt-3 col-12"
         onClick={(e) => props.addItem(e)}
       >
         Dodaj
       </button>
-      <div className='row'>
-        <div className=' col-12 mt-3 justify-content-center'>
+      <div className="row">
+        <div className=" col-12 mt-3 justify-content-center">
           <Select
             options={[
               { value: 'EUR', label: 'EURO' },
               { value: 'PLN', label: 'PLN' },
             ]}
-            label='Waluta'
+            label="Waluta"
             value={props.currency}
             onChange={(value: string) => props.changeCurrency(value)}
           />
         </div>
-        <div className='col-12 mt-3 justify-content-center'>
+        <div className="col-12 mt-3 justify-content-center">
           <Select
             options={[
               { value: 0, label: '0%' },
               { value: 15, label: '15%' },
               { value: 23, label: '23%' },
             ]}
-            label='VAT [%]'
+            label="VAT [%]"
             value={props.vatRate}
             onChange={(value: number) => props.changeVatRate(value)}
           />

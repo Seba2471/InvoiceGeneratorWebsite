@@ -1,0 +1,25 @@
+.errorFeedback {
+  &__input {
+    display: none;
+  }
+
+  &__message {
+    font-size: 1.7rem;
+    font-weight: 600;
+  }
+}
+
+@media (min-width: 768px) {
+  .errorFeedback {
+    &__message {
+      font-size: 2rem;
+    }
+  }
+}
+@media (min-width: 1200px) {
+  .errorFeedback {
+    &__message {
+      font-size: 2.2rem;
+    }
+  }
+}

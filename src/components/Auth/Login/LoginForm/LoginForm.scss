@@ -1,0 +1,62 @@
+@import '/src/assets//scss/mixins/colors';
+@import '../../Shared/FormStyle';
+
+.login-form {
+  @include auth-form;
+
+  &__link {
+    text-decoration: none;
+    color: black;
+  }
+
+  &__restart-password-link {
+    align-self: flex-end;
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
+    font-weight: 400;
+    letter-spacing: 1.5px;
+    color: $dark;
+    font-size: 1.4rem;
+    transition: color 0.3s;
+
+    &:hover {
+      color: $secondary;
+    }
+  }
+
+  &__register-text {
+    letter-spacing: 1px;
+    color: $dark;
+    font-size: 1.6rem;
+    font-weight: 600;
+  }
+}
+
+//media
+
+@media (min-width: 768px) {
+  .login-form {
+    @include auth-form-media-768px;
+
+    &__restart-password-link {
+      font-size: 1.7rem;
+    }
+
+    &__register-text {
+      font-size: 2rem;
+    }
+  }
+}
+
+@media (min-width: 992px) {
+  .login-form {
+    @include auth-form-media-992px;
+    &__restart-password-link {
+      font-size: 1.5rem;
+    }
+
+    &__register-text {
+      font-size: 2rem;
+    }
+  }
+}

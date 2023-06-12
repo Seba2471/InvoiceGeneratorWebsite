@@ -3,7 +3,7 @@ import {
   InvoiceFormPersonType,
 } from '../../types/Invoice/Form/InvoiceFormType';
 import { validateRules } from './validations';
-import { FormProperty } from '../../types/FormProperty';
+import { FormProperty } from '../../types/Forms/FormProperty';
 
 function validatedObjectFormPropertyType<T extends Object>(data: T) {
   const newData = { ...data };
@@ -27,6 +27,8 @@ function validatedObjectFormPropertyType<T extends Object>(data: T) {
         field.showError = true;
       }
     }
+
+    return key;
   });
 
   return { isValid, data: newData };

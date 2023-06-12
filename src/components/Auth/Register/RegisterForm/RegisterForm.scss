@@ -1,0 +1,30 @@
+@import '/src/assets/scss/mixins/colors';
+@import '../../Shared/FormStyle';
+
+.register-form {
+  @include auth-form;
+
+  &__login-text {
+    letter-spacing: 1px;
+    color: $dark;
+    font-size: 1.6rem;
+    font-weight: 600;
+  }
+}
+
+//media
+@media (min-width: 768px) {
+  .register-form {
+    @include auth-form-media-768px;
+  }
+}
+
+@media (min-width: 992px) {
+  .register-form {
+    @include auth-form-media-992px;
+
+    &__login-text {
+      font-size: 2rem;
+    }
+  }
+}
