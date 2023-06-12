@@ -22,6 +22,7 @@ const content = (
     <Route path="/" element={<AuthenticatedRoute />}>
       <Route path="/my-invoices" element={<Invoices />} />
       <Route path="/contractors" element={<PageUnderConstruction />} />
+      <Route path="/stats" element={<PageUnderConstruction />} />
       <Route path="/settings" element={<PageUnderConstruction />} />
       <Route path="/" element={<Home />} />
     </Route>
