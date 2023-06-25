@@ -18,6 +18,9 @@ export const validate: availableRules = {
   notEmptyArray(value: Array<any>, data: { message: string }) {
     return value.length > 0 ? '' : data.message;
   },
+  positive(value: number) {
+    return value > -1 ? '' : 'Wartość musi być dodania';
+  },
 };
 
 export function validateEmail(text: string) {

@@ -1,17 +1,76 @@
+@import '/src/assets/scss/mixins/colors';
+
 .layout {
   display: flex;
   position: relative;
+  min-height: 100vh;
   overflow: hidden;
-  height: 100vh;
+  background-color: $background;
+
+  &__nav {
+    z-index: 5;
+    overflow: hidden;
+  }
+
+  &__content {
+    margin-top: 5em;
+    overflow: scroll;
+  }
 }
 
 @media (min-width: 992px) {
   .layout {
     &__nav {
-      width: 20em;
+      width: 35%;
     }
     &__content {
+      overflow: auto;
+      display: flex;
+      width: 100%;
+      padding: 0 2em;
+      margin: 0;
+    }
+  }
+}
+@media (min-width: 1200px) {
+  .layout {
+    &__nav {
+      width: 20%;
+    }
+    &__content {
+      overflow: auto;
+      display: flex;
       width: 80%;
+      padding: 0 2em;
+      margin: auto;
+    }
+  }
+}
+@media (min-width: 1600px) {
+  .layout {
+    &__nav {
+      width: 20%;
+    }
+    &__content {
+      overflow: auto;
+      display: flex;
+      width: 70%;
+      padding: 0 2em;
+      margin: auto;
+    }
+  }
+}
+@media (min-width: 1900px) {
+  .layout {
+    &__nav {
+      width: 20%;
+    }
+    &__content {
+      overflow: auto;
+      display: flex;
+      width: 60%;
+      padding: 0 2em;
+      margin: auto;
     }
   }
 }

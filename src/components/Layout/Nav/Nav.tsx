@@ -9,7 +9,7 @@ import './Nav.scss';
 
 export default function Nav() {
   const [mobileNavActive, setMobileNavActive] = useState(false);
-  const [auth, setAuth] = useAuth();
+  const [, setAuth] = useAuth();
   const navigate = useNavigate();
   let location = useLocation();
 

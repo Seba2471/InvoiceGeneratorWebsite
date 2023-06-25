@@ -95,12 +95,12 @@ export const emptyInvoiceFormItem: InvoiceFormItemType = {
     value: 1,
     error: '',
     showError: false,
-    rules: ['required', 'number'],
+    rules: ['required', 'number', 'positive'],
   },
   cost: {
     value: 0,
     error: '',
     showError: false,
-    rules: ['required', 'number'],
+    rules: ['required', 'number', 'positive'],
   },
 };

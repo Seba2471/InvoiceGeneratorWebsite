@@ -4,4 +4,5 @@ export type availableRules = {
   min: Function;
   number: Function;
   notEmptyArray: Function;
+  positive: Function;
 };

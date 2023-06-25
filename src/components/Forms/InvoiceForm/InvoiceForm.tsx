@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
-import InputText from '../../UI/Form/InputText';
-import InputDate from '../../UI/Form/InputDate';
+import InputText from '../../UI/Form/Inputs/InputText/InputText';
+import InputDate from '../../UI/Form/Inputs/InputDate/InputDate';
 import PersonForm from './PersonForm/PersonForm';
-import InvoiceItemsTable from './InvoiceItemsTable/InvoiceItemsTable';
-import InvoiceItemsMobileTable from './InvoiceItemsMobileTable/InvoiceItemsMobileTable';
-import LoadingButton from '../../UI/Buttons/LoadingButton';
 import {
   initInvoiceFormValue,
   emptyInvoiceFormItem,
@@ -24,6 +21,9 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import successNotify from '../../../helpers/notify/successNotify';
 import clearInvoiceForm from '../../../helpers/clearInvoiceForm';
+import ButtonWithSpinner from '../../UI/Buttons/ButtonWithSpinner/ButtonWithSpinner';
+import './InvoiceForm.scss';
+import InvoiceItemsTable from './InvoiceItemsTable/InvoiceItemsTable';
 
 export default function InvoiceForm() {
   const [form, setForm] = useState<InvoiceFormType>(initInvoiceFormValue);
@@ -155,126 +155,100 @@ export default function InvoiceForm() {
   };
 
   return (
-    <div className="row">
-      <h4> Nowa faktura </h4>
-      <span> Wypełnij dane faktury</span>
-      <form className="mt-4" onSubmit={(e) => generateInvoice(e)}>
-        <div className="row">
-          <div className="col-12 col-md-12 col-lg-4">
-            <InputText
-              className="col-lg-12 col-md-4"
-              label="Numer faktury"
-              value={form.invoiceNumber.value}
-              error={form.invoiceNumber.error}
-              showError={form.invoiceNumber.showError}
-              onChange={(value: string) =>
-                changeInputValue(value, 'invoiceNumber')
-              }
-            />
-          </div>
-          <div className="col-12 col-md-5 col-lg-4 mt-md-3 mt-lg-0">
-            <InputDate
-              label="Data sprzedaży"
-              value={form.soldDate.value}
-              error={form.soldDate.error}
-              showError={form.soldDate.showError}
-              onChange={(value: string) => changeInputValue(value, 'soldDate')}
-            />
-          </div>
-          <div className="col-12 col-md-5 col-lg-4 mt-md-3 mt-lg-0">
-            <InputDate
-              label="Data wystawienia"
-              value={form.issueDate.value}
-              error={form.issueDate.error}
-              showError={form.issueDate.showError}
-              onChange={(value: string) => changeInputValue(value, 'issueDate')}
-            />
-          </div>
-          <div className="col-12 col-md-5 mt-4 offset-md-1">
-            <PersonForm
-              header="Sprzedający"
-              fullName={form.seller.fullName}
-              nip={form.seller.nip}
-              line1={form.seller.address.line1}
-              line2={form.seller.address.line2}
-              onChangeFullName={(value: string) =>
-                changePersonValue(value, 'seller', 'fullName')
-              }
-              onChangeAddresLine1={(value: string) =>
-                changePersonAdresValue(value, 'seller', 'line1')
-              }
-              onChangeAddresLine2={(value: string) =>
-                changePersonAdresValue(value, 'seller', 'line2')
-              }
-              onChangeNip={(value: string) =>
-                changePersonValue(value, 'seller', 'nip')
-              }
-            />
-          </div>
-          <div className="col-12 col-md-5 mt-4">
-            <PersonForm
-              header="Nabywca"
-              fullName={form.buyer.fullName}
-              nip={form.buyer.nip}
-              line1={form.buyer.address.line1}
-              line2={form.buyer.address.line2}
-              onChangeFullName={(value: string) =>
-                changePersonValue(value, 'buyer', 'fullName')
-              }
-              onChangeAddresLine1={(value: string) =>
-                changePersonAdresValue(value, 'buyer', 'line1')
-              }
-              onChangeAddresLine2={(value: string) =>
-                changePersonAdresValue(value, 'buyer', 'line2')
-              }
-              onChangeNip={(value: string) =>
-                changePersonValue(value, 'buyer', 'nip')
-              }
-            />
-          </div>
-          <div className="col-md-12">
-            <div className="d-none d-md-block m-3">
-              <InvoiceItemsTable
-                items={form.invoiceItems.value}
-                error={form.invoiceItems.error}
-                showError={form.invoiceItems.showError}
-                vatRate={form.vatRate}
-                currency={form.currency}
-                changeItem={changeItem}
-                changeCurrency={(value: string) =>
-                  changeInputValue(value, 'currency')
-                }
-                changeVatRate={(value: string) =>
-                  changeInputValue(value, 'vatRate')
-                }
-                addItem={addItem}
-                removeItem={removeItem}
-              />
-            </div>
-            <div className="d-md-none">
-              <InvoiceItemsMobileTable
-                items={form.invoiceItems.value}
-                vatRate={form.vatRate.value}
-                currency={form.currency.value}
-                changeItem={changeItem}
-                changeCurrency={(value: string) =>
-                  changeInputValue(value, 'currency')
-                }
-                changeVatRate={(value: string) =>
-                  changeInputValue(value, 'vatRate')
-                }
-                addItem={addItem}
-                removeItem={removeItem}
-              />
-            </div>
-          </div>
-        </div>
-        <LoadingButton
-          className="btn btn-success p-3 ps-5 pe-5 col-12 col-md-6 offset-md-3 col-lg-4 offset-lg-0 mt-4"
+    <div className="invoice-form">
+      <h2 className="invoice-form__title">Nowa faktura</h2>
+      <span className="invoice-form__subtitle"> Wypełnij dane faktury</span>
+      <form className="invoice-form__form" onSubmit={(e) => generateInvoice(e)}>
+        <InputText
+          className="invoice-form__form-invoice-number"
+          label="Numer faktury"
+          value={form.invoiceNumber.value}
+          error={form.invoiceNumber.error}
+          showError={form.invoiceNumber.showError}
+          onChange={(value: string) => changeInputValue(value, 'invoiceNumber')}
+        />
+        <InputDate
+          className="invoice-form__form-sold-date"
+          label="Data sprzedaży"
+          value={form.soldDate.value}
+          error={form.soldDate.error}
+          showError={form.soldDate.showError}
+          onChange={(value: string) => changeInputValue(value, 'soldDate')}
+        />
+        <InputDate
+          className="invoice-form__form-issue-date"
+          label="Data wystawienia"
+          value={form.issueDate.value}
+          error={form.issueDate.error}
+          showError={form.issueDate.showError}
+          onChange={(value: string) => changeInputValue(value, 'issueDate')}
+        />
+        <hr className="invoice-form__form-line-first" />
+        <PersonForm
+          className="invoice-form__form-person-form invoice-form__form-person-form-seller"
+          header="Sprzedający"
+          fullName={form.seller.fullName}
+          nip={form.seller.nip}
+          line1={form.seller.address.line1}
+          line2={form.seller.address.line2}
+          onChangeFullName={(value: string) =>
+            changePersonValue(value, 'seller', 'fullName')
+          }
+          onChangeAddresLine1={(value: string) =>
+            changePersonAdresValue(value, 'seller', 'line1')
+          }
+          onChangeAddresLine2={(value: string) =>
+            changePersonAdresValue(value, 'seller', 'line2')
+          }
+          onChangeNip={(value: string) =>
+            changePersonValue(value, 'seller', 'nip')
+          }
+        />
+        <hr className="invoice-form__form-line-secondary" />
+        <PersonForm
+          className="invoice-form__form-person-form invoice-form__form-person-form-buyer"
+          header="Nabywca"
+          fullName={form.buyer.fullName}
+          nip={form.buyer.nip}
+          line1={form.buyer.address.line1}
+          line2={form.buyer.address.line2}
+          onChangeFullName={(value: string) =>
+            changePersonValue(value, 'buyer', 'fullName')
+          }
+          onChangeAddresLine1={(value: string) =>
+            changePersonAdresValue(value, 'buyer', 'line1')
+          }
+          onChangeAddresLine2={(value: string) =>
+            changePersonAdresValue(value, 'buyer', 'line2')
+          }
+          onChangeNip={(value: string) =>
+            changePersonValue(value, 'buyer', 'nip')
+          }
+        />
+        <hr className="invoice-form__form-line-three" />
+        <InvoiceItemsTable
+          className="invoice-form__form-items-table"
+          items={form.invoiceItems.value}
+          error={form.invoiceItems.error}
+          showError={form.invoiceItems.showError}
+          vatRate={form.vatRate}
+          currency={form.currency}
+          changeItem={changeItem}
+          changeCurrency={(value: string) =>
+            changeInputValue(value, 'currency')
+          }
+          changeVatRate={(value: string) => changeInputValue(value, 'vatRate')}
+          addItem={addItem}
+          removeItem={removeItem}
+        />
+        <hr className="invoice-form__form-line-four" />
+        <ButtonWithSpinner
+          classnameButton="invoice-form__form-submit-btn"
+          classnameSpinner="invoice-form__form-spinner"
+          value="Wygeneruj fakturę"
           loading={loading}
-        >
-          Wygeneruj fakturę
-        </LoadingButton>
+          action={() => null}
+        />
       </form>
       <ToastContainer />
     </div>

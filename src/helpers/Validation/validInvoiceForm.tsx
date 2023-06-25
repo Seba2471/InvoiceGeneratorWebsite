@@ -1,6 +1,7 @@
 import {
   InvoiceFormType,
   InvoiceFormPersonType,
+  InvoiceFormItemType,
 } from '../../types/Invoice/Form/InvoiceFormType';
 import { validateRules } from './validations';
 import { FormProperty } from '../../types/Forms/FormProperty';
@@ -44,17 +45,42 @@ function validInvoicePerson(data: InvoiceFormPersonType) {
   };
 }
 
+function validInvoiceItems(data: FormProperty<Array<InvoiceFormItemType>>) {
+  const items = data.value;
+  let isValid = true;
+  let validateItems: Array<InvoiceFormItemType> = [];
+
+  items.forEach((item) => {
+    const validItem = validatedObjectFormPropertyType(item);
+    if (!validItem) {
+      isValid = false;
+    }
+    validateItems = [...validateItems, validItem.data];
+  });
+
+  return {
+    isValid,
+    data: { ...data, value: validateItems },
+  };
+}
+
 function validateInvoiceForm(data: InvoiceFormType) {
   const dataValid = validatedObjectFormPropertyType(data);
   const buyerValid = validInvoicePerson(dataValid.data.buyer);
   const sellerValid = validInvoicePerson(dataValid.data.seller);
+  const itemsValid = validInvoiceItems(dataValid.data.invoiceItems);
 
   const result: { isValid: boolean; data: InvoiceFormType } = {
-    isValid: dataValid.isValid && buyerValid.isValid && sellerValid.isValid,
+    isValid:
+      dataValid.isValid &&
+      buyerValid.isValid &&
+      sellerValid.isValid &&
+      itemsValid.isValid,
     data: {
       ...dataValid.data,
       seller: sellerValid.data,
       buyer: buyerValid.data,
+      invoiceItems: itemsValid.data,
     },
   };
 
