@@ -10,7 +10,7 @@ export default function PageItem(props: {
       className={`page-item ${props.className}`}
       onClick={() => props.setPage(props.page)}
     >
-      <span className='page-link'>{props.page.toString()}</span>
+      <span className="page-link">{props.page.toString()}</span>
     </li>
   );
 }

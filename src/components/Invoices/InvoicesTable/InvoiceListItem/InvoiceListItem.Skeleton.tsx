@@ -1,0 +1,63 @@
+import { Skeleton } from '@mui/material';
+export default function InvoiceListItemSkeleton() {
+  return (
+    <div className="invoices__loading-skeleton">
+      <Skeleton
+        animation="wave"
+        className="invoices__loading-skeleton-item"
+        variant="text"
+        width={155}
+        height={70}
+      />
+      <Skeleton
+        animation="wave"
+        className="invoices__loading-skeleton-item"
+        variant="text"
+        width={120}
+        height={70}
+      />
+      <Skeleton
+        animation="wave"
+        className="invoices__loading-skeleton-item"
+        variant="text"
+        width={267}
+        height={70}
+      />
+      <Skeleton
+        animation="wave"
+        className="invoices__loading-skeleton-item"
+        variant="text"
+        width={267}
+        height={70}
+      />
+      <Skeleton
+        animation="wave"
+        className="invoices__loading-skeleton-item"
+        variant="text"
+        width={120}
+        height={70}
+      />
+      <Skeleton
+        animation="wave"
+        className="invoices__loading-skeleton-item"
+        variant="circular"
+        width={40}
+        height={40}
+      />
+      <Skeleton
+        animation="wave"
+        className="invoices__loading-skeleton-item"
+        variant="circular"
+        width={40}
+        height={40}
+      />
+      <Skeleton
+        animation={false}
+        className="invoices__loading-skeleton-line "
+        variant="rectangular"
+        width={1200}
+        height={2}
+      />
+    </div>
+  );
+}

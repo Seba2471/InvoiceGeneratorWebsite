@@ -4,6 +4,7 @@ import {
   HiOutlineChevronDoubleLeft,
   HiOutlineChevronDoubleRight,
 } from 'react-icons/hi';
+import './Pagination.scss';
 
 type PropsTypes = {
   page: number;
@@ -85,18 +86,12 @@ export default function Pagination(props: PropsTypes) {
   };
 
   return (
-    <nav aria-label="Page navigation m-0">
-      <ul className="pagination pagination-sm">
-        {previusButton}
-        {previusPages()}
-        <PageItem
-          className="active"
-          setPage={props.setPage}
-          page={props.page}
-        />
-        {nextPages()}
-        {nextButton}
-      </ul>
-    </nav>
+    <ul className="pagination pagination-lg">
+      {previusButton}
+      {previusPages()}
+      <PageItem className="active" setPage={props.setPage} page={props.page} />
+      {nextPages()}
+      {nextButton}
+    </ul>
   );
 }

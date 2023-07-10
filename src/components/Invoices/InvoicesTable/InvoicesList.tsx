@@ -1,9 +1,9 @@
 import React from 'react';
 import { InvoiceShortInfo } from '../../../types/Invoice/InvoiceType';
-import TableHeader from './TableHeader/TableHeader';
-import TableRow from './TableRow/TableRow';
+import InvoiceListItem from './InvoiceListItem/InvoiceListItem';
+import './InvoicesList.scss';
 
-export default function InvoicesTable(props: {
+export default function InvoicesList(props: {
   invoices: Array<InvoiceShortInfo>;
   deleteInvoice: Function;
   downoladInvoice: Function;
@@ -19,10 +19,9 @@ export default function InvoicesTable(props: {
   };
 
   return (
-    <div className="mt-3 mb-3">
-      <TableHeader />
+    <div className="invoice-list">
       {props.invoices.map((invoice) => (
-        <TableRow
+        <InvoiceListItem
           key={invoice.id}
           {...invoice}
           deleteInvoice={deleteInvoice}

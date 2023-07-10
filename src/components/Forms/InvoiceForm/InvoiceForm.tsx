@@ -156,7 +156,6 @@ export default function InvoiceForm() {
 
   return (
     <div className="invoice-form">
-      <h2 className="invoice-form__title">Nowa faktura</h2>
       <span className="invoice-form__subtitle"> Wypełnij dane faktury</span>
       <form className="invoice-form__form" onSubmit={(e) => generateInvoice(e)}>
         <InputText

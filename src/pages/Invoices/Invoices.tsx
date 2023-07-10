@@ -1,10 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { InvoiceShortInfo } from '../../types/Invoice/InvoiceType';
-import InvoicesTable from '../../components/Invoices/InvoicesTable/InvoicesTable';
+import InvoicesList from '../../components/Invoices/InvoicesTable/InvoicesList';
 import invoiceServices from '../../services/InvoiceServices';
-import Pagination from '../../components/UI/Pagination/Pagination';
 import { useSearchParams } from 'react-router-dom';
-import Spinner from '../../components/UI/Spinner/Spinner';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import { ToastContainer } from 'react-toastify';
@@ -13,6 +11,10 @@ import axiosGet from '../../services/axiosGet';
 import ErrorAlert from '../../components/UI/Alerts/ErrorAlert';
 import successNotify from '../../helpers/notify/successNotify';
 import errorNotify from '../../helpers/notify/errorNotify';
+import PageTitle from '../../components/Shared/PageTitle/PageTitle';
+import './Invoices.scss';
+import { Pagination } from '@mui/material';
+import InvoicesListSkeleton from '../../components/Invoices/InvoicesTable/InvoicesList.Skeleton';
 
 export default function Invoices() {
   let [searchParams, setSearchParams] = useSearchParams();
@@ -29,7 +31,6 @@ export default function Invoices() {
     loading: false,
     invoiceId: '',
   });
-
   const [error, setError] = useState({
     show: false,
     message: '',
@@ -37,8 +38,8 @@ export default function Invoices() {
 
   const fetchInvoice = useCallback(
     (page: string) => {
-      const controller = new AbortController();
       setLoading(true);
+      const controller = new AbortController();
       const params = new URLSearchParams({
         pageSize: '10',
         pageNumber: page,
@@ -80,7 +81,7 @@ export default function Invoices() {
   );
 
   useEffect(() => {
-    return fetchInvoice('1');
+    fetchInvoice('1');
   }, [fetchInvoice]);
 
   const deleteInvoice = async (invoiceId: string) => {
@@ -134,15 +135,9 @@ export default function Invoices() {
     // eslint-disable-next-line
   }, [fetchInvoice, setSearchParams, pagination.page]);
 
-  const itemText = `${pagination.itemsFrom} - ${pagination.itemsTo} z
-  ${pagination.totalItemsCount}`;
-
-  const dataTabel = (
+  const dataList = (
     <>
-      <div className="mt-3 col-12">
-        <span> {itemText}</span>
-      </div>
-      <InvoicesTable
+      <InvoicesList
         invoices={invoices}
         deleteInvoice={async (invoiceId: string) =>
           await deleteInvoice(invoiceId)
@@ -152,30 +147,29 @@ export default function Invoices() {
         }
         loading={downloadLoading}
       />
-      <Pagination
-        page={pagination.page}
-        totalPages={pagination.totalPages}
-        setPage={(page: number) => setPagination({ ...pagination, page })}
-      />
     </>
   );
 
-  const spinner = (
-    <div className="col-12 text-center">
-      <Spinner />
-    </div>
-  );
-
   return (
-    <div className="row p-5">
-      <h4>Moje faktury </h4>
+    <div className="invoices">
+      <PageTitle value="Moje faktury" />
       {loading ? (
-        spinner
+        <InvoicesListSkeleton items={10} />
       ) : error.show ? (
         <ErrorAlert error={error.message} />
       ) : (
-        dataTabel
+        dataList
       )}
+      <Pagination
+        className="invoices__pagination"
+        size="large"
+        count={pagination.totalPages}
+        page={pagination.page}
+        onChange={(event, page: number) =>
+          setPagination({ ...pagination, page })
+        }
+      />
+
       <ToastContainer />
     </div>
   );

@@ -1,0 +1,10 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+
+  .page {
+    font-size: 2rem;
+  }
+}
+
+$pagination-active-bg: red;
