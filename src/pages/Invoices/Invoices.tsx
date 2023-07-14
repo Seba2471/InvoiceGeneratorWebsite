@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { InvoiceShortInfo } from '../../types/Invoice/InvoiceType';
+import { InvoicesResponse } from '../../models/Invoice/InvoicesResponse';
 import InvoicesList from '../../components/Invoices/InvoicesTable/InvoicesList';
 import invoiceServices from '../../services/InvoiceServices';
 import { useSearchParams } from 'react-router-dom';
@@ -18,7 +18,7 @@ import InvoicesListSkeleton from '../../components/Invoices/InvoicesTable/Invoic
 
 export default function Invoices() {
   let [searchParams, setSearchParams] = useSearchParams();
-  const [invoices, setInvoices] = useState<Array<InvoiceShortInfo>>([]);
+  const [invoices, setInvoices] = useState<Array<InvoicesResponse>>([]);
   const [pagination, setPagination] = useState({
     totalPages: 1,
     page: Number(searchParams.get('page')) | 1,

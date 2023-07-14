@@ -1,6 +1,6 @@
 import { FormProperty } from '../../types/Forms/FormProperty';
 import { InvoiceFormItemType } from '../../types/Invoice/Form/InvoiceFormType';
-import { InvoiceItem } from '../../types/Invoice/InvoiceType';
+import { InvoiceItem } from '../../types/Invoice/InvoiceTypes';
 
 const mapInvoiceFormItemToInvoiceItem = (
   invoiceFormItems: FormProperty<Array<InvoiceFormItemType>>,

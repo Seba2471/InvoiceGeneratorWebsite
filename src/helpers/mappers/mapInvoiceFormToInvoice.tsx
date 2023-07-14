@@ -1,11 +1,11 @@
 import { InvoiceFormType } from '../../types/Invoice/Form/InvoiceFormType';
-import { Invoice } from '../../types/Invoice/InvoiceType';
+import { NewInvoice } from '../../models/Invoice/NewInvoice';
 import mapInvoiceFormItemToInvoiceItem from './mapInvoiceFormItemToInvoiceItem';
 
 const mapInvoiceFormToInvoice = (form: InvoiceFormType) => {
   const mappedInvoiceItems = mapInvoiceFormItemToInvoiceItem(form.invoiceItems);
 
-  const invoiceData: Invoice = {
+  const invoiceData: NewInvoice = {
     invoiceNumber: form.invoiceNumber.value,
     soldDate: form.soldDate.value,
     issueDate: form.issueDate.value,

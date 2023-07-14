@@ -1,7 +1,7 @@
 import { axiosAuthInstance } from '../axios';
-import { Invoice } from '../types/Invoice/InvoiceType';
+import { NewInvoice } from '../models/Invoice/NewInvoice';
 
-export const downoladInvoiceFromData = async (data: Invoice) => {
+export const downoladInvoiceFromData = async (data: NewInvoice) => {
   try {
     await axiosAuthInstance
       .post('invoice', data, {

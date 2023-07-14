@@ -1,10 +1,10 @@
 import React from 'react';
-import { InvoiceShortInfo } from '../../../../types/Invoice/InvoiceType';
+import { InvoicesResponse } from '../../../../models/Invoice/InvoicesResponse';
 import DeleteAction from '../../../UI/Actions/DeleteAction';
 import DownloadAction from '../../../UI/Actions/DownloadAction';
 import './InvoiceListItem.scss';
 
-interface PropsTypes extends InvoiceShortInfo {
+interface PropsTypes extends InvoicesResponse {
   loading: {
     invoiceId: string;
     loading: boolean;

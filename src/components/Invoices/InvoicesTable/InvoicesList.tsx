@@ -1,10 +1,10 @@
 import React from 'react';
-import { InvoiceShortInfo } from '../../../types/Invoice/InvoiceType';
+import { InvoicesResponse } from '../../../models/Invoice/InvoicesResponse';
 import InvoiceListItem from './InvoiceListItem/InvoiceListItem';
 import './InvoicesList.scss';
 
 export default function InvoicesList(props: {
-  invoices: Array<InvoiceShortInfo>;
+  invoices: Array<InvoicesResponse>;
   deleteInvoice: Function;
   downoladInvoice: Function;
   loading: { loading: boolean; invoiceId: string };
