@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { InvoicesResponse } from '../../models/Invoice/InvoicesResponse';
 import InvoicesList from '../../components/Invoices/InvoicesTable/InvoicesList';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import ErrorAlert from '../../components/UI/Alerts/ErrorAlert';
@@ -17,6 +17,8 @@ import { PaginationResponse } from '../../models/Pagination/PaginationResponse';
 import { Pagination } from '@mui/material';
 import { getUiIsLoading } from '../../data/ui/ui';
 import './Invoices.scss';
+import InfoAlert from '../../components/UI/Alerts/InfoAlert/InfoAlert';
+import Button from '../../components/UI/Buttons/Button/Button';
 
 export default function Invoices() {
   let [searchParams, setSearchParams] = useSearchParams();
@@ -28,6 +30,7 @@ export default function Invoices() {
   const error = useSelector(getInvoicesErrorSelector);
   const pageSize = 10;
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const fetchInvoices = useCallback(
     (pageNumber: number) => {
       dispatch(invoicesActions.fetch({ pageNumber, pageSize }));
@@ -104,6 +107,13 @@ export default function Invoices() {
       />
     </>
   );
+
+  const emptyListWarning = (
+    <div className="invoices__empty-list-warrning">
+      <InfoAlert />
+      <Button value="Dodaj nową fakturę" action={() => navigate('/')} />
+    </div>
+  );
   return (
     <div className="invoices">
       <PageTitle value="Moje faktury" />
@@ -113,8 +123,10 @@ export default function Invoices() {
         <ErrorAlert
           error={'Nie udało się pobrać faktur, spróbuj ponownie później.'}
         />
-      ) : (
+      ) : data.items.length > 0 ? (
         dataList
+      ) : (
+        emptyListWarning
       )}
     </div>
   );
