@@ -1,38 +1,105 @@
-import { getInvoicesIsPendingSelector } from './../../data/invoices/invoices';
+import { PaginationResponse } from './../../models/Pagination/PaginationResponse';
+import { DeleteInvoiceRequest } from './../../models/Invoice/DeleteInvoiceRequest';
 import { PayloadAction } from '@reduxjs/toolkit/dist/createAction';
 import { InvoicesResponse } from '../../models/Invoice/InvoicesResponse';
-import { PaginationResponse } from '../../models/Pagination/PaginationResponse';
-import { call, put, select, takeLatest } from 'redux-saga/effects';
-import { getUserInvoices } from '../../api/invoices/invoices';
+import { call, put, takeLatest } from 'redux-saga/effects';
+import {
+  deleteInvoiceRequest,
+  getUserInvoicesRequest,
+  downloadInvoiceRequest,
+} from '../../api/invoices/invoices';
 import { PaginationRequest } from '../../models/Pagination/PaginationRequest';
 import { invoicesActions } from '../../data/invoices/invoices';
+import { uiActions } from '../../data/ui/ui';
+import { downloadBlobFile } from '../../utils/downloadBlobFile';
+import { DownloadInvoiceRequest } from '../../models/Invoice/DownloadInvoiceRequest';
+import successNotify from '../../helpers/notify/successNotify';
+import errorNotify from '../../helpers/notify/errorNotify';
 
 function* fetchInvoices(action: PayloadAction<PaginationRequest>) {
   try {
+    yield put(invoicesActions.clearErrors());
     const { pageNumber, pageSize } = action.payload;
-    const isPending: ReturnType<typeof getInvoicesIsPendingSelector> =
-      yield select(getInvoicesIsPendingSelector);
-    if (!isPending) {
-      yield put(invoicesActions.setIsPending(true));
+    yield put(uiActions.setLoading(true));
+    const invoicesData: PaginationResponse<InvoicesResponse> = yield call(
+      getUserInvoicesRequest,
+      pageNumber,
+      pageSize,
+    );
+    if (invoicesData.totalPages < pageNumber) {
       const invoicesData: PaginationResponse<InvoicesResponse> = yield call(
-        getUserInvoices,
-        pageNumber,
+        getUserInvoicesRequest,
+        1,
         pageSize,
       );
-
+      yield put(invoicesActions.fetchSuccess(invoicesData));
+    } else {
       yield put(invoicesActions.fetchSuccess(invoicesData));
     }
-
-    return;
-  } catch (error) {
-    if (typeof error === 'string') {
-      yield put(invoicesActions.fetchFailure(error));
+  } catch (error: unknown) {
+    if (typeof error === 'object' && error !== null && 'message' in error) {
+      const errorWithMessage = error as Error;
+      yield put(invoicesActions.fetchFailure(errorWithMessage.message));
+    } else {
+      yield put(invoicesActions.fetchFailure('An error occurred.'));
     }
   } finally {
-    yield put(invoicesActions.setIsPending(false));
+    yield put(uiActions.setLoading(false));
+  }
+}
+
+function* deleteUserInvoice(action: PayloadAction<DeleteInvoiceRequest>) {
+  try {
+    yield put(invoicesActions.clearErrors());
+    const { invoiceId, pageNumber, pageSize } = action.payload;
+    yield call(deleteInvoiceRequest, invoiceId);
+    yield put(
+      invoicesActions.fetch({ pageNumber: pageNumber, pageSize: pageSize }),
+    );
+    successNotify('Faktura została usunięta!');
+  } catch (error: unknown) {
+    if (typeof error === 'object' && error !== null && 'message' in error) {
+      const errorWithMessage = error as Error;
+      yield put(invoicesActions.fetchFailure(errorWithMessage.message));
+      errorNotify('Nie udało się usunąć faktury!');
+    } else {
+      yield put(invoicesActions.fetchFailure('An error occurred.'));
+      errorNotify('Nie udało się usunąć faktury!');
+    }
+  }
+}
+
+function* downoladInvoice(action: PayloadAction<DownloadInvoiceRequest>) {
+  try {
+    yield put(invoicesActions.clearErrors());
+    const { invoiceId, invoiceNumber } = action.payload;
+    yield put(
+      uiActions.setDownloadPending({ isPending: true, invoiceId: invoiceId }),
+    );
+    const data: { data: Blob; success: boolean } = yield call(
+      downloadInvoiceRequest,
+      invoiceId,
+    );
+    downloadBlobFile(data.data, invoiceNumber);
+    successNotify('Faktura została pobrana!');
+  } catch (error: unknown) {
+    if (typeof error === 'object' && error !== null && 'message' in error) {
+      const errorWithMessage = error as Error;
+      yield put(invoicesActions.fetchFailure(errorWithMessage.message));
+      errorNotify('Nie udało się pobrać faktury!');
+    } else {
+      yield put(invoicesActions.fetchFailure('An error occurred'));
+      errorNotify('Nie udało się pobrać faktury!');
+    }
+  } finally {
+    yield put(
+      uiActions.setDownloadPending({ isPending: false, invoiceId: '' }),
+    ); // Użyj efektu put, aby wysłać akcję
   }
 }
 
 export default function* invoicesSagas() {
   yield takeLatest(invoicesActions.fetch.type, fetchInvoices);
+  yield takeLatest(invoicesActions.delete.type, deleteUserInvoice);
+  yield takeLatest(invoicesActions.download.type, downoladInvoice);
 }

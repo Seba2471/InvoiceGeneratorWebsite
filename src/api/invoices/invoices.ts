@@ -1,11 +1,12 @@
 import { InvoicesResponse } from '../../models/Invoice/InvoicesResponse';
-import axios, { AxiosError } from 'axios';
 import { PaginationResponse } from '../../models/Pagination/PaginationResponse';
 import apiRequest from '../../utils/apiRequest';
 
-export async function getUserInvoices(pageNumber: number, pageSize: number) {
+export async function getUserInvoicesRequest(
+  pageNumber: number,
+  pageSize: number,
+) {
   try {
-    console.log('TUTAJ');
     const params = new URLSearchParams({
       pageSize: pageSize.toString(),
       pageNumber: pageNumber.toString(),
@@ -17,10 +18,25 @@ export async function getUserInvoices(pageNumber: number, pageSize: number) {
 
     return data;
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      return (error as AxiosError<string>).response?.data;
-    }
+    throw error;
+  }
+}
 
-    return 'Somethink went wrong...';
+export async function deleteInvoiceRequest(id: string) {
+  try {
+    await apiRequest.delete('/invoice/' + id);
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function downloadInvoiceRequest(id: string) {
+  try {
+    const { data } = await apiRequest.get(`invoice/downolad/${id}`, {
+      responseType: 'blob',
+    });
+    return { data, success: true };
+  } catch (error) {
+    throw error;
   }
 }

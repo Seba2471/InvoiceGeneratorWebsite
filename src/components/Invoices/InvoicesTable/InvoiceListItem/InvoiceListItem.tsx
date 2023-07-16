@@ -1,19 +1,18 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { getUiDownloadingPending } from '../../../../data/ui/ui';
 import { InvoicesResponse } from '../../../../models/Invoice/InvoicesResponse';
 import DeleteAction from '../../../UI/Actions/DeleteAction';
 import DownloadAction from '../../../UI/Actions/DownloadAction';
 import './InvoiceListItem.scss';
 
 interface PropsTypes extends InvoicesResponse {
-  loading: {
-    invoiceId: string;
-    loading: boolean;
-  };
   deleteInvoice: Function;
   downoladInvoice: Function;
 }
 
 export default function InvoiceListItem(props: PropsTypes) {
+  const loading = useSelector(getUiDownloadingPending);
   return (
     <div key={props.id} className="invoice-list-item">
       <DeleteAction
@@ -54,8 +53,8 @@ export default function InvoiceListItem(props: PropsTypes) {
       </div>
       <DownloadAction
         className="invoice-list-item__download-icon"
-        loading={props.loading.loading}
-        disabled={props.id === props.loading.invoiceId}
+        loading={loading.isPending && props.id === loading.invoiceId}
+        disabled={loading.isPending && props.id !== loading.invoiceId}
         onDownolad={props.downoladInvoice}
         size={30}
       />

@@ -1,14 +1,15 @@
+import { DeleteInvoiceRequest } from './../../models/Invoice/DeleteInvoiceRequest';
 import { RootState } from './../../store/store';
 import { PaginationRequest } from './../../models/Pagination/PaginationRequest';
-import { createSlice } from '@reduxjs/toolkit';
-import { createAction, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction, createAction } from '@reduxjs/toolkit';
 import { InvoicesResponse } from '../../models/Invoice/InvoicesResponse';
 import { PaginationResponse } from '../../models/Pagination/PaginationResponse';
+import { DownloadInvoiceRequest } from '../../models/Invoice/DownloadInvoiceRequest';
 
 type InvoicesState = {
   data: PaginationResponse<InvoicesResponse>;
-  error: null | string;
-  isPending: boolean;
+  error: { show: boolean; message: string };
+  successDownload: boolean;
 };
 
 const initialState: InvoicesState = {
@@ -19,8 +20,11 @@ const initialState: InvoicesState = {
     itemsFrom: 0,
     items: [],
   },
-  error: null,
-  isPending: false,
+  error: {
+    show: false,
+    message: '',
+  },
+  successDownload: false,
 };
 
 const slice = createSlice({
@@ -34,10 +38,13 @@ const slice = createSlice({
       state.data = { ...payload };
     },
     fetchFailure: (state, { payload }: PayloadAction<string>) => {
-      state.error = payload;
+      state.error = { show: true, message: payload };
     },
-    setIsPending: (state, { payload }: PayloadAction<boolean>) => {
-      state.isPending = payload;
+    clearErrors: (state) => {
+      state.error = { show: false, message: '' };
+    },
+    setDownloadSuccess: (state, { payload }: PayloadAction<boolean>) => {
+      state.successDownload = payload;
     },
   },
 });
@@ -48,14 +55,19 @@ const invoicesActions = {
     'invoices/fetchSuccess',
   ),
   fetchFailure: createAction<string>('invoices/fetchFailure'),
-  setIsPending: createAction<boolean>('invoices/setIsPending'),
+  clearErrors: createAction('invoices/clearErrors'),
+  download: createAction<DownloadInvoiceRequest>('invoice/downolad'),
+  setDownloadSuccess: createAction<boolean>('invoice/download'),
+  delete: createAction<DeleteInvoiceRequest>('invoices/delete'),
 };
 
 export { invoicesActions };
 
-export const getInvoicesTotalPagesSelector = (store: RootState) =>
-  store.invoices.data.totalPages;
-export const getInvoicesIsPendingSelector = (store: RootState) =>
-  store.invoices.isPending;
+export const getInvoicesDataSelector = (store: RootState) =>
+  store.invoices.data;
+export const getInvoicesErrorSelector = (store: RootState) =>
+  store.invoices.error;
+export const getInvoiceDownloadStatus = (store: RootState) =>
+  store.invoices.successDownload;
 
 export default slice.reducer;

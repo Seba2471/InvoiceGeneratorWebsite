@@ -7,11 +7,9 @@ export default function InvoicesList(props: {
   invoices: Array<InvoicesResponse>;
   deleteInvoice: Function;
   downoladInvoice: Function;
-  loading: { loading: boolean; invoiceId: string };
 }) {
   const deleteInvoice = (invoiceId: string) => {
     props.deleteInvoice(invoiceId);
-    console.log(invoiceId);
   };
 
   const downoladInvoice = (invoiceId: string, invoiceNumber: string) => {
@@ -24,11 +22,10 @@ export default function InvoicesList(props: {
         <InvoiceListItem
           key={invoice.id}
           {...invoice}
-          deleteInvoice={deleteInvoice}
-          downoladInvoice={(id: string, number: string) =>
-            downoladInvoice(id, number)
+          deleteInvoice={() => deleteInvoice(invoice.id)}
+          downoladInvoice={() =>
+            downoladInvoice(invoice.id, invoice.invoiceNumber)
           }
-          loading={props.loading}
         />
       ))}
     </div>
