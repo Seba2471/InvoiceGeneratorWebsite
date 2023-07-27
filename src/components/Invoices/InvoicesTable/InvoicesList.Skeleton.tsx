@@ -6,5 +6,5 @@ export default function InvoicesListSkeleton(props: { items: number }) {
   for (let i = 0; props.items > i; i++) {
     items.push(<InvoiceListItemSkeleton key={i} />);
   }
-  return <> {items} </>;
+  return <div className="invoices__loading-skeleton-list"> {items} </div>;
 }
