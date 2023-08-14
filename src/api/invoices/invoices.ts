@@ -1,6 +1,19 @@
+import { NewInvoice } from './../../models/Invoice/NewInvoice';
 import { InvoicesResponse } from '../../models/Invoice/InvoicesResponse';
 import { PaginationResponse } from '../../models/Pagination/PaginationResponse';
 import apiRequest from '../../utils/apiRequest';
+import { downloadBlobFile } from '../../utils/downloadBlobFile';
+
+export async function createNewInvoiceRequest(data: NewInvoice) {
+  try {
+    const response = await apiRequest.post('invoice', data, {
+      responseType: 'blob',
+    });
+    downloadBlobFile(response.data, data.invoiceNumber);
+  } catch (error) {
+    throw error;
+  }
+}
 
 export async function getUserInvoicesRequest(
   pageNumber: number,

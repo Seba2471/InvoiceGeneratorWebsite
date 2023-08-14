@@ -1,3 +1,4 @@
+import { NewInvoice } from './../../models/Invoice/NewInvoice';
 import { DeleteInvoiceRequest } from './../../models/Invoice/DeleteInvoiceRequest';
 import { RootState } from './../../store/store';
 import { PaginationRequest } from './../../models/Pagination/PaginationRequest';
@@ -56,6 +57,7 @@ const invoicesActions = {
   ),
   fetchFailure: createAction<string>('invoices/fetchFailure'),
   clearErrors: createAction('invoices/clearErrors'),
+  create: createAction<NewInvoice>('invoice/create'),
   download: createAction<DownloadInvoiceRequest>('invoice/downolad'),
   setDownloadSuccess: createAction<boolean>('invoice/download'),
   delete: createAction<DeleteInvoiceRequest>('invoices/delete'),

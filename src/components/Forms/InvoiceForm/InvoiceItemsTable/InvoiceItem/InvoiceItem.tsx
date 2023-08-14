@@ -1,20 +1,23 @@
 import React from 'react';
-import { FormProperty } from '../../../../../types/Forms/FormProperty';
-import InputText from '../../../../UI/Form/Inputs/InputText/InputText';
+import InputText from '../../../../UI/Form/Inputs/Input/Input';
 import TextArea from '../../../../UI/Form/TextArea/TextArea';
 import { FiX } from 'react-icons/fi';
 import './InvoiceItem.scss';
+import { IInvoiceItemsValuesFormFields } from '../../../../../types/Forms/InvoiceForm';
+import { FieldError, FieldErrorsImpl, Merge } from 'react-hook-form';
 
 type PropsTypes = {
   index: number;
-  name: FormProperty<string>;
+  name: string;
   onChange: Function;
-  quantity: FormProperty<number>;
-  cost: FormProperty<number>;
+  quantity: number;
+  cost: number;
   onRemove: Function;
+  errors?: Merge<FieldError, FieldErrorsImpl<IInvoiceItemsValuesFormFields>>;
 };
 
 export default function InvoiceItem(props: PropsTypes) {
+  const { cost, name, quantity, errors } = props;
   return (
     <div className="invoice-item">
       <div className="invoice-item__fields-wrapper">
@@ -28,9 +31,8 @@ export default function InvoiceItem(props: PropsTypes) {
           <TextArea
             className="invoice-item__fields-textarea"
             label="Nazwa"
-            value={props.name.value}
-            error={props.name.error}
-            showError={props.name.showError}
+            value={name}
+            error={errors?.name?.message}
             onChange={(value: string) => props.onChange(value, 'name')}
           />
           <div className="invoice-item__fields-quantity-cost-box">
@@ -38,20 +40,22 @@ export default function InvoiceItem(props: PropsTypes) {
               className="invoice-item__fields-quantity"
               label="Ilość"
               type="number"
-              value={props.quantity.value.toString()}
-              error={props.quantity.error}
-              showError={props.quantity.showError}
-              onChange={(value: number) => props.onChange(value, 'quantity')}
+              value={quantity.toString()}
+              error={errors?.quantity?.message}
+              onChange={(value: React.ChangeEvent<HTMLInputElement>) =>
+                props.onChange(value.target.value, 'quantity')
+              }
             />
 
             <InputText
               className="invoice-item__fields-cost"
               label="Cena/szt."
               type="number"
-              value={props.cost.value.toString()}
-              error={props.cost.error}
-              showError={props.cost.showError}
-              onChange={(value: number) => props.onChange(value, 'cost')}
+              value={cost.toString()}
+              error={errors?.cost?.message}
+              onChange={(value: React.ChangeEvent<HTMLInputElement>) =>
+                props.onChange(value.target.value, 'cost')
+              }
             />
           </div>
         </div>

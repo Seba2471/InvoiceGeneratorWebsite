@@ -1,4 +1,3 @@
-import moment from 'moment';
 import { FormProperty } from '../../Forms/FormProperty';
 import {
   InvoiceFormItemType,
@@ -51,13 +50,13 @@ export const initString: FormProperty<string> = {
 export const initInvoiceFormValue: InvoiceFormType = {
   invoiceNumber: initString,
   issueDate: {
-    value: moment().format('YYYY-MM-DD'),
+    value: '',
     error: '',
     showError: false,
     rules: ['required'],
   },
   soldDate: {
-    value: moment().format('YYYY-MM-DD'),
+    value: '',
     error: '',
     showError: false,
     rules: ['required'],

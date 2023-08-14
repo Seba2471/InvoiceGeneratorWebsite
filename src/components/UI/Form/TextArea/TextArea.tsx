@@ -5,7 +5,6 @@ type Props = {
   label: string;
   value: string;
   error?: string;
-  showError: boolean;
   onChange: Function;
 };
 
@@ -20,7 +19,7 @@ function TextArea(props: Props) {
         value={props.value}
         onChange={(e) => props.onChange(e.target.value)}
         className={`form-control form-input__input ${
-          props.error && props.showError ? 'is-invalid' : ''
+          props.error ? 'is-invalid' : ''
         }`}
       />
       <div className="form-input__feedback invalid-feedback">{props.error}</div>

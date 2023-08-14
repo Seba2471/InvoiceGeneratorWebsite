@@ -5,6 +5,7 @@
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
+    "@hookform/resolvers": "^3.2.0",
     "@mui/icons-material": "^5.11.0",
     "@mui/material": "^5.11.0",
     "@reduxjs/toolkit": "^1.9.5",
@@ -20,10 +21,11 @@
     "bootstrap": "^5.2.2",
     "dot-env": "^0.0.1",
     "jwt-decode": "^3.1.2",
-    "moment": "^2.29.4",
+    "luxon": "^3.4.0",
     "react": "^18.2.0",
     "react-confirm-alert": "^3.0.6",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.45.2",
     "react-icons": "^4.7.1",
     "react-redux": "^8.1.1",
     "react-router-dom": "^6.4.3",
@@ -34,7 +36,8 @@
     "redux-thunk": "^2.4.2",
     "sass": "^1.62.1",
     "typescript": "^4.8.4",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yup": "^1.2.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -61,6 +64,7 @@
     ]
   },
   "devDependencies": {
+    "@types/luxon": "^3.3.1",
     "jsdoc": "^4.0.2"
   }
 }

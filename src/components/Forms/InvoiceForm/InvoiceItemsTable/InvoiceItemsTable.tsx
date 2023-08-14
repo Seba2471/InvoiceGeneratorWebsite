@@ -1,45 +1,68 @@
-import React, { useEffect, useState } from 'react';
-import { InvoiceFormItemType } from '../../../../types/Invoice/Form/InvoiceFormType';
-import { FormProperty } from '../../../../types/Forms/FormProperty';
+import React, { useState } from 'react';
 import { FiChevronDown } from 'react-icons/fi';
 import './InvoiceItemTable.scss';
 import InvoiceItem from './InvoiceItem/InvoiceItem';
 import Select from '../../../UI/Form/Select';
+import {
+  IInoivceItemsFormFields,
+  IInvoiceItemsValuesFormFields,
+} from '../../../../types/Forms/InvoiceForm';
+import updateProperty from '../../../../utils/updateProperty';
+import { FieldError, FieldErrorsImpl, Merge } from 'react-hook-form';
 
 type PropsTypes = {
   className?: string;
-  items: Array<InvoiceFormItemType>;
-  error: string;
-  showError: boolean;
-  vatRate: FormProperty<number>;
-  currency: FormProperty<string>;
-  changeItem: Function;
-  addItem: Function;
-  removeItem: Function;
-  changeCurrency: Function;
-  changeVatRate: Function;
+  errors?: Merge<FieldError, FieldErrorsImpl<IInoivceItemsFormFields>>;
+  onChange: Function;
+  items: IInoivceItemsFormFields;
 };
 
 export default function InvoiceItemsTable(props: PropsTypes) {
+  const { items, onChange, errors } = props;
+  const { values, currency, vatRate } = items;
   const [showItems, setShowItems] = useState(true);
-  const addItem = (e: any) => {
-    e.preventDefault();
-    props.addItem();
+  const emptyItem: IInvoiceItemsValuesFormFields = {
+    name: '',
+    quantity: 0,
+    cost: 0,
   };
 
-  useEffect(() => {
-    props.addItem();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const addItem = (e: any) => {
+    e.preventDefault();
+    const newValues = [...values, emptyItem];
+    const newItem = updateProperty(items, newValues, 'values');
+    onChange(newItem);
+  };
+
+  const removeItem = (indexToRemove: Number) => {
+    const newValues = values.filter((_, index) => index !== indexToRemove);
+    const newItem = updateProperty(items, newValues, 'values');
+    onChange(newItem);
+  };
+
+  const changeItem = (
+    indexToUpdate: number,
+    value: string | number,
+    key: string,
+  ) => {
+    if (indexToUpdate >= 0 && indexToUpdate < values.length) {
+      const valuesToUpdate = [...values];
+      valuesToUpdate[indexToUpdate] = {
+        ...valuesToUpdate[indexToUpdate],
+        [key]: value,
+      };
+      onChange({ ...items, values: valuesToUpdate });
+    }
+  };
 
   return (
     <div className={`invoice-items-table ${props.className}`}>
       <div className="invoice-items-table__title-counter-wrapper">
         <h3 className="invoice-items-table__title">Towary/usługi</h3>
-        {props.items.length > 0 ? (
+        {values.length > 0 ? (
           <div className="invoice-items-table__items-counter-box">
             <p className="invoice-items-table__items-counter">
-              {props.items.length}
+              {values.length}
             </p>
           </div>
         ) : null}
@@ -67,7 +90,7 @@ export default function InvoiceItemsTable(props: PropsTypes) {
             <div className="invoice-items-table__desktop-top-bar-action"></div>
           </div>
           <div className="invoice-items-table__items">
-            {props.items.map((row, index) => {
+            {items.values.map((row, index) => {
               return (
                 <InvoiceItem
                   key={index}
@@ -75,10 +98,11 @@ export default function InvoiceItemsTable(props: PropsTypes) {
                   name={row.name}
                   quantity={row.quantity}
                   cost={row.cost}
-                  onChange={(e: string, key: string) =>
-                    props.changeItem(e, index, key)
+                  errors={errors?.values?.[index]}
+                  onChange={(e: string | number, key: string) =>
+                    changeItem(index, e, key)
                   }
-                  onRemove={props.removeItem}
+                  onRemove={() => removeItem(index)}
                 />
               );
             })}
@@ -97,10 +121,11 @@ export default function InvoiceItemsTable(props: PropsTypes) {
                 { value: 'PLN', label: 'PLN' },
               ]}
               label="Waluta"
-              value={props.currency.value}
-              error={props.currency.error}
-              showError={props.currency.showError}
-              onChange={(value: string) => props.changeCurrency(value)}
+              value={currency}
+              error={errors?.currency?.message}
+              onChange={(val: string) =>
+                onChange(updateProperty(items, val, 'currency'))
+              }
             />
             <Select
               className="invoice-items-table__select-vat"
@@ -110,10 +135,11 @@ export default function InvoiceItemsTable(props: PropsTypes) {
                 { value: 23, label: '23%' },
               ]}
               label="VAT [%]"
-              value={props.vatRate.value}
-              error={props.vatRate.error}
-              showError={props.vatRate.showError}
-              onChange={(value: number) => props.changeVatRate(value)}
+              value={vatRate.toString()}
+              error={errors?.vatRate?.message}
+              onChange={(val: number) =>
+                onChange(updateProperty(items, val, 'vatRate'))
+              }
             />
           </div>
         </>

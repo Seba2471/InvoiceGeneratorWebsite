@@ -4,14 +4,15 @@ type Props = {
   className?: string;
   label: string;
   value: string;
-  type: string;
+  type?: string;
   error?: string;
-  showError: boolean;
+  showError?: boolean;
   onChange: Function;
 };
 
-function InputText(props: Props) {
+function Input(props: Props) {
   const className = props.className;
+  const type = props.type ? props.type : 'text';
   return (
     <div className={`form-group form-input ${className}`}>
       {props.label ? (
@@ -19,10 +20,10 @@ function InputText(props: Props) {
       ) : null}
       <input
         value={props.value}
-        onChange={(e) => props.onChange(e.target.value)}
-        type={props.type}
+        onChange={(e) => props.onChange(e)}
+        type={type}
         className={`form-control form-input__input ${
-          props.error && props.showError ? 'is-invalid' : ''
+          props.error ? 'is-invalid' : ''
         }`}
       />
       <div className="form-input__feedback invalid-feedback">{props.error}</div>
@@ -30,10 +31,4 @@ function InputText(props: Props) {
   );
 }
 
-InputText.defaultProps = {
-  type: 'text',
-  showError: false,
-  error: '',
-};
-
-export default InputText;
+export default Input;

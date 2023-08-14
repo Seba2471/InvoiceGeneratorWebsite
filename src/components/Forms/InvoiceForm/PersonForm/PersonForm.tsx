@@ -1,40 +1,32 @@
 import React, { useState, useEffect } from 'react';
-import { FormProperty } from '../../../../types/Forms/FormProperty';
-import InputText from '../../../UI/Form/Inputs/InputText/InputText';
+import Input from '../../../UI/Form/Inputs/Input/Input';
 import { FiChevronDown, FiAlertCircle } from 'react-icons/fi';
 import './PersonForm.scss';
+import updateProperty from '../../../../utils/updateProperty';
+import { FieldError, FieldErrorsImpl, Merge } from 'react-hook-form/dist/types';
+import { IPersonFormFields } from '../../../../types/Forms/InvoiceForm';
 
 type PropsTypes = {
   className?: string;
   header: string;
-  fullName: FormProperty<string>;
-  onChangeFullName: Function;
-  line1: FormProperty<string>;
-  line2: FormProperty<string>;
-  onChangeAddresLine1: Function;
-  onChangeAddresLine2: Function;
-  nip: FormProperty<string>;
-  onChangeNip: Function;
+  errors?: Merge<FieldError, FieldErrorsImpl<IPersonFormFields>>;
+  onChange: Function;
+  value: IPersonFormFields;
 };
 
 export default function PersonForm(props: PropsTypes) {
   const [showForm, setShowForm] = useState(true);
   const [showError, setShowError] = useState(false);
+  const { onChange, value, errors } = props;
+  const { fullName, nip, address } = value;
 
   useEffect(() => {
-    props.fullName.error !== '' ||
-    props.line1.error !== '' ||
-    props.line2.error !== '' ||
-    props.nip.error !== ''
+    errors?.fullName?.message ||
+    errors?.nip?.message ||
+    errors?.address?.line1?.message
       ? setShowError(true)
       : setShowError(false);
-  }, [
-    props.fullName.error,
-    props.nip.error,
-    props.line1.error,
-    props.line2.error,
-  ]);
-
+  }, [errors, errors?.fullName?.message, errors?.nip?.message]);
   return (
     <div className={`person-form ${props.className}`}>
       <div className="person-form__header">
@@ -58,36 +50,44 @@ export default function PersonForm(props: PropsTypes) {
       </div>
       {showForm ? (
         <div className="person-form__form">
-          <InputText
+          <Input
             label="Imię i nazwisko"
-            value={props.fullName.value}
-            error={props.fullName.error}
-            showError={props.fullName.showError}
-            onChange={(e: string) => props.onChangeFullName(e)}
+            value={fullName}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              onChange(updateProperty(props.value, e.target.value, 'fullName'))
+            }
+            error={errors?.fullName?.message}
           />
           <h4 className="person-form__form-address-text">Adres</h4>
-          <InputText
+          <Input
             className="person-form__form-address-input"
             label="Linia 1"
-            value={props.line1.value}
-            error={props.line1.error}
-            showError={props.line1.showError}
-            onChange={(e: string) => props.onChangeAddresLine1(e)}
+            value={address.line1}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              onChange(
+                updateProperty(props.value, e.target.value, 'address.line1'),
+              )
+            }
+            error={errors?.address?.line1?.message}
           />
-          <InputText
+          <Input
             className="person-form__form-address-input"
             label="Linia 2"
-            value={props.line2.value}
-            error={props.line2.error}
-            showError={props.line2.showError}
-            onChange={(e: string) => props.onChangeAddresLine2(e)}
+            value={address.line2 ? address.line2 : ''}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              onChange(
+                updateProperty(props.value, e.target.value, 'address.line2'),
+              )
+            }
+            error={errors?.address?.line2?.message}
           />
-          <InputText
+          <Input
             label="NIP"
-            value={props.nip.value}
-            error={props.nip.error}
-            showError={props.nip.showError}
-            onChange={(e: string) => props.onChangeNip(e)}
+            value={nip ? nip.toString() : ''}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              onChange(updateProperty(props.value, e.target.value, 'nip'))
+            }
+            error={errors?.nip?.message}
           />
         </div>
       ) : null}
