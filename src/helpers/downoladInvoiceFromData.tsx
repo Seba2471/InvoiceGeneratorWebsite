@@ -1,5 +1,5 @@
 import { axiosAuthInstance } from '../axios';
-import { NewInvoice } from '../models/Invoice/NewInvoice';
+import { NewInvoice } from '../models/Invoice/Requests/NewInvoiceRequest';
 
 export const downoladInvoiceFromData = async (data: NewInvoice) => {
   try {

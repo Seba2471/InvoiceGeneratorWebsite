@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { InvoicesResponse } from '../../models/Invoice/InvoicesResponse';
+import { InvoicesResponse } from '../../models/Invoice/Response/InvoicesResponse';
 import InvoicesList from '../../components/Invoices/InvoicesTable/InvoicesList';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { confirmAlert } from 'react-confirm-alert';

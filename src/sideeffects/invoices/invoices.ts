@@ -1,7 +1,7 @@
 import { PaginationResponse } from './../../models/Pagination/PaginationResponse';
-import { DeleteInvoiceRequest } from './../../models/Invoice/DeleteInvoiceRequest';
+import { DeleteInvoiceRequest } from '../../models/Invoice/Requests/DeleteInvoiceRequest';
 import { PayloadAction } from '@reduxjs/toolkit/dist/createAction';
-import { InvoicesResponse } from '../../models/Invoice/InvoicesResponse';
+import { InvoicesResponse } from '../../models/Invoice/Response/InvoicesResponse';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import {
   deleteInvoiceRequest,
@@ -13,16 +13,18 @@ import { PaginationRequest } from '../../models/Pagination/PaginationRequest';
 import { invoicesActions } from '../../data/invoices/invoices';
 import { uiActions } from '../../data/ui/ui';
 import { downloadBlobFile } from '../../utils/downloadBlobFile';
-import { DownloadInvoiceRequest } from '../../models/Invoice/DownloadInvoiceRequest';
+import { DownloadInvoiceRequest } from '../../models/Invoice/Requests/DownloadInvoiceRequest';
 import successNotify from '../../helpers/notify/successNotify';
 import errorNotify from '../../helpers/notify/errorNotify';
-import { NewInvoice } from '../../models/Invoice/NewInvoice';
+import { IInvoice } from '../../types/Invoice/IInvoice';
+import mapFromIInvoiceFormFieldsToNewInvoice from '../../utils/mappers';
 
-function* createInvoice(action: PayloadAction<NewInvoice>) {
+function* createInvoice(action: PayloadAction<IInvoice>) {
   try {
     yield put(invoicesActions.clearErrors());
     yield put(uiActions.setLoading(true));
-    yield call(createNewInvoiceRequest, action.payload);
+    const data = mapFromIInvoiceFormFieldsToNewInvoice(action.payload);
+    yield call(createNewInvoiceRequest, data);
     successNotify('Faktura została wygenerowana');
   } catch (error: unknown) {
     if (typeof error === 'object' && error !== null && 'message' in error) {

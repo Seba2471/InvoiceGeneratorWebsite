@@ -1,4 +1,4 @@
-import { InvoicesResponse } from '../../models/Invoice/InvoicesResponse';
+import { InvoicesResponse } from '../../models/Invoice/Response/InvoicesResponse';
 
 export interface InvoiceResponse {
   items: Array<InvoicesResponse>;

@@ -4,14 +4,14 @@ import { FiChevronDown, FiAlertCircle } from 'react-icons/fi';
 import './PersonForm.scss';
 import updateProperty from '../../../../utils/updateProperty';
 import { FieldError, FieldErrorsImpl, Merge } from 'react-hook-form/dist/types';
-import { IPersonFormFields } from '../../../../types/Forms/InvoiceForm';
+import { IInvoicePerson } from '../../../../types/Invoice/IInvoicePerson';
 
 type PropsTypes = {
   className?: string;
   header: string;
-  errors?: Merge<FieldError, FieldErrorsImpl<IPersonFormFields>>;
+  errors?: Merge<FieldError, FieldErrorsImpl<IInvoicePerson>>;
   onChange: Function;
-  value: IPersonFormFields;
+  value: IInvoicePerson;
 };
 
 export default function PersonForm(props: PropsTypes) {

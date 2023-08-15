@@ -1,4 +1,5 @@
-import { InvoiceItem, InvoicePerson } from '../../types/Invoice/InvoiceTypes';
+import { IInvoiceItemsValues } from './../../../types/Invoice/IInvoiceItem';
+import { IInvoicePerson } from '../../../types/Invoice/IInvoicePerson';
 
 export interface NewInvoice {
   /**
@@ -8,7 +9,7 @@ export interface NewInvoice {
   /**
    * Array including invoice items
    */
-  invoiceItems: Array<InvoiceItem>;
+  invoiceItems: Array<IInvoiceItemsValues>;
   /**
    * Sold date choosed by user
    */
@@ -20,11 +21,11 @@ export interface NewInvoice {
   /**
    * Seller specified on the invoice by the user
    */
-  seller: InvoicePerson;
+  seller: IInvoicePerson;
   /**
    * Buyer specified on the invoice by the user
    */
-  buyer: InvoicePerson;
+  buyer: IInvoicePerson;
   /**
    * Specific vat rate by the user
    */

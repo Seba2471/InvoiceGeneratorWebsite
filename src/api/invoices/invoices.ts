@@ -1,5 +1,5 @@
-import { NewInvoice } from './../../models/Invoice/NewInvoice';
-import { InvoicesResponse } from '../../models/Invoice/InvoicesResponse';
+import { NewInvoice } from '../../models/Invoice/Requests/NewInvoiceRequest';
+import { InvoicesResponse } from '../../models/Invoice/Response/InvoicesResponse';
 import { PaginationResponse } from '../../models/Pagination/PaginationResponse';
 import apiRequest from '../../utils/apiRequest';
 import { downloadBlobFile } from '../../utils/downloadBlobFile';

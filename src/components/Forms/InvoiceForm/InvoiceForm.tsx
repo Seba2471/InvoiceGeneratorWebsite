@@ -1,61 +1,34 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Input from '../../UI/Form/Inputs/Input/Input';
 import InputDate from '../../UI/Form/Inputs/InputDate/InputDate';
 import PersonForm from './PersonForm/PersonForm';
-import {
-  initInvoiceFormValue,
-  emptyInvoiceFormItem,
-} from '../../../types/Invoice/Form/InvoiceFormInitState';
-import {
-  InvoiceFormItemType,
-  InvoiceFormType,
-} from '../../../types/Invoice/Form/InvoiceFormType';
-import changeFieldValueInObject from '../../../helpers/changeFieldValueInObject';
-import validateInvoiceForm from '../../../helpers/validation/validInvoiceForm';
-import { validateRules } from '../../../helpers/validation/validations';
-import errorNotify from '../../../helpers/notify/errorNotify';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import ButtonWithSpinner from '../../UI/Buttons/ButtonWithSpinner/ButtonWithSpinner';
-import './InvoiceForm.scss';
 import InvoiceItemsTable from './InvoiceItemsTable/InvoiceItemsTable';
 import { useDispatch, useSelector } from 'react-redux';
 import { invoicesActions } from '../../../data/invoices/invoices';
-import mapInvoiceFormToInvoice from '../../../helpers/mappers/mapInvoiceFormToInvoice';
 import { getUiIsLoading } from '../../../data/ui/ui';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { DateTime } from 'luxon';
 import validation from '../../../validation/Forms/InvoiceForm/InvoiceFormValidation';
-import { Currency, IInvoiceFormFields } from '../../../types/Forms/InvoiceForm';
+import { IInvoice } from '../../../types/Invoice/IInvoice';
+import { InvoiceCurrency } from '../../../types/Invoice/InvoiceCurrency';
+import './InvoiceForm.scss';
 
 export default function InvoiceForm() {
-  const [form, setForm] = useState<InvoiceFormType>(initInvoiceFormValue);
   const loading = useSelector(getUiIsLoading);
   const dispatch = useDispatch();
 
-  const generateInvoice = async (data: IInvoiceFormFields) => {
-    console.log(data);
-    // const validateResult = validateInvoiceForm(form);
-    // if (!validateResult.isValid) {
-    //   errorNotify('Nie poprawne dane do wygenerowania faktury');
-    //   setForm(validateResult.data);
-    // } else {
-    //   const newInvoiceData = mapInvoiceFormToInvoice(form);
-    //   dispatch(invoicesActions.create(newInvoiceData));
-    //   setForm({ ...initInvoiceFormValue });
-    // }
-  };
-
   const {
+    reset,
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<IInvoiceFormFields>({
+  } = useForm<IInvoice>({
     defaultValues: {
       invoiceNumber: '',
-      soldDate: DateTime.local().toJSDate(),
-      issueDate: DateTime.local().toJSDate(),
+      soldDate: DateTime.utc().toJSDate(),
+      issueDate: DateTime.utc().toJSDate(),
       seller: {
         fullName: '',
         nip: undefined,
@@ -75,9 +48,9 @@ export default function InvoiceForm() {
         },
       },
       items: {
-        currency: Currency.Zloty,
+        currency: InvoiceCurrency.Zloty,
         vatRate: 23,
-        values: [{ name: 'test', quantity: 11, cost: 2000 }],
+        values: [],
       },
     },
     resolver: yupResolver(validation),
@@ -85,11 +58,15 @@ export default function InvoiceForm() {
 
   const onSubmit = handleSubmit(async (data) => await generateInvoice(data));
 
+  const generateInvoice = async (data: IInvoice) => {
+    dispatch(invoicesActions.create(data));
+    reset();
+  };
+
   return (
     <div className="invoice-form">
       <span className="invoice-form__subtitle"> Wypełnij dane faktury</span>
       <form className="invoice-form__form" onSubmit={onSubmit}>
-        {/* <form className="invoice-form__form" onSubmit={onSubmit}> */}
         <Controller
           control={control}
           name="invoiceNumber"
@@ -165,8 +142,6 @@ export default function InvoiceForm() {
             <InvoiceItemsTable
               className="invoice-form__form-items-table"
               errors={errors.items}
-              // changeItem={changeItem}
-              // removeItem={removeItem}
               onChange={onChange}
               items={value}
             />
@@ -182,7 +157,6 @@ export default function InvoiceForm() {
           action={() => null}
         />
       </form>
-      <ToastContainer />
     </div>
   );
 }

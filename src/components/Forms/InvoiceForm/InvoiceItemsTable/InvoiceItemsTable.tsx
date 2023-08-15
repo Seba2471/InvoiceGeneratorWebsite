@@ -3,25 +3,25 @@ import { FiChevronDown } from 'react-icons/fi';
 import './InvoiceItemTable.scss';
 import InvoiceItem from './InvoiceItem/InvoiceItem';
 import Select from '../../../UI/Form/Select';
-import {
-  IInoivceItemsFormFields,
-  IInvoiceItemsValuesFormFields,
-} from '../../../../types/Forms/InvoiceForm';
 import updateProperty from '../../../../utils/updateProperty';
 import { FieldError, FieldErrorsImpl, Merge } from 'react-hook-form';
+import {
+  IInoivceItems,
+  IInvoiceItemsValues,
+} from '../../../../types/Invoice/IInvoiceItem';
 
 type PropsTypes = {
   className?: string;
-  errors?: Merge<FieldError, FieldErrorsImpl<IInoivceItemsFormFields>>;
+  errors?: Merge<FieldError, FieldErrorsImpl<IInoivceItems>>;
   onChange: Function;
-  items: IInoivceItemsFormFields;
+  items: IInoivceItems;
 };
 
 export default function InvoiceItemsTable(props: PropsTypes) {
   const { items, onChange, errors } = props;
   const { values, currency, vatRate } = items;
   const [showItems, setShowItems] = useState(true);
-  const emptyItem: IInvoiceItemsValuesFormFields = {
+  const emptyItem: IInvoiceItemsValues = {
     name: '',
     quantity: 0,
     cost: 0,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { InvoicesResponse } from '../../../models/Invoice/InvoicesResponse';
+import { InvoicesResponse } from '../../../models/Invoice/Response/InvoicesResponse';
 import InvoiceListItem from './InvoiceListItem/InvoiceListItem';
 import './InvoicesList.scss';
 

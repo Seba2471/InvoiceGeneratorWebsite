@@ -1,5 +1,5 @@
+import { InvoiceCurrency } from './../../../types/Invoice/InvoiceCurrency';
 import * as yup from 'yup';
-import { Currency } from '../../../types/Forms/InvoiceForm';
 
 const personValidation = yup.object().shape({
   fullName: yup.string().required('Pole wymagane'),
@@ -30,7 +30,7 @@ const itemValueValidation = yup.object().shape({
 const itemsValidation = yup.object().shape({
   currency: yup
     .string()
-    .oneOf(Object.values(Currency))
+    .oneOf(Object.values(InvoiceCurrency))
     .required('Pole wymagane'),
   vatRate: yup.number().required('Pole wymagane'),
   values: yup.array(itemValueValidation).required('Pole wymagane'),

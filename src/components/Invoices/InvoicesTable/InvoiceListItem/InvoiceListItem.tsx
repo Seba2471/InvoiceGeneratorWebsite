@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { getUiDownloadingPending } from '../../../../data/ui/ui';
-import { InvoicesResponse } from '../../../../models/Invoice/InvoicesResponse';
+import { InvoicesResponse } from '../../../../models/Invoice/Response/InvoicesResponse';
 import DeleteAction from '../../../UI/Actions/DeleteAction';
 import DownloadAction from '../../../UI/Actions/DownloadAction';
 import './InvoiceListItem.scss';

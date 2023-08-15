@@ -1,11 +1,11 @@
-import { NewInvoice } from './../../models/Invoice/NewInvoice';
-import { DeleteInvoiceRequest } from './../../models/Invoice/DeleteInvoiceRequest';
+import { IInvoice } from '../../types/Invoice/IInvoice';
+import { DeleteInvoiceRequest } from '../../models/Invoice/Requests/DeleteInvoiceRequest';
 import { RootState } from './../../store/store';
 import { PaginationRequest } from './../../models/Pagination/PaginationRequest';
 import { createSlice, PayloadAction, createAction } from '@reduxjs/toolkit';
-import { InvoicesResponse } from '../../models/Invoice/InvoicesResponse';
+import { InvoicesResponse } from '../../models/Invoice/Response/InvoicesResponse';
 import { PaginationResponse } from '../../models/Pagination/PaginationResponse';
-import { DownloadInvoiceRequest } from '../../models/Invoice/DownloadInvoiceRequest';
+import { DownloadInvoiceRequest } from '../../models/Invoice/Requests/DownloadInvoiceRequest';
 
 type InvoicesState = {
   data: PaginationResponse<InvoicesResponse>;
@@ -57,7 +57,7 @@ const invoicesActions = {
   ),
   fetchFailure: createAction<string>('invoices/fetchFailure'),
   clearErrors: createAction('invoices/clearErrors'),
-  create: createAction<NewInvoice>('invoice/create'),
+  create: createAction<IInvoice>('invoice/create'),
   download: createAction<DownloadInvoiceRequest>('invoice/downolad'),
   setDownloadSuccess: createAction<boolean>('invoice/download'),
   delete: createAction<DeleteInvoiceRequest>('invoices/delete'),

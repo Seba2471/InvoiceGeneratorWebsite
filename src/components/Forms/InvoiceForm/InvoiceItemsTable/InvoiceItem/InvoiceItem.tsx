@@ -3,8 +3,8 @@ import InputText from '../../../../UI/Form/Inputs/Input/Input';
 import TextArea from '../../../../UI/Form/TextArea/TextArea';
 import { FiX } from 'react-icons/fi';
 import './InvoiceItem.scss';
-import { IInvoiceItemsValuesFormFields } from '../../../../../types/Forms/InvoiceForm';
 import { FieldError, FieldErrorsImpl, Merge } from 'react-hook-form';
+import { IInvoiceItemsValues } from '../../../../../types/Invoice/IInvoiceItem';
 
 type PropsTypes = {
   index: number;
@@ -13,7 +13,7 @@ type PropsTypes = {
   quantity: number;
   cost: number;
   onRemove: Function;
-  errors?: Merge<FieldError, FieldErrorsImpl<IInvoiceItemsValuesFormFields>>;
+  errors?: Merge<FieldError, FieldErrorsImpl<IInvoiceItemsValues>>;
 };
 
 export default function InvoiceItem(props: PropsTypes) {
