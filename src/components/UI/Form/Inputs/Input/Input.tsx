@@ -13,6 +13,13 @@ type Props = {
 function Input(props: Props) {
   const className = props.className;
   const type = props.type ? props.type : 'text';
+
+  const handleKeyPress = (event: any) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+    }
+  };
+
   return (
     <div className={`form-group form-input ${className}`}>
       {props.label ? (
@@ -21,6 +28,7 @@ function Input(props: Props) {
       <input
         value={props.value}
         onChange={(e) => props.onChange(e)}
+        onKeyDown={handleKeyPress}
         type={type}
         className={`form-control form-input__input ${
           props.error ? 'is-invalid' : ''

@@ -53,9 +53,10 @@ export default function PersonForm(props: PropsTypes) {
           <Input
             label="Imię i nazwisko"
             value={fullName}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              onChange(updateProperty(props.value, e.target.value, 'fullName'))
-            }
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              e.preventDefault();
+              onChange(updateProperty(props.value, e.target.value, 'fullName'));
+            }}
             error={errors?.fullName?.message}
           />
           <h4 className="person-form__form-address-text">Adres</h4>

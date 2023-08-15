@@ -27,8 +27,7 @@ export default function InvoiceItemsTable(props: PropsTypes) {
     cost: 0,
   };
 
-  const addItem = (e: any) => {
-    e.preventDefault();
+  const addItem = () => {
     const newValues = [...values, emptyItem];
     const newItem = updateProperty(items, newValues, 'values');
     onChange(newItem);
@@ -107,8 +106,9 @@ export default function InvoiceItemsTable(props: PropsTypes) {
               );
             })}
             <button
+              type="button"
               className="btn invoice-items-table__add-btn"
-              onClick={(e) => addItem(e)}
+              onClick={() => addItem()}
             >
               Dodaj
             </button>
