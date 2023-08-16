@@ -1,21 +1,18 @@
 import React from 'react';
 import LoginForm from '../../../components/Auth/Login/LoginForm/LoginForm';
-import { axiosInstance } from '../../../axios';
-import useAuth from '../../../hooks/useAuth';
-import { useNavigate } from 'react-router-dom';
 import Auth from '../../../components/Layout/AuthLayout/AuthLayaout';
+import { useDispatch } from 'react-redux';
+import { authActions } from '../../../data/auth/auth';
+import { INewUser } from '../../../models/Auth/IAuthRequest';
+import { useNavigate } from 'react-router-dom';
 
 export default function NewLogin() {
-  const [, setAuth] = useAuth();
-  let navigate = useNavigate();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const login = async (email: string, password: string) => {
+  const login = async (userData: INewUser) => {
     try {
-      const response = await axiosInstance.post('Auth/login', {
-        email,
-        password,
-      });
-      setAuth.login(response.data);
+      await dispatch(authActions.login(userData));
       navigate('/');
     } catch (e: any) {
       if (e.response) {
@@ -28,7 +25,7 @@ export default function NewLogin() {
 
   const content = (
     <LoginForm
-      onLogin={(email: string, password: string) => login(email, password)}
+      onLogin={(email: string, password: string) => login({ password, email })}
     />
   );
 

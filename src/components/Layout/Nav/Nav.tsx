@@ -1,20 +1,21 @@
 import React, { useState } from 'react';
 import { FiHome, FiBarChart2, FiSettings } from 'react-icons/fi';
 import { IoDocuments, IoPeople, IoLogOutOutline } from 'react-icons/io5';
+import { useDispatch } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
-import useAuth from '../../../hooks/useAuth';
+import { authActions } from '../../../data/auth/auth';
 import './Hamburger.scss';
 import './Nav.scss';
 
 export default function Nav() {
   const [mobileNavActive, setMobileNavActive] = useState(false);
-  const [, setAuth] = useAuth();
   const navigate = useNavigate();
   let location = useLocation();
+  const dispatch = useDispatch();
 
   const logout = () => {
-    setAuth.logout();
+    dispatch(authActions.logout());
     navigate('/login');
   };
 

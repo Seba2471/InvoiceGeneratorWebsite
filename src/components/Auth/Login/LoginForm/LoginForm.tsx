@@ -10,6 +10,8 @@ import './LoginForm.scss';
 import ButtonWithSpinner from '../../../UI/Buttons/ButtonWithSpinner/ButtonWithSpinner';
 import Button from '../../../UI/Buttons/Button/Button';
 import Title from '../../Shared/Title/Title';
+import { getUiIsLoading } from '../../../../data/ui/ui';
+import { useSelector } from 'react-redux';
 
 type LoginFormTypes = {
   email: FormProperty<string>;
@@ -34,7 +36,7 @@ export default function LoginForm(props: { onLogin: Function }) {
     },
   });
 
-  const [loading, setLoading] = useState(false);
+  const loading = useSelector(getUiIsLoading);
   const [loginError, setLoginError] = useState('');
 
   const clearForm = ({
@@ -69,9 +71,7 @@ export default function LoginForm(props: { onLogin: Function }) {
         password: { ...form.password, error: errors.password, showError: true },
       });
     } else {
-      setLoading(true);
       const error = await props.onLogin(form.email.value, form.password.value);
-      setLoading(false);
 
       if (error?.LoginFailed) {
         setLoginError('Nieprawidłowy login lub hasło');

@@ -4,7 +4,9 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useNavigate } from 'react-router-dom';
-import useAuth from '../../../../hooks/useAuth';
+import { useDispatch } from 'react-redux';
+import { authActions } from '../../../../data/auth/auth';
+// import useAuth from '../../../../hooks/useAuth';
 const ITEM_HEIGHT = 55;
 
 export default function BurgerMenu(props: {
@@ -14,14 +16,14 @@ export default function BurgerMenu(props: {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
-  const [, setAuth] = useAuth();
+  const dispatch = useDispatch();
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = (path: string) => {
     setAnchorEl(null);
     if (path === '/logout') {
-      setAuth.logout();
+      dispatch(authActions.logout());
     } else {
       navigate(`${path}`);
     }

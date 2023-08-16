@@ -2,14 +2,17 @@ import React from 'react';
 import logo from '../../../assets/images/logo.png';
 import styles from './Header.module.css';
 import { useNavigate } from 'react-router-dom';
-import useAuth from '../../../hooks/useAuth';
+import { useSelector } from 'react-redux';
+import { getUserSelector } from '../../../data/auth/auth';
+// import useAuth from '../../../hooks/useAuth';
 
 export default function Header() {
-  const [auth, setAuth] = useAuth();
+  // const [auth, setAuth] = useAuth();
   const navigate = useNavigate();
+  const user = useSelector(getUserSelector);
 
   const logout = () => {
-    setAuth.logout();
+    // setAuth.logout();
     navigate('/login');
   };
 
@@ -19,7 +22,7 @@ export default function Header() {
         <img src={logo} className={`${styles.logo}`} alt="logo" />
       </div>
       <div className="d-none d-md-flex col-md-7 align-items-center justify-content-end d-flex">
-        <span>Witaj, {auth.user.email}</span>
+        <span>Witaj, {user.email}</span>
         <span onClick={() => logout()} className="text-primary ms-3">
           Wyloguj
         </span>

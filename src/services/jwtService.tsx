@@ -1,5 +1,5 @@
 import jwtDecode from 'jwt-decode';
-import { Tokens } from '../types/Auth/Tokens';
+import { ITokens } from '../types/Auth/ITokens';
 
 const sidPropertyName =
   'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/sid';
@@ -30,7 +30,7 @@ const jwtServices = {
     };
   },
 
-  getAuthDataFromTokens(tokens: Tokens) {
+  getAuthDataFromTokens(tokens: ITokens) {
     const user = jwtServices.getClaimsFromToken(tokens.accessToken);
     const authData = {
       accessToken: tokens.accessToken,
