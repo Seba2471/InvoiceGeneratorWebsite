@@ -12,6 +12,7 @@ import Button from '../../../UI/Buttons/Button/Button';
 import Title from '../../Shared/Title/Title';
 import { getUiIsLoading } from '../../../../data/ui/ui';
 import { useSelector } from 'react-redux';
+import { getAuthErrorSelector } from '../../../../data/auth/auth';
 
 type LoginFormTypes = {
   email: FormProperty<string>;
@@ -37,7 +38,8 @@ export default function LoginForm(props: { onLogin: Function }) {
   });
 
   const loading = useSelector(getUiIsLoading);
-  const [loginError, setLoginError] = useState('');
+  const [, setLoginError] = useState('');
+  const error = useSelector(getAuthErrorSelector);
 
   const clearForm = ({
     clearEmail,
@@ -119,7 +121,7 @@ export default function LoginForm(props: { onLogin: Function }) {
           error={form.password.error}
           showError={form.password.showError}
         />
-        <ErrorFeedback error={loginError} />
+        <ErrorFeedback error={error} />
         <a
           className="login-form__link login-form__restart-password-link"
           href="/password_restart"

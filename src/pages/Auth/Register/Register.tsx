@@ -1,25 +1,20 @@
 import React, { useState } from 'react';
-import { axiosInstance } from '../../../axios';
 import RegisterForm from '../../../components/Auth/Register/RegisterForm/RegisterForm';
 import Auth from '../../../components/Layout/AuthLayout/AuthLayaout';
 import ConfirmEmailForm from '../../../components/Auth/Register/ConfirmEmailForm/ConfirmEmailForm';
+import { useDispatch } from 'react-redux';
+import { IAuthRegisterRequest } from '../../../models/Auth/IAuthRegisterRequest';
+import { authActions } from '../../../data/auth/auth';
 
 export default function Register() {
   const [showEmailConfirm, setShowEmailConfirm] = useState(false);
   const [userEmail, setUserEmail] = useState('');
+  const dispatch = useDispatch();
 
-  const register = async (
-    email: string,
-    password: string,
-    confirmPassword: string,
-  ) => {
+  const register = async (data: IAuthRegisterRequest) => {
     try {
-      await axiosInstance.post('Auth/register', {
-        email,
-        password,
-        confirmPassword,
-      });
-      setUserEmail(email);
+      dispatch(authActions.register(data));
+      setUserEmail(data.email);
       setShowEmailConfirm(true);
     } catch (e: any) {
       if (e.response) {
@@ -46,7 +41,7 @@ export default function Register() {
   ) : (
     <RegisterForm
       onRegister={(email: string, password: string, confirmPassword: string) =>
-        register(email, password, confirmPassword)
+        register({ email, password, confirmPassword })
       }
     />
   );

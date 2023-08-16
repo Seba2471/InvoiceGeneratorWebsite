@@ -3,17 +3,14 @@ import LoginForm from '../../../components/Auth/Login/LoginForm/LoginForm';
 import Auth from '../../../components/Layout/AuthLayout/AuthLayaout';
 import { useDispatch } from 'react-redux';
 import { authActions } from '../../../data/auth/auth';
-import { INewUser } from '../../../models/Auth/IAuthRequest';
-import { useNavigate } from 'react-router-dom';
+import { IAuthRequest } from '../../../models/Auth/IAuthRequest';
 
 export default function NewLogin() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
-  const login = async (userData: INewUser) => {
+  const login = async (userData: IAuthRequest) => {
     try {
       await dispatch(authActions.login(userData));
-      navigate('/');
     } catch (e: any) {
       if (e.response) {
         return e.response.data.errors;

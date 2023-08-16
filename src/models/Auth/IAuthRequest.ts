@@ -1,4 +1,4 @@
-export interface INewUser {
+export interface IAuthRequest {
   email: string;
   password: string;
 }

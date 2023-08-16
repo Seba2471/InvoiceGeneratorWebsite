@@ -1,6 +1,6 @@
 import { RootState } from './../../store/store';
 import { createSlice, createAction, PayloadAction } from '@reduxjs/toolkit';
-import { INewUser } from '../../models/Auth/IAuthRequest';
+import { IAuthRequest } from '../../models/Auth/IAuthRequest';
 import { ITokens } from '../../types/Auth/ITokens';
 import { IUser } from '../../types/Auth/IUser';
 import decodeJWT from '../../utils/decodeJWT';
@@ -35,14 +35,15 @@ const slice = createSlice({
     authFailure: (state, { payload }: PayloadAction<string>) => {
       state.error = payload;
     },
-    logout: (state) => {
+    logout: () => {
       return initialState;
     },
   },
 });
 
 const authActions = {
-  login: createAction<INewUser>('auth/login'),
+  login: createAction<IAuthRequest>('auth/login'),
+  register: createAction<IAuthRequest>('auth/register'),
   authSuccess: createAction<ITokens>('auth/authSuccess'),
   authFailure: createAction<string>('auth/authFailure'),
   logout: createAction('auth/logout'),
@@ -53,5 +54,6 @@ export { authActions };
 export const getIsAuthenticatedSelector = (store: RootState) =>
   store.auth.user.isAuthenticated;
 export const getUserSelector = (store: RootState) => store.auth.user;
+export const getAuthErrorSelector = (store: RootState) => store.auth.error;
 
 export default slice.reducer;

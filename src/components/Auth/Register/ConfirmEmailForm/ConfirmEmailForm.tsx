@@ -28,7 +28,7 @@ export default function ConfirmEmailForm(props: {
       <Title title="Potwierdz email" />
       {successedSend ? (
         <SuccessAlert
-          message={`Sukces! Link do zmiany hasła został wysłany na twój adres ${props.email}`}
+          message={`Sukces! Link do aktywacji konta został wysłany na twój adres ${props.email}`}
         />
       ) : (
         <ErrorAlert error={`Coś poszło nie tak! Spróbuj później!`} />
