@@ -8,7 +8,6 @@ type PropsTypes = {
   inputClassName?: string;
   placeHolder: string;
   error?: string;
-  showError?: boolean;
   type?: string;
 };
 
@@ -21,7 +20,7 @@ export default function AuthInput(props: PropsTypes) {
       <input
         type={type.toString()}
         className={`form-control auth-input__input ${
-          props.error && props.showError ? 'is-invalid' : ''
+          props.error ? 'is-invalid' : ''
         } ${!props.error && props.value !== '' ? 'is-valid' : ''}`}
         aria-label={`password-input-${id}`}
         aria-describedby={`password-input-${id}`}

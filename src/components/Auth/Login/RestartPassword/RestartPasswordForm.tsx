@@ -80,7 +80,6 @@ export default function RestartPasswordForm(props: { onRestart: Function }) {
               changeHandler(value);
             }}
             error={email.error}
-            showError={email.showError}
           />
         )}
         {showFeedback ? actionFeedback : null}

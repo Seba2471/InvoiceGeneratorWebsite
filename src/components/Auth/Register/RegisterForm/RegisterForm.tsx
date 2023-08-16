@@ -135,7 +135,6 @@ export default function RegisterForm(props: { onRegister: Function }) {
           value={form.email.value}
           onChange={(value: string) => changeHandler(value, 'email')}
           error={form.email.error}
-          showError={form.email.showError}
         />
         <AuthInput
           placeHolder={'Hasło'}
@@ -143,7 +142,6 @@ export default function RegisterForm(props: { onRegister: Function }) {
           value={form.password.value}
           onChange={(value: string) => changeHandler(value, 'password')}
           error={form.password.error}
-          showError={form.password.showError}
         />
         <AuthInput
           placeHolder={'Powtórz hasło'}
@@ -151,7 +149,6 @@ export default function RegisterForm(props: { onRegister: Function }) {
           value={form.confirmPassword.value}
           onChange={(value: string) => changeHandler(value, 'confirmPassword')}
           error={form.confirmPassword.error}
-          showError={form.confirmPassword.showError}
         />
         <ErrorFeedback error={registerError} />
         <ButtonWithSpinner
