@@ -1,4 +1,4 @@
-import LoginInput from '../../../UI/Form/AuthInput/AuthInput';
+import AuthInput from '../../../UI/Form/AuthInput/AuthInput';
 import ErrorFeedback from '../../../UI/Form/ErrorFeedback/ErrorFeedback';
 import { useNavigate } from 'react-router-dom';
 import Underline from '../../Shared/Underline/Underline';
@@ -33,9 +33,9 @@ export default function LoginForm() {
     resolver: yupResolver(validation),
   });
 
-  const onSubmit = handleSubmit(async (data) => await generateInvoice(data));
+  const onSubmit = handleSubmit(async (data) => await login(data));
 
-  const generateInvoice = async (data: IAuthRequest) => {
+  const login = async (data: IAuthRequest) => {
     dispatch(authActions.login(data));
     reset();
   };
@@ -48,7 +48,7 @@ export default function LoginForm() {
           control={control}
           name="email"
           render={({ field: { onChange, value } }) => (
-            <LoginInput
+            <AuthInput
               className="login-form__input-group"
               inputClassName="login-form__input"
               placeHolder={'Email'}
@@ -63,7 +63,7 @@ export default function LoginForm() {
           control={control}
           name="password"
           render={({ field: { onChange, value } }) => (
-            <LoginInput
+            <AuthInput
               className="login-form__input-group"
               inputClassName="login-form__input"
               placeHolder={'Hasło'}
