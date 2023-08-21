@@ -1,5 +1,7 @@
 # Invoice Generator - PDF Invoice Generation Application
 
+![Invoice Generator](./assets/invoicegenerator.png)
+
 A frontend application for generating invoices in PDF format. The application is built using React and a variety of libraries and tools. It allows users to create and manage invoices in a simple and convenient way.
 
 ## Features
