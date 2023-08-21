@@ -39,5 +39,16 @@ Aplikacja korzysta z następujących technologii i bibliotek:
 
 Po zainstalowaniu zależności, uruchom aplikację za pomocą następującej komendy:
 
-```bash
+```bash```
 npm start
+```bash```
+Aplikacja będzie dostępna w przeglądarce pod adresem http://localhost:3000.
+Konfiguracja
+
+Plik .env zawiera konfigurację środowiska, takie jak klucze API, ustawienia połączenia z bazą danych, etc.
+Wkład
+
+Wszelkie propozycje udoskonaleń, zgłaszanie błędów czy wnioski są mile widziane! Prosimy o składanie Pull Requestów lub zgłaszanie problemów w sekcji Issues.
+Licencja
+
+Ten projekt jest objęty licencją MIT.
