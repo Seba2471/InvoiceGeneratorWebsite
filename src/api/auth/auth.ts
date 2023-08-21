@@ -1,9 +1,10 @@
+import { AxiosError } from 'axios';
 import { IAuthRegisterRequest } from '../../models/Auth/IAuthRegisterRequest';
 import { IAuthRequest } from '../../models/Auth/IAuthRequest';
 import apiRequest from '../../utils/apiRequest';
 export async function loginRequest(userData: IAuthRequest) {
   try {
-    const response = apiRequest.post('auth/login', userData);
+    const response = await apiRequest.post('auth/login', userData);
     return response;
   } catch (error) {
     throw error;
@@ -11,7 +12,8 @@ export async function loginRequest(userData: IAuthRequest) {
 }
 export async function registerRequest(userData: IAuthRegisterRequest) {
   try {
-    const response = apiRequest.post('auth/register', userData);
+    const response = await apiRequest.post('auth/register', userData);
+    console.log(response.data);
     return response;
   } catch (error) {
     throw error;

@@ -7,19 +7,19 @@ import Button from '../../../UI/Buttons/Button/Button';
 import './RegisterForm.scss';
 import Underline from '../../Shared/Underline/Underline';
 import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
 import { getUiIsLoading } from '../../../../data/ui/ui';
 import { authActions, getAuthErrorSelector } from '../../../../data/auth/auth';
 import { useForm, Controller } from 'react-hook-form';
 import { IAuthRegisterRequest } from '../../../../models/Auth/IAuthRegisterRequest';
 import validation from '../../../../validation/Auth/AuthRegisterValidation';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useDispatch } from 'react-redux';
 
-export default function RegisterForm(props: { onRegister: Function }) {
+export default function RegisterForm() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const loading = useSelector(getUiIsLoading);
   const registerError = useSelector(getAuthErrorSelector);
-  const dispatch = useDispatch();
   const {
     reset,
     control,
@@ -36,8 +36,8 @@ export default function RegisterForm(props: { onRegister: Function }) {
 
   const onSubmit = handleSubmit(async (data) => await login(data));
 
-  const login = async (data: IAuthRegisterRequest) => {
-    dispatch(authActions.register(data));
+  const login = async (userData: IAuthRegisterRequest) => {
+    dispatch(authActions.register(userData));
     reset();
   };
 

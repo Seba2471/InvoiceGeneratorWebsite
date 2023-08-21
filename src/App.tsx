@@ -12,6 +12,7 @@ import Login from './pages/Auth/Login/Login';
 import RestartPassword from './pages/Auth/RestartPassword/RestartPassword';
 import { ReduxRouter } from '@lagunovsky/redux-react-router';
 import { history, routerSelector } from './store/store';
+import ConfirmEmailForm from './components/Auth/Register/ConfirmEmailForm/ConfirmEmailForm';
 
 const header = <Header />;
 const menu = <Menu />;
@@ -27,7 +28,8 @@ const content = (
     </Route>
     <Route path="/register" element={<Register />} />
     <Route path="/login" element={<Login />} />
-    <Route path="/password_restart" element={<RestartPassword />} />
+    <Route path="/password-restart" element={<RestartPassword />} />
+    <Route path="/confirm-email/:email" element={<ConfirmEmailForm />} />
   </Routes>
 );
 
