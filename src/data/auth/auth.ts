@@ -32,11 +32,16 @@ const slice = createSlice({
       const decodedToken = decodeJWT(state.tokens.accessToken);
       state.user = { ...decodedToken, isAuthenticated: true };
     },
-    authFailure: (state, { payload }: PayloadAction<string>) => {
-      state.error = payload;
+    authFailure: (state, { payload }: PayloadAction<string | undefined>) => {
+      state.error = payload
+        ? payload
+        : 'Coś poszło nie tak... Spróbuj ponownie później.';
     },
     logout: () => {
       return initialState;
+    },
+    clearErrors: (state) => {
+      state.error = '';
     },
   },
 });
@@ -45,8 +50,9 @@ const authActions = {
   login: createAction<IAuthRequest>('auth/login'),
   register: createAction<IAuthRequest>('auth/register'),
   authSuccess: createAction<ITokens>('auth/authSuccess'),
-  authFailure: createAction<string>('auth/authFailure'),
+  authFailure: createAction<string | undefined>('auth/authFailure'),
   logout: createAction('auth/logout'),
+  clearErrors: createAction('auth/clearErrors'),
 };
 
 export { authActions };
