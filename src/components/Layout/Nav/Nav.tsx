@@ -1,14 +1,24 @@
 import React, { useState } from 'react';
 import { FiHome, FiBarChart2, FiSettings } from 'react-icons/fi';
-import { IoDocuments, IoPeople } from 'react-icons/io5';
-import { NavLink } from 'react-router-dom';
+import { IoDocuments, IoPeople, IoLogOutOutline } from 'react-icons/io5';
+import { useDispatch } from 'react-redux';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
+import { authActions } from '../../../data/auth/auth';
 import './Hamburger.scss';
 import './Nav.scss';
 
 export default function Nav() {
   const [mobileNavActive, setMobileNavActive] = useState(false);
+  const navigate = useNavigate();
   let location = useLocation();
+  const dispatch = useDispatch();
+
+  const logout = () => {
+    dispatch(authActions.logout());
+    navigate('/login');
+  };
+
   return (
     <>
       <button
@@ -123,6 +133,17 @@ export default function Nav() {
               <FiSettings className="navbar__nav-link-icon" />
               <span>Ustawienia</span>
             </NavLink>
+          </div>
+          <div>
+            <button
+              className={'navbar__nav-item navbar__nav-item-logout'}
+              onClick={() => logout()}
+            >
+              <div className="navbar__nav-link">
+                <IoLogOutOutline className="navbar__nav-link-icon" />
+                <span>Wyloguj</span>
+              </div>
+            </button>
           </div>
         </div>
       </nav>

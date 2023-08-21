@@ -2,16 +2,18 @@ import React from 'react';
 import styles from './Menu.module.css';
 import MenuLink from './MenuLink/MenuLink';
 import { homeIcon, invoiceIcon, contractorsIcon, settingsIcon } from './Icons';
-import useAuth from '../../../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import BurgerMenu from './BurgerMenu/BurgerMenu';
+import { useDispatch, useSelector } from 'react-redux';
+import { authActions, getUserSelector } from '../../../data/auth/auth';
 
 export default function Menu() {
-  const [auth, setAuth] = useAuth();
+  const dispatch = useDispatch();
+  const user = useSelector(getUserSelector);
   const navigate = useNavigate();
 
   const logout = () => {
-    setAuth.logout();
+    dispatch(authActions.logout());
     navigate('/login');
   };
 
@@ -40,7 +42,7 @@ export default function Menu() {
         </MenuLink>
       </div>
       <div className="col-10  col-md-8 align-items-center justify-content-start d-flex d-md-none">
-        <span>Witaj, {auth.user.email}</span>
+        <span>Witaj, {user.email}</span>
         <span onClick={() => logout()} className="text-primary me-2 d-none">
           Wyloguj
         </span>

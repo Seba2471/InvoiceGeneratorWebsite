@@ -1,0 +1,160 @@
+@import '/src/assets/scss/mixins/colors';
+
+.invoice-items-table {
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+
+  &__title-counter-wrapper {
+    display: flex;
+    align-items: center;
+  }
+
+  &__title {
+    align-items: center;
+    font-size: 2rem;
+    margin: 0;
+    margin-right: 0.7em;
+  }
+
+  &__items-counter-box {
+    position: relative;
+    width: 2.5em;
+    height: 2.5em;
+    border: solid 1px transparent;
+    background-color: rgba(92, 184, 92, 0.4);
+    border-radius: 50%;
+    padding: 0.15em;
+  }
+
+  &__items-counter {
+    font-size: 1.9rem;
+    text-align: center;
+    justify-self: flex-start;
+    color: $darker;
+  }
+
+  &__icon {
+    justify-content: flex-end;
+    font-size: 3rem;
+    width: 20%;
+    transform: rotate(180deg);
+    transition: transform 0.3s;
+  }
+
+  &__items--collapsed {
+    transform: rotate(0);
+  }
+
+  &__desktop-top-bar {
+    display: none;
+  }
+
+  &__items {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  &__add-btn.btn {
+    width: 95%;
+    margin: 1em auto;
+    padding: 0.6em;
+  }
+  &__select {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    &-vat,
+    &-currency {
+      width: 95%;
+      margin: auto;
+      margin-bottom: 0.5em;
+      font-size: 1.8rem;
+
+      .form-control {
+        font-size: 1.6rem;
+      }
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .invoice-items-table {
+    &__icon {
+      width: 10%;
+    }
+
+    &__add-btn.btn {
+      width: 80%;
+
+      margin: auto;
+      font-size: 1.6rem;
+    }
+
+    &__select {
+      display: flex;
+      width: 100%;
+      flex-direction: row;
+      position: relative;
+      align-items: flex-end;
+      justify-content: flex-end;
+
+      &-vat,
+      &-currency {
+        margin: 1em;
+        width: 25%;
+        margin-bottom: 0.5em;
+        font-size: 2rem;
+
+        .form-control {
+          font-size: 1.8rem;
+        }
+      }
+    }
+  }
+}
+@media (min-width: 992px) {
+  .invoice-items-table {
+    &__icon {
+      width: 10%;
+    }
+
+    &__desktop-top-bar {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      text-align: center;
+      padding: 0.5em 0;
+      margin-bottom: 1em;
+      border-bottom: 1px solid $white;
+
+      &-lp {
+        width: 5%;
+      }
+      &-name {
+        width: 50%;
+      }
+      &-quantity {
+        width: 15%;
+      }
+      &-cost {
+        width: 25%;
+      }
+      &-action {
+        width: 5%;
+      }
+    }
+
+    &__add-btn.btn {
+      width: 40%;
+      margin: 0.5em auto;
+      padding: 0.4em;
+      font-size: 1.8rem;
+    }
+  }
+}

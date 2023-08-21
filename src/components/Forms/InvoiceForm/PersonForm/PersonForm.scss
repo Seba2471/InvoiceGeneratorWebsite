@@ -1,0 +1,71 @@
+@import '/src/assets/scss/mixins/colors';
+
+.person-form {
+  &__header {
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5em 0;
+  }
+
+  &__title {
+    display: flex;
+    font-size: 2rem;
+    padding: 0.5em 0;
+    margin: 0;
+
+    &--error {
+      color: $red;
+    }
+
+    &-error-icon {
+      color: $red;
+      font-size: 2.4rem;
+      margin-left: 0.4em;
+    }
+  }
+
+  &__icon {
+    display: flex;
+    font-size: 3rem;
+    width: 20%;
+    transform: rotate(180deg);
+    transition: transform 0.3s;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    &-address-text {
+      font-size: 1.6rem;
+      margin-bottom: 0;
+      margin-top: 0.5em;
+    }
+
+    &-address-input {
+      margin: 0.2em 0;
+      .form-input__label {
+        font-size: 1.2rem;
+        display: none;
+      }
+    }
+  }
+
+  .person-form__icon.person-form--collapsed {
+    transform: rotate(0);
+  }
+}
+
+@media (min-width: 768px) {
+  .person-form {
+    &__title {
+      padding: 0.8em 0;
+    }
+    &__icon {
+      width: 10%;
+    }
+  }
+}

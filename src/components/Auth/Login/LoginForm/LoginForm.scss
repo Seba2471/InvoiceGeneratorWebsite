@@ -11,12 +11,12 @@
 
   &__restart-password-link {
     align-self: flex-end;
-    padding-top: 0.2em;
+    padding-top: 0.4em;
     padding-bottom: 0.2em;
-    font-weight: 400;
-    letter-spacing: 1.5px;
-    color: $dark;
-    font-size: 1.4rem;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    color: $darker;
+    font-size: 1.6rem;
     transition: color 0.3s;
 
     &:hover {
@@ -26,7 +26,7 @@
 
   &__register-text {
     letter-spacing: 1px;
-    color: $dark;
+    color: $darker;
     font-size: 1.6rem;
     font-weight: 600;
   }
@@ -53,10 +53,6 @@
     @include auth-form-media-992px;
     &__restart-password-link {
       font-size: 1.5rem;
-    }
-
-    &__register-text {
-      font-size: 2rem;
     }
   }
 }

@@ -1,8 +1,4 @@
-import React, { useState } from 'react';
-import { FormProperty } from '../../../../types/Forms/FormProperty';
-import { validateRules } from '../../../../helpers/validation/validations';
-import clearFormFields from '../../../../helpers/clearFormFields';
-import LoginInput from '../../../UI/Form/AuthInput/AuthInput';
+import AuthInput from '../../../UI/Form/AuthInput/AuthInput';
 import ErrorFeedback from '../../../UI/Form/ErrorFeedback/ErrorFeedback';
 import { useNavigate } from 'react-router-dom';
 import Underline from '../../Shared/Underline/Underline';
@@ -10,116 +6,75 @@ import './LoginForm.scss';
 import ButtonWithSpinner from '../../../UI/Buttons/ButtonWithSpinner/ButtonWithSpinner';
 import Button from '../../../UI/Buttons/Button/Button';
 import Title from '../../Shared/Title/Title';
+import { getUiIsLoading } from '../../../../data/ui/ui';
+import { useSelector } from 'react-redux';
+import { authActions, getAuthErrorSelector } from '../../../../data/auth/auth';
+import { IAuthRequest } from '../../../../models/Auth/IAuthRequest';
+import { useForm, Controller } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import validation from '../../../../validation/Auth/AuthValidation';
+import { useDispatch } from 'react-redux';
 
-type LoginFormTypes = {
-  email: FormProperty<string>;
-  password: FormProperty<string>;
-};
-
-export default function LoginForm(props: { onLogin: Function }) {
+export default function LoginForm() {
   const navigate = useNavigate();
-
-  const [form, setForm] = useState<LoginFormTypes>({
-    email: {
-      value: '',
-      error: '',
-      showError: false,
-      rules: ['email', 'required'],
+  const loading = useSelector(getUiIsLoading);
+  const error = useSelector(getAuthErrorSelector);
+  const dispatch = useDispatch();
+  const {
+    reset,
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IAuthRequest>({
+    defaultValues: {
+      email: '',
+      password: '',
     },
-    password: {
-      value: '',
-      error: '',
-      showError: false,
-      rules: ['required'],
-    },
+    resolver: yupResolver(validation),
   });
 
-  const [loading, setLoading] = useState(false);
-  const [loginError, setLoginError] = useState('');
+  const onSubmit = handleSubmit(async (data) => await login(data));
 
-  const clearForm = ({
-    clearEmail,
-    clearPassword,
-  }: {
-    clearEmail?: boolean;
-    clearPassword?: boolean;
-  }) => {
-    clearFormFields<LoginFormTypes>(
-      form,
-      [
-        { fieldName: 'email', clearValue: clearEmail || true },
-        { fieldName: 'password', clearValue: clearPassword || true },
-      ],
-      setForm,
-    );
-  };
-
-  const submitForm = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoginError('');
-    const errors = {
-      email: validateRules(form.email.rules, form.email.value),
-      password: validateRules(form.password.rules, form.password.value),
-    };
-
-    if (errors.email !== '' || errors.password !== '') {
-      setForm({
-        ...form,
-        email: { ...form.email, error: errors.email, showError: true },
-        password: { ...form.password, error: errors.password, showError: true },
-      });
-    } else {
-      setLoading(true);
-      const error = await props.onLogin(form.email.value, form.password.value);
-      setLoading(false);
-
-      if (error?.LoginFailed) {
-        setLoginError('Nieprawidłowy login lub hasło');
-        clearForm({ clearEmail: false });
-      } else {
-        setLoginError('Coś poszło nie tak... Spróbuj później');
-        clearForm({});
-      }
-    }
-  };
-  const changeHandler = (value: string, fieldName: keyof LoginFormTypes) => {
-    const errorMessage = validateRules(form[fieldName].rules, value);
-
-    setForm({
-      ...form,
-      [fieldName]: {
-        ...form[fieldName],
-        value,
-        showError: true,
-        error: errorMessage,
-      },
-    });
+  const login = async (data: IAuthRequest) => {
+    dispatch(authActions.login(data));
+    reset();
   };
 
   return (
     <div className="login-form">
       <Title title="Logowanie" />
-      <form className="login-form__form" onSubmit={submitForm}>
-        <LoginInput
-          className="login-form__input-group"
-          inputClassName="login-form__input"
-          placeHolder={'Email'}
-          value={form.email.value}
-          onChange={(value: string) => changeHandler(value, 'email')}
-          error={form.email.error}
-          showError={form.email.showError}
+      <form className="login-form__form" onSubmit={onSubmit}>
+        <Controller
+          control={control}
+          name="email"
+          render={({ field: { onChange, value } }) => (
+            <AuthInput
+              className="login-form__input-group"
+              inputClassName="login-form__input"
+              placeHolder={'Email'}
+              type="email"
+              value={value}
+              onChange={(val: string) => onChange(val)}
+              error={errors.email?.message}
+            />
+          )}
         />
-        <LoginInput
-          className="login-form__input-group"
-          inputClassName="login-form__input"
-          placeHolder={'Hasło'}
-          type={'password'}
-          value={form.password.value}
-          onChange={(value: string) => changeHandler(value, 'password')}
-          error={form.password.error}
-          showError={form.password.showError}
+        <Controller
+          control={control}
+          name="password"
+          render={({ field: { onChange, value } }) => (
+            <AuthInput
+              className="login-form__input-group"
+              inputClassName="login-form__input"
+              placeHolder={'Hasło'}
+              type="password"
+              value={value}
+              onChange={(val: string) => onChange(val)}
+              error={errors.password?.message}
+            />
+          )}
         />
-        <ErrorFeedback error={loginError} />
+        <ErrorFeedback error={error} />
         <a
           className="login-form__link login-form__restart-password-link"
           href="/password_restart"

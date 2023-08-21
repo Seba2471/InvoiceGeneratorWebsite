@@ -1,9 +1,13 @@
 import React from 'react';
 import './Button.scss';
 
-export default function Button(props: { value: string; action: Function }) {
+export default function Button(props: {
+  classname?: string;
+  value: string;
+  action: Function;
+}) {
   return (
-    <button className="btn" onClick={() => props.action()}>
+    <button className={`${props.classname} btn`} onClick={() => props.action()}>
       {props.value}
     </button>
   );

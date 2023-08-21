@@ -1,0 +1,60 @@
+.invoice-list {
+  .invoice-list-item:first-child {
+    .invoice-list-item {
+      &__field {
+        &-title {
+          display: block;
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 1200px) {
+  .invoice-list {
+    .invoice-list-item:first-child {
+      .invoice-list-item {
+        &__delete-icon {
+          grid-row: 2/3;
+        }
+        &__download-icon {
+          grid-row: 2/3;
+        }
+        &__field {
+          &-title {
+            display: block;
+            font-size: 1.8rem;
+            font-weight: 600;
+          }
+          &-value {
+            text-align: center;
+            padding: 0;
+            &:nth-of-type(3) {
+              grid-column: 1/4;
+              grid-row: 2/3;
+            }
+            &:nth-of-type(5) {
+              grid-column: 4/8;
+              grid-row: 2/3;
+            }
+            &:nth-of-type(7) {
+              grid-column: 8/14;
+              grid-row: 2/3;
+            }
+            &:nth-of-type(9) {
+              grid-column: 14/20;
+              grid-row: 2/3;
+            }
+            &:nth-of-type(11) {
+              grid-column: 20/23;
+              grid-row: 2/3;
+            }
+          }
+        }
+        &__underline {
+          grid-row: 3;
+        }
+      }
+    }
+  }
+}

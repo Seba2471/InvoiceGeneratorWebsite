@@ -1,0 +1,19 @@
+@import '/src/assets/scss/mixins/colors';
+
+.form-input {
+  // padding: 0.5em 0;
+  &__label {
+    font-size: 1.6rem;
+    letter-spacing: 1px;
+  }
+
+  &__input {
+    padding: 0.5em;
+    color: $darker;
+    font-size: 1.8rem;
+  }
+
+  &__feedback {
+    font-size: 1.6rem;
+  }
+}

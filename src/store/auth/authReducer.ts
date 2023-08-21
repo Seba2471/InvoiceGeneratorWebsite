@@ -1,8 +1,8 @@
 import type { Action } from './actions';
-import type { User } from '../../types/Auth/User';
+import type { IUser } from '../../types/Auth/IUser';
 
 export type Store = {
-  user: User;
+  user: IUser;
   accessToken: string | null;
   refreshToken: string | null;
   isAuthenticated: boolean;

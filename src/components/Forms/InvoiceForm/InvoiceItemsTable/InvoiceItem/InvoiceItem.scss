@@ -1,0 +1,164 @@
+@import '/src/assets/scss/mixins/colors';
+
+.invoice-item {
+  margin-bottom: 1em;
+  margin-top: 1em;
+  display: flex;
+  flex-direction: row;
+  &__desktop-top-bar {
+    display: none;
+  }
+
+  &__fields-wrapper {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    width: 100%;
+  }
+  &__number-box {
+    display: flex;
+    width: 10%;
+    border-right: 1px solid $white;
+    align-items: center;
+    justify-content: center;
+    padding-right: 0.5em;
+  }
+
+  &__number {
+    font-size: 2rem;
+  }
+  &__fields {
+    padding-left: 0.5em;
+    padding-bottom: 0.4em;
+    width: 100%;
+
+    &-delete-icon {
+      width: 100%;
+      text-align: right;
+      font-size: 2.5rem;
+      color: red;
+    }
+
+    .invalid-feedback {
+      font-size: 1.5rem;
+      text-align: center;
+    }
+    .is-invalid {
+      background: none;
+      padding-right: 9px;
+    }
+
+    .form-input__label {
+      text-align: center;
+      display: block;
+    }
+    &-quantity-cost-box {
+      display: flex;
+      flex-direction: row;
+    }
+
+    &-quantity {
+      width: 65%;
+      padding-right: 1em;
+    }
+
+    &-cost {
+      input {
+        text-align: right;
+      }
+      /* Chrome, Safari, Edge, Opera */
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      /* Firefox */
+      input[type='number'] {
+        -moz-appearance: textfield;
+      }
+    }
+  }
+}
+@media (min-width: 768px) {
+  .invoice-item {
+    &__number-box {
+      width: 5%;
+    }
+    &__number {
+      font-size: 2.2rem;
+    }
+    &__fields {
+      &-delete-icon {
+        font-size: 3rem;
+      }
+      &-quantity {
+        width: 20%;
+      }
+
+      &-cost {
+        width: 80%;
+      }
+    }
+  }
+}
+@media (min-width: 992px) {
+  .invoice-item {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+
+    &__number-box {
+      margin: 0;
+      padding: 0;
+      border: none;
+      width: 4%;
+      max-height: 3em;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    &__number {
+      font-size: 2.2rem;
+    }
+    &__fields {
+      display: flex;
+      flex-wrap: wrap;
+      width: 100%;
+      &-delete-icon {
+        order: 5;
+        width: 5%;
+        align-items: center;
+        justify-content: center;
+        max-height: 54px;
+      }
+
+      &-textarea {
+        display: flex;
+        flex-direction: column;
+        width: 52%;
+      }
+      .form-input__label {
+        display: none;
+      }
+
+      .form-input__input {
+        height: 3em;
+      }
+      &-quantity-cost-box {
+        width: 43%;
+      }
+
+      &-quantity {
+        width: 60%;
+        margin: 0 0.5em;
+        padding: 0;
+      }
+
+      &-cost {
+        margin: 0;
+        // width: 100%;
+      }
+    }
+  }
+}

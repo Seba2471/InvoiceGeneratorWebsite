@@ -48,6 +48,11 @@
     width: 100%;
     padding: 0 0.2em;
 
+    button:only-of-type::after {
+      content: '';
+      display: none;
+    }
+
     &-item {
       display: flex;
       align-items: center;
@@ -56,9 +61,17 @@
       font-size: 1.7rem;
       text-align: left;
       font-weight: 600;
+
       &:hover .navbar__nav-icon,
       &:hover .navbar__nav-link {
         color: $secondary;
+      }
+
+      &-logout {
+        border: none;
+        background-color: transparent;
+        color: $white;
+        width: 100%;
       }
     }
 
@@ -148,7 +161,7 @@
       transform: translateY(-50%) translateX(70%);
       border-top: 1.8em solid transparent;
       border-bottom: 1.8em solid transparent;
-      border-right: 1.8em solid #fff;
+      border-right: 1.8em solid $background;
       transition: transform 0.3s;
     }
     .navbar__nav-item--show.navbar__nav-item::after {

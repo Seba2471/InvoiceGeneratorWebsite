@@ -1,0 +1,51 @@
+@import '/src/assets/scss/mixins/colors';
+
+.info-alert {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2em;
+  align-items: center;
+  background-color: $secondary;
+  border-radius: 8px;
+  color: $main;
+  font-weight: 600;
+  font-size: 1.7rem;
+  letter-spacing: 1px;
+  &__icon {
+    width: 20%;
+    font-size: 5rem;
+    text-align: center;
+  }
+  &__text {
+    width: 80%;
+    text-align: center;
+    margin: 0;
+  }
+}
+
+@media (min-width: 768px) {
+  .info-alert {
+    padding: 1em;
+    justify-content: center;
+    &__icon {
+      width: 10%;
+    }
+    &__text {
+      width: 40%;
+    }
+  }
+}
+@media (min-width: 992px) {
+  .info-alert {
+    padding: 1em;
+    justify-content: center;
+    &__icon {
+      width: 10%;
+    }
+    &__text {
+      width: 50%;
+    }
+  }
+}

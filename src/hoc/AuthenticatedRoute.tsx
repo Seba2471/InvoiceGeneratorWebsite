@@ -1,9 +1,9 @@
-import React, { useContext } from 'react';
+import { useSelector } from 'react-redux';
 import { Navigate, Outlet } from 'react-router-dom';
-import AuthContext from '../contexts/authContext';
+import { getIsAuthenticatedSelector } from '../data/auth/auth';
 
 export default function AuthenticatedRoute() {
-  const { state } = useContext(AuthContext);
+  const isAuthenticated = useSelector(getIsAuthenticatedSelector);
 
-  return state.isAuthenticated ? <Outlet /> : <Navigate to='/login' />;
+  return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
 }
